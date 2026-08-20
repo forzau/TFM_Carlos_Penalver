@@ -56,7 +56,33 @@ El principal valor consiste en facilitar una visión del riesgo de despoblación
 
 Al igual que antes, el sistema se puede presentar con un mapa o dashboard territorial visualizando el riesgo y sus factores para mejorar las decisiones y planificación de las administraciones públicas. Además, identificar los factores que presentan una mayor relación con la pérdida de población puede aportar información útil para comprender las diferencias entre territorios.
 
+# Idea 3 - Sistema inteligente de planificación de puntos de recarga para vehículos eléctricos
 
+## Problema que resuelve
+
+La expansión del coche eléctrico requiere de una infraestructura de recarga suficiente y correctamente distribuida, algo que no está sucediendo. Sin embrago, decidir dónde instalar nuevos puntos de recarga no es una tarea sencilla.
+
+La decisión sobre nuevas ubicaciones puede depender de múltiples factores, como la cantidad de vehículos eléctricos de la zona, población, vías de comunicación, infraestructura disponible o presencia de lugares con alta movilidad.
+
+El objetivo propone desarrollar un sistema que permita analizar estas variables para identificar las zonas en las que la instalación de puntos de recarga es más necesaria o útil. 
+
+## Motivación para el proyecto
+
+Es un hecho la transición hacia la movilidad con vehículos total o parcialmente eléctricos, por lo que debería de existir una infraestructura a la altura de esta transición. Actualmente existe una distribución insuficiente, lo que dificulta la utilización y genera diferencias de uso entre territorios.
+
+Como en las ideas anteriores, el proyecto permite trabajar con información de diferentes ámbitos, con datos probablemente públicos sobre la infraestructura actual, parque de vehículos, población o red viaria. También permite implementar correctamente los contenidos del máster.
+
+## A quién impacta
+
+Los principales usuarios serían las administraciones públicas y empresas encargadas de desarrollar y gestionar las infraestructuras de recarga. Esta idea propone un uso también hacia los operadores privados, que podrían utilizar el sistema para identificar ubicaciones con mayor demanda potencial y reducir la incertidumbre asociada a la apertura de nuevas instalaciones.
+
+Y por supuesto, los usuarios de vehículos eléctricos también se beneficiarían de una red de recarga mejor distribuida y adaptada a las necesidades reales de movilidad.
+
+## Por qué tiene valor
+
+El principal valor del proyecto consiste en transformar distintas fuentes de información territorial y de movilidad en una herramienta de apoyo para decidir dónde es más conveniente ampliar la infraestructura de recarga de vehículos eléctricos. A partir de estos datos, el sistema podría generar una clasificación de prioridad por zonas y representarla en un mapa o dashboard interactivo, facilitando la identificación de áreas con mayor necesidad potencial y de los factores que influyen en esa demanda.
+
+Esta información sería útil tanto para administraciones públicas como para operadores privados. Las primeras podrían mejorar la planificación de inversiones y detectar zonas con cobertura insuficiente, mientras que los segundos podrían reducir el riesgo de instalar puntos de recarga en ubicaciones poco rentables y encontrar nuevas oportunidades. En conjunto, el sistema contribuiría a una planificación más eficiente y a una expansión más equilibrada de la movilidad eléctrica basada en datos.
 
 
 
