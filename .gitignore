@@ -1,6 +1,8 @@
 # Originales y salidas pesadas: se sincronizan con OneDrive.
 /[Ff]uentes/
 /docs/inventario_fuentes.csv
+# Contextos originales de conversaciones: conservar mediante OneDrive.
+/contexto/antecedentes/
 /resultados/*
 !/resultados/.gitkeep
 

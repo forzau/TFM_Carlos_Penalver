@@ -3,15 +3,22 @@
 Proyecto local del Trabajo de Fin de Máster, migrado desde un proyecto en la nube.
 Repositorio: [forzau/TFM_Carlos_Penalver](https://github.com/forzau/TFM_Carlos_Penalver).
 
-El setup organiza el trabajo y conserva el contexto. El tema, los objetivos y las
-herramientas se concretarán cuando se incorpore el contexto del proyecto anterior.
+Tema elegido: **localización óptima de nuevos puntos de recarga para vehículos
+eléctricos en la Comunitat Valenciana**. El objetivo es apoyar decisiones sobre
+dónde ampliar la infraestructura pública de recarga utilizando datos reales y públicos.
+
+Se han incorporado las dos conversaciones anteriores. La investigación y validación
+de fuentes está completada preliminarmente según el contexto recibido; todavía no
+se han realizado limpieza, integración ni modelado. La siguiente fase, cuando
+corresponda, será la auditoría técnica de datasets. Consultar `contexto/PROYECTO.md`
+y `contexto/ESTADO.md`.
 
 ## Estructura
 
 | Ruta | Uso |
 | --- | --- |
 | `AGENTS.md` | Instrucciones para los asistentes que trabajen en el proyecto. |
-| `contexto/` | Contexto del TFM, estado actual y decisiones. |
+| `contexto/` | Contexto del TFM, estado actual y decisiones. Los originales de `antecedentes/` se conservan localmente mediante OneDrive, fuera de Git. |
 | `docs/entregas/` | Entregas y documentos de trabajo existentes. |
 | `docs/memoria/` | Redacción de la memoria del TFM. |
 | `docs/CONTINUIDAD.md` | Cómo continuar en otro equipo o conversación. |

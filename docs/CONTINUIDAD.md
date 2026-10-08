@@ -47,6 +47,9 @@ no guardar contraseñas ni tokens en el proyecto.
 
 Pedir al asistente que lea `AGENTS.md` y los tres documentos de `contexto/`.
 Estos archivos recogen lo confirmado, los pendientes, las decisiones y el próximo paso.
+Los contextos originales de conversaciones se conservan en
+`contexto/antecedentes/` mediante OneDrive y están excluidos de Git. Consultarlos
+si se necesita detalle histórico; una copia clonada únicamente de GitHub no los incluye.
 
 ## Al cerrar una sesión de trabajo
 

@@ -18,5 +18,11 @@ El procesamiento debe leer los originales y escribir sus salidas en `resultados/
 Los resultados que deban formar parte de una entrega se incorporarán expresamente
 a `docs/entregas/` después de revisarlos.
 
-La procedencia, las licencias y el significado de los archivos quedan pendientes
-del contexto que facilitará el usuario.
+La segunda conversación describe ocho bloques: vehículos DGT, aforos GVA,
+población INE, recarga MITECO, renta INE, capacidad eléctrica, red viaria IGN/CNIG
+y POI de OpenStreetMap. Sus usos previstos y las observaciones preliminares están
+en `contexto/PROYECTO.md`.
+
+Las comprobaciones previas son superficiales y no sustituyen la auditoría técnica.
+Quedan pendientes las URLs y versiones exactas, licencias, esquemas y correspondencia
+de cada archivo local con su bloque. No inferir su contenido solo por el nombre.
