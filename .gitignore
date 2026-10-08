@@ -1,0 +1,24 @@
+# Originales y salidas pesadas: se sincronizan con OneDrive.
+/[Ff]uentes/
+/docs/inventario_fuentes.csv
+/resultados/*
+!/resultados/.gitkeep
+
+# Credenciales y configuración privada del equipo.
+.env
+.env.*
+!.env.example
+
+# Entornos y cachés locales.
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Archivos temporales del sistema y de Office.
+.DS_Store
+Thumbs.db
+desktop.ini
+~$*
+*.tmp
