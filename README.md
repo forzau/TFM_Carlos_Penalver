@@ -1,6 +1,7 @@
 # TFM de Carlos Peñalver
 
 Trabajo de Fin de Máster del Máster de Ciencia de Datos e IA.
+El trabajo se organiza mediante entregas y no incluye una memoria.
 Repositorio: [forzau/TFM_Carlos_Penalver](https://github.com/forzau/TFM_Carlos_Penalver).
 
 Tema elegido: **localización óptima de nuevos puntos de recarga para vehículos
@@ -16,7 +17,6 @@ antes de definir la granularidad e integrar las fuentes.
 | Ruta | Uso |
 | --- | --- |
 | `docs/entregas/` | Entregas y documentos de trabajo existentes. |
-| `docs/memoria/` | Redacción de la memoria del TFM. |
 | `docs/FUENTES.md` | Fuentes de datos previstas y limitaciones pendientes de revisar. |
 | `src/` | Código del proyecto, cuando se defina la solución. |
 | `notebooks/` | Cuadernos de exploración, si se utilizan. |
