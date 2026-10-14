@@ -15,11 +15,17 @@ la Comunitat Valenciana:
 | Ubicaciones candidatas | OpenStreetMap, distribución Geofabrik | Aparcamientos, servicios y otros puntos de interés. |
 
 La disponibilidad se ha comprobado preliminarmente durante la preparación del
-proyecto. Quedan pendientes la auditoría técnica, las URLs y versiones exactas,
-las licencias y la compatibilidad espacial y temporal entre fuentes.
+proyecto. Las referencias de acceso y la revisión de condiciones de uso del
+2026-10-14 se documentan en la [Entrega 02](entregas/02_datos_y_preparacion.md).
+La [auditoría técnica](AUDITORIA_FUENTES.md) identifica esquemas, recuentos y
+problemas de las copias locales. DGT corresponde al parque mensual provisional
+de diciembre de 2025, con municipios pequeños suprimidos; renta contiene 2015–2023.
+Quedan pendientes algunas versiones exactas y la integración espacial y temporal. La reutilización
+de i-DE necesita aclaración; la versión de CC BY de aforos no consta en los
+metadatos revisados y OSM requiere atender las obligaciones de ODbL al publicar.
 
 La capacidad eléctrica publicada es orientativa y no constituye una garantía
 de acceso o conexión a la red.
 
 Los datos originales se conservan en `Fuentes/`, fuera de Git. La documentación
-de descarga se completará antes de disponer de un pipeline reproducible.
+de preparación y las instrucciones de ejecución están en el README y la auditoría.
