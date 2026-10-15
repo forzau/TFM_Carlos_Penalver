@@ -1,5 +1,6 @@
 # Originales y salidas pesadas: se sincronizan con OneDrive.
 /[Ff]uentes/
+/datos/bronze/
 /docs/inventario_fuentes.csv
 # Notas personales e instrucciones locales: conservar mediante OneDrive.
 /contexto/

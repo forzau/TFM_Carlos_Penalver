@@ -1,0 +1,437 @@
+{
+  "version_catalogo": 1,
+  "fecha_revision": "2026-10-15",
+  "criterio": "Registro de copias sin transformar. null significa no confirmado; la fecha de modificación local no acredita descarga ni edición. Las URL de acceso no prueban identidad con la copia local.",
+  "recursos": [
+    {
+      "id": "dgt_microdatos_202512",
+      "fuente": "DGT",
+      "nombre": "Microdatos mensuales del parque de vehículos",
+      "proveedor": "Dirección General de Tráfico",
+      "pagina": "https://www.dgt.es/menusecundario/dgt-en-cifras/dgt-en-cifras-resultados/dgt-en-cifras-detalle/Microdatos-de-parque-de-vehiculos-mensual/",
+      "descarga": "https://www.dgt.es/microdatos/Parque/parque_vehiculos_202512.zip",
+      "version": "202512; datos provisionales",
+      "periodo": "2025-12",
+      "evidencia_temporal": "Nombre de la copia e interfaz mensual DGT; no se ha comparado con una nueva descarga.",
+      "fecha_descarga": null,
+      "cobertura": "España; filtrado posterior de Comunitat Valenciana",
+      "unidad_original": "Registro de vehículo; municipio suprimido en municipios de menos de 10.000 habitantes",
+      "formato": "TXT delimitado",
+      "uso": "Detalle disponible del parque; no ofrece cobertura municipal completa por sí solo.",
+      "condiciones": {
+        "estado": "licencia_declarada",
+        "licencia": "CC BY 4.0",
+        "evidencia": "https://datos.gob.es/es/catalogo/e00130502-microdatos-parque-de-vehiculos-mensual",
+        "revision": "2026-10-14",
+        "obligaciones_pendientes": "Atribuir DGT, identificar versión y cambios; revisar privacidad antes de publicar registros."
+      },
+      "pendientes": [
+        "Fecha real de adquisición de la copia"
+      ],
+      "entradas": [
+        {
+          "patron": "Fuentes/parque_vehiculos_202512.txt",
+          "rol": "datos"
+        }
+      ]
+    },
+    {
+      "id": "dgt_municipal_2025",
+      "fuente": "DGT",
+      "nombre": "Datos municipales: información general 2025",
+      "proveedor": "Dirección General de Tráfico",
+      "pagina": "https://www.dgt.es/menusecundario/dgt-en-cifras/dgt-en-cifras-resultados/dgt-en-cifras-detalle/Datos-municipales-informacion-general-2025/",
+      "descarga": "https://www.dgt.es/export/sites/web-DGT/.galleries/downloads/dgt-en-cifras/informacion_municipal/Datos-municipales-general/DatosMunicipalesGeneral_2025.xlsx",
+      "documentacion": "https://www.dgt.es/export/sites/web-DGT/.galleries/downloads/dgt-en-cifras/informacion_municipal/Datos-municipales-general/ContenidoFichasGeneral2025.pdf",
+      "version": "2025",
+      "periodo": "Parque a 2025-12-31; población a 1 de enero según ficha",
+      "evidencia_temporal": "Ficha oficial ContenidoFichasGeneral2025.pdf, inspeccionada el 2026-10-15",
+      "fecha_descarga": "2026-10-15",
+      "evidencia_descarga": "Descarga oficial realizada en la comprobación municipal; precisión de día, sin inferir la hora del archivo.",
+      "cobertura": "España; 542 municipios de Comunitat Valenciana y tres códigos provinciales sin municipio",
+      "unidad_original": "Municipio o código de municipio sin especificar (PP000)",
+      "formato": "XLSX y ficha PDF",
+      "uso": "Distintivo 0 como aproximación de demanda potencial; no equivale a BEV+PHEV ni mide recargas reales.",
+      "condiciones": {
+        "estado": "pendiente_asociar_licencia",
+        "licencia": null,
+        "evidencia": "https://datos.gob.es/es/catalogo/e00130502-datos-municipales-informacion-general-2025",
+        "revision": "2026-10-15",
+        "obligaciones_pendientes": "La ficha remite al aviso legal general. Confirmar condiciones aplicables antes de redistribuir XLSX o derivados; no heredar CC BY del microdato."
+      },
+      "pendientes": [
+        "Condiciones específicas de reutilización y redistribución"
+      ],
+      "entradas": [
+        {
+          "patron": "datos/bronze/dgt_municipal/2025/DatosMunicipalesGeneral_2025.xlsx",
+          "rol": "datos"
+        },
+        {
+          "patron": "datos/bronze/dgt_municipal/2025/ContenidoFichasGeneral2025.pdf",
+          "rol": "documentacion"
+        }
+      ]
+    },
+    {
+      "id": "gva_aforos",
+      "fuente": "GVA",
+      "nombre": "IMD de tráfico de la red autonómica de carreteras",
+      "proveedor": "Generalitat Valenciana",
+      "pagina": "https://dadesobertes.gva.es/dataset/intensidad-media-diaria-anual-imd-de-trafico-por-tramos-red-autonomica-de-carreteras-2009-2025",
+      "descarga": "https://terramapas.icv.gva.es/0902_Aforos?request=GetFeature&service=WFS&version=2.0.0&typename=Aforos2009,Aforos2010,Aforos2011,Aforos2012,Aforos2013,Aforos2014,Aforos2015,Aforos2016,Aforos2017,Aforos2018,Aforos2019,Aforos2020,Aforos2021,Aforos2022,Aforos2023,Aforos2024,Aforos2025&outputformat=gpkg",
+      "version": null,
+      "periodo": "2009–2025",
+      "evidencia_temporal": "17 capas anuales observadas en el GeoPackage",
+      "fecha_descarga": null,
+      "cobertura": "Red autonómica de carreteras de Comunitat Valenciana",
+      "unidad_original": "Tramo o estación según capa anual; semántica de medidas pendiente",
+      "formato": "GeoPackage",
+      "uso": "Tráfico como indicador territorial; no representa todas las carreteras.",
+      "condiciones": {
+        "estado": "licencia_declarada_version_no_indicada",
+        "licencia": "CC BY; versión no indicada",
+        "evidencia": "https://dadesobertes.gva.es/api/3/action/package_show?id=intensidad-media-diaria-anual-imd-de-trafico-por-tramos-red-autonomica-de-carreteras-2009-2025",
+        "revision": "2026-10-14",
+        "obligaciones_pendientes": "Atribuir Generalitat Valenciana e identificar modificaciones; precisar versión de licencia."
+      },
+      "pendientes": [
+        "Edición exacta de la copia y fecha real de adquisición",
+        "Versión de CC BY"
+      ],
+      "entradas": [
+        {
+          "patron": "Fuentes/Trafico.gpkg",
+          "rol": "datos"
+        }
+      ],
+      "recurso_catalogo": "aeac4d25-cd33-46c2-a9f3-3be342da167f",
+      "evidencia_edicion": "Ficha CKAN consultada el 2026-10-15. El last_modified del recurso (2026-03-03) y la modificación de ficha (2026-09-23) no acreditan la fecha de exportación de la copia local."
+    },
+    {
+      "id": "ine_poblacion",
+      "fuente": "INE_POBLACION",
+      "nombre": "Población según municipio y sexo",
+      "proveedor": "Instituto Nacional de Estadística",
+      "pagina": "https://www.ine.es/jaxiT3/Tabla.htm?t=68065",
+      "descarga": "https://www.ine.es/jaxiT3/files/t/es/csv_bdsc/68065.csv",
+      "version": "Tabla 68065; publicación indicada por INE: 2025-12-02",
+      "periodo": "2021–2025",
+      "evidencia_temporal": "Periodos observados en el CSV",
+      "fecha_descarga": null,
+      "cobertura": "España; contiene los 542 municipios de Comunitat Valenciana",
+      "unidad_original": "Municipio, periodo y categorías estadísticas originales",
+      "formato": "CSV",
+      "uso": "Referencia municipal y población; selección de categorías posterior.",
+      "condiciones": {
+        "estado": "condiciones_generales_ine",
+        "licencia": "CC BY 4.0 para información propia del INE, salvo excepciones",
+        "evidencia": "https://www.ine.es/dyngs/AYU/index.htm?cid=125",
+        "revision": "2026-10-14",
+        "obligaciones_pendientes": "Mantener atribución INE y referencia de producto, periodos y modificaciones."
+      },
+      "pendientes": [
+        "Fecha real de adquisición de la copia original; la consulta actual no la recupera"
+      ],
+      "entradas": [
+        {
+          "patron": "Fuentes/Poblacion.csv",
+          "rol": "datos"
+        }
+      ],
+      "tabla_ine": "68065",
+      "evidencia_identidad": "Descarga oficial del 2026-10-15 idéntica byte a byte por SHA-256: 9e37188faa63aa86e7a8648469834beaa2e728e5338e3364ef1ce4685178d419"
+    },
+    {
+      "id": "miteco_recarga",
+      "fuente": "MITECO",
+      "nombre": "Instalaciones públicas de recarga eléctrica",
+      "proveedor": "Ministerio para la Transición Ecológica y el Reto Demográfico",
+      "pagina": "https://catalogo.datosabiertos.miteco.gob.es/catalogo/es/dataset/6ee8d46f-93bd-478f-8e29-3ba4f6d8405c",
+      "descarga": "https://energia.serviciosmin.gob.es/Ripree/ExportarInstalaciones/Export",
+      "version": null,
+      "periodo": null,
+      "evidencia_temporal": "Última modificación máxima de registros observada: 2026-09-09; no acredita fecha de exportación.",
+      "fecha_descarga": null,
+      "cobertura": "España; filtrado territorial posterior",
+      "unidad_original": "Instalación, punto y conector según campos del registro",
+      "formato": "CSV UTF-16LE sin BOM",
+      "uso": "Oferta de recarga existente; requiere tratamiento de formato y repeticiones en Silver.",
+      "condiciones": {
+        "estado": "licencia_declarada",
+        "licencia": "CC BY 4.0",
+        "evidencia": "https://catalogo.datosabiertos.miteco.gob.es/catalogo/api/3/action/package_show?id=6ee8d46f-93bd-478f-8e29-3ba4f6d8405c",
+        "revision": "2026-10-14",
+        "obligaciones_pendientes": "Atribuir proveedor, identificar copia y cambios; revisar campos antes de publicar registros."
+      },
+      "pendientes": [
+        "Fecha y versión de exportación",
+        "Fecha real de adquisición; el endpoint es mutable"
+      ],
+      "entradas": [
+        {
+          "patron": "Fuentes/instalaciones_actuales.csv",
+          "rol": "datos"
+        }
+      ],
+      "version_catalogo_proveedor": "1.0",
+      "recurso_catalogo": "047c1f64-7552-44da-a639-2291292e650d",
+      "evidencia_edicion": "Ficha CKAN consultada el 2026-10-15: versión de catálogo 1.0; recurso CSV creado el 2026-06-01 y sin last_modified. No acredita fecha de exportación ni edición de la copia local."
+    },
+    {
+      "id": "ine_renta",
+      "fuente": "INE_RENTA",
+      "nombre": "Atlas de distribución de renta de los hogares",
+      "proveedor": "Instituto Nacional de Estadística",
+      "pagina": "https://www.ine.es/jaxiT3/dlgExport.htm?t=30824&L=0",
+      "descarga": "https://www.ine.es/jaxiT3/files/t/es/csv_bdsc/30824.csv",
+      "version": null,
+      "periodo": "2015–2023",
+      "evidencia_temporal": "Periodos observados en el CSV",
+      "fecha_descarga": null,
+      "cobertura": "España; niveles municipal, distrito y sección censal",
+      "unidad_original": "Territorio, indicador y periodo; seis indicadores observados",
+      "formato": "CSV",
+      "uso": "Contexto socioeconómico; ausencias y protección estadística pendientes de interpretar.",
+      "condiciones": {
+        "estado": "condiciones_generales_ine",
+        "licencia": "CC BY 4.0 para información propia del INE, salvo excepciones",
+        "evidencia": "https://www.ine.es/dyngs/AYU/index.htm?cid=125",
+        "revision": "2026-10-14",
+        "obligaciones_pendientes": "Mantener atribución INE y referencia de producto, periodos y modificaciones."
+      },
+      "pendientes": [
+        "Fecha real de adquisición y edición exacta de la copia original; el descargable actual no es idéntico"
+      ],
+      "entradas": [
+        {
+          "patron": "Fuentes/Renta.csv",
+          "rol": "datos"
+        }
+      ],
+      "tabla_ine": "30824",
+      "evidencia_identidad": {
+        "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bdsc/30824.csv",
+        "fecha_consulta_utc": "2026-10-15T15:11:19.967675+00:00",
+        "bytes_remotos": 353006608,
+        "sha256_remoto": "fb14c283af96d1e948464ffd780fcdf7a58efe3e27fda379498af50a02694dd7",
+        "tipo": "text/plain;charset=ISO-8859-15",
+        "sha256_local": "a8998c45abc39df71d6537856add9c2ce822cfe078f78ca9a8448773118ee3cd",
+        "identicos": false
+      },
+      "evidencia_edicion": "El índice actual indica 2025-10-21; el descargable actual difiere de la copia local y esa publicación no acredita su edición exacta.",
+      "incidencia_territorial": "12066 es código histórico de Gátova; 54 filas municipales sin valor informado. 46902 ya existe con información. Conservar Bronze y separar la incidencia en Silver sin reemplazo automático."
+    },
+    {
+      "id": "ide_capacidad_demanda",
+      "fuente": "IDE",
+      "nombre": "Capacidad de acceso para demanda",
+      "proveedor": "i-DE Redes Eléctricas Inteligentes",
+      "pagina": "https://www.i-de.es/es/conexion-red-electrica/suministro-electrico/mapa-capacidad-consumo",
+      "descarga": null,
+      "version": null,
+      "periodo": null,
+      "evidencia_temporal": "La copia no acredita fecha de referencia ni edición.",
+      "fecha_descarga": null,
+      "cobertura": "Nudos publicados por i-DE; extensión y referencia espacial por confirmar",
+      "unidad_original": "Nudo eléctrico con capacidad de acceso para demanda",
+      "formato": "CSV",
+      "uso": "Viabilidad eléctrica orientativa; no es consumo observado ni garantía de conexión.",
+      "condiciones": {
+        "estado": "condiciones_restrictivas_pendientes",
+        "licencia": null,
+        "evidencia": "https://www.i-de.es/es/informacion-legal",
+        "revision": "2026-10-14",
+        "obligaciones_pendientes": "Licencia abierta no confirmada; aviso con reserva de derechos y restricciones comerciales. Aclarar uso y redistribución; no publicar valores por nudo."
+      },
+      "pendientes": [
+        "Condiciones aplicables al CSV",
+        "Edición, fecha de referencia y adquisición",
+        "URL exacta de descarga",
+        "Huso y datum de coordenadas"
+      ],
+      "entradas": [
+        {
+          "patron": "Fuentes/Demanda_energetica.csv",
+          "rol": "datos"
+        }
+      ],
+      "evidencia_edicion": "El CSV no contiene un campo de fecha de referencia en su esquema auditado. La página pública del mapa describe un recurso actualizable; no acredita la edición concreta de esta copia."
+    },
+    {
+      "id": "ign_red_transporte",
+      "fuente": "IGN",
+      "nombre": "Redes de Transporte: Alicante, Castellón y Valencia",
+      "proveedor": "Instituto Geográfico Nacional / CNIG",
+      "pagina": "https://centrodedescargas.cnig.es/CentroDescargas/catalogo.do?Serie=REDTR",
+      "descarga": null,
+      "version": null,
+      "periodo": null,
+      "evidencia_temporal": "Fechas internas de almacenamiento/alta en 2026 no acreditan la edición oficial del producto.",
+      "fecha_descarga": null,
+      "cobertura": "Provincias de Alicante/Alacant, Castellón/Castelló y Valencia",
+      "unidad_original": "Entidades de cinco GeoPackages por provincia, con tablas y relaciones propias",
+      "formato": "GeoPackage, CSV de atributos y TXT de documentación",
+      "uso": "Red viaria y contexto de transporte; conservar también los componentes no seleccionados para análisis.",
+      "condiciones": {
+        "estado": "condiciones_compatibles_cc_by",
+        "licencia": "Condiciones IGN compatibles con CC BY 4.0",
+        "evidencia": "https://www.ign.es/resources/licencia/Condiciones_licenciaUso_IGN.pdf",
+        "revision": "2026-10-14",
+        "obligaciones_pendientes": "Atribuir IGN, producto y año de edición; confirmar este último para las copias."
+      },
+      "pendientes": [
+        "Edición oficial y año para atribución",
+        "Descargables exactos",
+        "Fecha real de adquisición"
+      ],
+      "entradas": [
+        {
+          "patron": "Fuentes/RT_*_gpkg/*.gpkg",
+          "rol": "datos",
+          "cantidad": 15
+        },
+        {
+          "patron": "Fuentes/RT_*_gpkg/atributos_gpkg.csv",
+          "rol": "documentacion",
+          "cantidad": 3
+        },
+        {
+          "patron": "Fuentes/RT_*_gpkg/leeme_RT_Prov_gpkg.txt",
+          "rol": "documentacion",
+          "cantidad": 3
+        }
+      ],
+      "evidencia_edicion": "GeoPackages sin gpkg_metadata; last_change y alta_db son fechas de almacenamiento. Leeme local y documentación del modelo consultados, sin acreditar edición oficial de estas copias."
+    },
+    {
+      "id": "osm_valencia",
+      "fuente": "OSM",
+      "nombre": "Extracto Geofabrik de OpenStreetMap: Valencia",
+      "proveedor": "OpenStreetMap contributors; distribución Geofabrik",
+      "pagina": "https://download.geofabrik.de/europe/spain/valencia.html",
+      "descarga": "https://download.geofabrik.de/europe/spain/valencia-latest-internal-free.gpkg.zip",
+      "version": "Instantánea 2026-09-09T20:21:20Z",
+      "periodo": "2026-09-09T20:21:20Z",
+      "evidencia_temporal": "README incluido en la copia; la URL latest es mutable.",
+      "fecha_descarga": null,
+      "cobertura": "Extracto denominado valencia de Geofabrik; alcance geométrico pendiente de inspección para el proyecto",
+      "unidad_original": "Objeto OSM en 20 capas temáticas",
+      "formato": "GeoPackage y README",
+      "uso": "POI y contexto territorial; no todos los objetos son ubicaciones candidatas.",
+      "condiciones": {
+        "estado": "licencia_declarada",
+        "licencia": "ODbL 1.0",
+        "evidencia": "https://www.openstreetmap.org/copyright",
+        "evidencia_local": "README de la distribución",
+        "revision": "2026-10-14",
+        "obligaciones_pendientes": "Atribuir © OpenStreetMap contributors y revisar obligaciones de ODbL para bases derivadas antes de publicarlas."
+      },
+      "pendientes": [
+        "Fecha real de adquisición",
+        "URL histórica inmutable equivalente a la copia"
+      ],
+      "entradas": [
+        {
+          "patron": "Fuentes/ubicaciones_candidatasgpkg/valencia.gpkg",
+          "rol": "datos"
+        },
+        {
+          "patron": "Fuentes/ubicaciones_candidatasgpkg/README",
+          "rol": "documentacion"
+        }
+      ]
+    },
+    {
+      "id": "ine_municipios_2025",
+      "fuente": "REFERENCIAS_TERRITORIALES",
+      "nombre": "Relación de municipios y códigos a 1 de enero de 2025",
+      "proveedor": "Instituto Nacional de Estadística",
+      "pagina": "https://www.ine.es/daco/daco42/codmun/25codmun.xlsx",
+      "descarga": "https://www.ine.es/daco/daco42/codmun/25codmun.xlsx",
+      "version": "2025",
+      "periodo": "2025-01-01",
+      "evidencia_temporal": "Título dentro del libro oficial; 52 hojas provinciales.",
+      "fecha_descarga": "2026-10-15",
+      "cobertura": "España; referencia de los 542 municipios valencianos",
+      "unidad_original": "Municipio por provincia, con CPRO, CMUN, DC y NOMBRE",
+      "formato": "XLSX y recibo de adquisición",
+      "uso": "Referencia de vigencia de códigos; conservar ceros iniciales y separar el dígito de control.",
+      "condiciones": {
+        "estado": "condiciones_generales_ine",
+        "licencia": "CC BY 4.0 para información propia del INE, salvo excepciones",
+        "evidencia": "https://www.ine.es/dyngs/AYU/index.htm?cid=125",
+        "revision": "2026-10-15",
+        "obligaciones_pendientes": "Mantener atribución INE y referencia de la edición."
+      },
+      "pendientes": [],
+      "entradas": [
+        {
+          "patron": "datos/bronze/ine_municipios/2025/25codmun.xlsx",
+          "rol": "datos",
+          "url": "https://www.ine.es/daco/daco42/codmun/25codmun.xlsx"
+        },
+        {
+          "patron": "datos/bronze/ine_municipios/2025/25codmun.xlsx.adquisicion.json",
+          "rol": "documentacion"
+        }
+      ]
+    },
+    {
+      "id": "ign_unidades_cv",
+      "fuente": "REFERENCIAS_TERRITORIALES",
+      "nombre": "Unidades administrativas de Comunitat Valenciana: respuesta WFS IGN",
+      "proveedor": "Instituto Geográfico Nacional / CNIG",
+      "pagina": "https://www.ign.es/web/es/ign/portal/ide-area-nodo-ide-ign",
+      "descarga": "https://www.ign.es/wfs-inspire/unidades-administrativas?service=WFS&version=2.0.0&request=GetFeature&typeNames=au%3AAdministrativeUnit&filter=%3Cfes%3AFilter+xmlns%3Afes%3D%22http%3A%2F%2Fwww.opengis.net%2Ffes%2F2.0%22%3E%3Cfes%3APropertyIsLike+wildCard%3D%22%2A%22+singleChar%3D%22%3F%22+escapeChar%3D%22%21%22%3E%3Cfes%3AValueReference%3Eau%3AnationalCode%3C%2Ffes%3AValueReference%3E%3Cfes%3ALiteral%3E3410%2A%3C%2Ffes%3ALiteral%3E%3C%2Ffes%3APropertyIsLike%3E%3C%2Ffes%3AFilter%3E&count=600&outputFormat=application%2Fgeo%2Bjson",
+      "version": "Respuesta WFS conservada el 2026-10-15; edición histórica no indicada",
+      "periodo": null,
+      "evidencia_temporal": "Fecha de consulta y recibo HTTP; no confundir con fecha de vigencia de todos los límites.",
+      "fecha_descarga": "2026-10-15",
+      "cobertura": "Prefijo nacional 3410*: Comunitat Valenciana; incluye niveles autonómico, provincial y municipal",
+      "unidad_original": "Unidad administrativa INSPIRE, con geometría y nivel jerárquico",
+      "formato": "GeoJSON del proveedor, XML WFS y recibos de adquisición",
+      "uso": "Recintos territoriales para la futura preparación espacial; respuesta original sin recortar ni simplificar.",
+      "condiciones": {
+        "estado": "condiciones_compatibles_cc_by",
+        "licencia": "Condiciones IGN compatibles con CC BY 4.0",
+        "evidencia": "https://www.ign.es/resources/licencia/Condiciones_licenciaUso_IGN.pdf",
+        "revision": "2026-10-15",
+        "obligaciones_pendientes": "Atribuir IGN/CNIG, producto y fecha de consulta."
+      },
+      "pendientes": [
+        "Fecha de referencia o edición histórica de los límites no acreditada por la respuesta"
+      ],
+      "entradas": [
+        {
+          "patron": "datos/bronze/ign_unidades_cv/2026-10-15/unidades_cv.geojson",
+          "rol": "datos",
+          "url": "https://www.ign.es/wfs-inspire/unidades-administrativas?service=WFS&version=2.0.0&request=GetFeature&typeNames=au%3AAdministrativeUnit&filter=%3Cfes%3AFilter+xmlns%3Afes%3D%22http%3A%2F%2Fwww.opengis.net%2Ffes%2F2.0%22%3E%3Cfes%3APropertyIsLike+wildCard%3D%22%2A%22+singleChar%3D%22%3F%22+escapeChar%3D%22%21%22%3E%3Cfes%3AValueReference%3Eau%3AnationalCode%3C%2Ffes%3AValueReference%3E%3Cfes%3ALiteral%3E3410%2A%3C%2Ffes%3ALiteral%3E%3C%2Ffes%3APropertyIsLike%3E%3C%2Ffes%3AFilter%3E&count=600&outputFormat=application%2Fgeo%2Bjson"
+        },
+        {
+          "patron": "datos/bronze/ign_unidades_cv/2026-10-15/unidades_cv.geojson.adquisicion.json",
+          "rol": "documentacion"
+        },
+        {
+          "patron": "datos/bronze/ign_unidades_cv/2026-10-15/capabilities.xml",
+          "rol": "documentacion",
+          "url": "https://www.ign.es/wfs-inspire/unidades-administrativas?service=WFS&request=GetCapabilities"
+        },
+        {
+          "patron": "datos/bronze/ign_unidades_cv/2026-10-15/capabilities.xml.adquisicion.json",
+          "rol": "documentacion"
+        },
+        {
+          "patron": "datos/bronze/ign_unidades_cv/2026-10-15/recuento.xml",
+          "rol": "documentacion",
+          "url": "https://www.ign.es/wfs-inspire/unidades-administrativas?service=WFS&version=2.0.0&request=GetFeature&typeNames=au%3AAdministrativeUnit&filter=%3Cfes%3AFilter+xmlns%3Afes%3D%22http%3A%2F%2Fwww.opengis.net%2Ffes%2F2.0%22%3E%3Cfes%3APropertyIsLike+wildCard%3D%22%2A%22+singleChar%3D%22%3F%22+escapeChar%3D%22%21%22%3E%3Cfes%3AValueReference%3Eau%3AnationalCode%3C%2Ffes%3AValueReference%3E%3Cfes%3ALiteral%3E3410%2A%3C%2Ffes%3ALiteral%3E%3C%2Ffes%3APropertyIsLike%3E%3C%2Ffes%3AFilter%3E&resultType=hits"
+        },
+        {
+          "patron": "datos/bronze/ign_unidades_cv/2026-10-15/recuento.xml.adquisicion.json",
+          "rol": "documentacion"
+        }
+      ],
+      "referencia_espacial": "Las capacidades WFS declaran EPSG:4258 por defecto; la respuesta GeoJSON no incluye miembro crs. Conservar respuesta original y confirmar interpretación espacial antes de integrar; CRS analítico sin fijar."
+    }
+  ]
+}

@@ -2,7 +2,7 @@
 
 **Proyecto:** localización de nuevos puntos de recarga para vehículos eléctricos en la Comunitat Valenciana.
 
-**Estado:** apartados 1-3 redactados y apartado 4 iniciado con la auditoría reproducible de las ocho fuentes. Silver, Gold y apartado 5 pendientes. Las salvedades de uso se recogen en el apartado 3.
+**Estado:** apartados 1-3 redactados y apartado 4 en curso, con Bronze formalizado y base territorial Silver preparada el 15 de octubre de 2026. Se adopta Distintivo 0 como aproximación documentada. El resto de Silver, Gold y apartado 5 siguen pendientes. Las salvedades de uso se recogen en el apartado 3 y en el catálogo del nuevo recurso.
 
 ## 1. Qué datos necesita vuestro producto
 
@@ -18,7 +18,7 @@ La unidad concreta sigue pendiente: zona territorial o ubicación candidata. Se 
 
 | Prioridad | Información | Uso |
 | --- | --- | --- |
-| Imprescindible | Parque de vehículos, distinguiendo eléctricos e híbridos enchufables, y referencia territorial. | Aproximar demanda potencial; el parque registrado no mide recargas efectivas. |
+| Imprescindible | Parque de vehículos con referencia municipal e indicador de demanda potencial. | Se adopta Distintivo 0 como aproximación para todos los municipios y se conserva BEV/PHEV donde esté observado. No equivale a un desglose exacto ni mide recargas efectivas. |
 | Imprescindible | Población y códigos territoriales. | Contextualizar demanda residencial y comparar territorios. |
 | Imprescindible | Localización de recarga pública existente y características técnicas informadas. | Evaluar cobertura e infraestructura disponible. |
 | Imprescindible | Red viaria y referencias territoriales oficiales. | Estudiar accesibilidad y asignar datos al territorio; las superficies y densidades requieren recintos adecuados. |
@@ -138,11 +138,106 @@ Los principales hallazgos que condicionan Silver son:
   requieren definición de recuentos y comprobación espacial antes de integrar.
 - i-DE: esquema de capacidad de demanda confirmado; CRS, fecha y reutilización pendientes.
 
-### Silver y Gold: pendientes de ejecución
+### Alternativa municipal DGT verificada
 
-La auditoría permite concretar las transformaciones necesarias, pero no se han
-materializado todavía Silver ni Gold. Antes se resolverá la cobertura municipal
-de DGT y se acordarán unidad espacial, criterio temporal y referencias geográficas.
+El 15 de octubre de 2026 se comprueba el [Excel municipal oficial de DGT de 2025](https://www.dgt.es/menusecundario/dgt-en-cifras/dgt-en-cifras-resultados/dgt-en-cifras-detalle/Datos-municipales-informacion-general-2025/).
+Los 542 códigos del ámbito presentes en población están en esa tabla, incluidos
+municipios pequeños. Hay tres filas provinciales de municipio sin especificar
+que se mantendrán separadas, sin tratarlas como municipios o totales provinciales.
+
+Se adopta **Distintivo 0 como aproximación documentada de demanda potencial**,
+conservando el detalle BEV/PHEV disponible en los microdatos. La etiqueta no
+equivale exactamente a BEV + PHEV y la columna `Electrificado` no permite deducir
+el desglose por resta. El panel oficial también agrupa municipios menores de
+10.000 habitantes, por lo que no resuelve ese desglose.
+
+El [informe específico](../DGT_COBERTURA_MUNICIPAL.md) recoge fuentes, cobertura,
+significado, condiciones pendientes de la nueva descarga y reproducción con
+`src/auditar_dgt_municipal.py`. Los originales previos siguen intactos; la descarga
+adicional queda preservada en `datos/bronze/dgt_municipal/2025/` y su perfil en
+`resultados/auditoria_dgt/`, ambas ubicaciones fuera de Git.
+
+### Registro formal de Bronze
+
+El 15 de octubre de 2026 se formaliza el [catálogo de Bronze](../CATALOGO_BRONZE.md)
+en `config/catalogo_bronze.json`: inicialmente nueve recursos en ocho bloques,
+ampliados con dos referencias territoriales oficiales hasta once recursos en
+nueve bloques. Se documentan proveedor, acceso, versión y periodo acreditados, adquisición,
+cobertura, unidad original, formato y condiciones de uso revisadas. Los metadatos
+no confirmados permanecen explícitamente pendientes; no se atribuye a los datos
+la fecha de modificación de sus archivos.
+
+El registro ampliado abarca 39 archivos, incluidos los documentos acompañantes. Los
+originales previos permanecen intactos en `Fuentes/`; la copia municipal de DGT
+y su ficha se preservan en una ubicación estable sin duplicar los archivos pesados.
+`src/catalogar_bronze.py` genera manifiestos locales con rutas relativas, tamaños
+y SHA-256 por bloques, y permite comprobar posteriormente su integridad sin
+sobrescribir la referencia. Datos y manifiestos detallados quedan fuera de Git.
+Persisten las aclaraciones de versiones, adquisiciones y licencias indicadas en
+el catálogo; registrar una entrada no da por resueltas sus condiciones de uso.
+
+### Referencias territoriales y procedencia comprobadas
+
+Se incorporan la relación INE de municipios y códigos a 01-01-2025 y una respuesta
+del servicio WFS de unidades administrativas del IGN conservada el 15-10-2026.
+El [informe de referencias y procedencia](../REFERENCIAS_TERRITORIALES.md) documenta
+la coincidencia de los 542 códigos valencianos entre INE, IGN, población y DGT.
+El GeoJSON contiene también las tres provincias y la comunidad autónoma; su
+recuento coincide con el del proveedor, sin truncamiento observado. Se conservan
+respuestas y recibos de adquisición sin recortar ni simplificar las geometrías.
+
+El código adicional `12066` de renta corresponde al código histórico de Gátova;
+el vigente es `46902`, ya presente en los datos. Las 54 filas de 12066 no aportan
+valores informados. Se mantiene Bronze intacta y se documenta su separación
+posterior en Silver, evitando contar otro municipio o reemplazar el código a
+ciegas y generar repeticiones.
+
+Se identifican las tablas INE **68065** (población) y **30824** (renta), así como el
+descargable GeoPackage de aforos. El CSV de población es idéntico al descargable
+oficial consultado; el de renta difiere. Por ello se preserva la copia local por
+su huella y no se inventa una edición exacta. Las fechas históricas de adquisición
+no recuperadas quedan documentadas como desconocidas. La referencia territorial
+consultada en 2026 no acredita por sí sola la geometría histórica de cada año.
+
+`src/incorporar_referencias.py` permite la adquisición sin sobrescribir copias;
+`src/auditar_referencias.py` reproduce las comprobaciones sin red. El manifiesto
+inicial se conserva y el ampliado mantiene las huellas de sus 31 entradas.
+
+### Silver: base territorial preparada; restantes fuentes y Gold pendientes
+
+Se documenta un [plan de Silver en ocho fases](../PLAN_SILVER.md): reglas comunes,
+base territorial, parque/población/renta, recarga existente, tráfico/red viaria,
+POI, capacidad eléctrica y relaciones/validación conjunta. Cada fase define las
+salidas y sus comprobaciones de cierre. El tratamiento de i-DE se organiza como
+complemento y su incertidumbre técnica no bloquea la preparación del resto.
+En la fase 1 se aceptan las convenciones comunes y se documenta un
+[diccionario inicial de salidas](../DICCIONARIO_SILVER.md) con unidades de fila,
+campos, tipos lógicos y claves por fuente. El contraste focal de MITECO distingue
+las seis repeticiones nacionales de la clave triple de su ausencia en la copia
+filtrada a CV; conserva horarios, servicios y pagos en el detalle cuando varían
+dentro de instalaciones o puntos. La [configuración técnica](../CONFIGURACION_SILVER.md)
+cierra la fase 1 con Parquet/GeoParquet, tipos explícitos y DuckDB espacial,
+probados sobre muestras. Se adopta EPSG:25830 para las operaciones métricas
+regionales admitidas y se conservan como pendientes las referencias espaciales de
+MITECO e i-DE. Los PK de aforos mantienen su notación textual y las modificaciones
+MITECO conservan fecha y hora en el diseño.
+
+La [fase 2, base territorial](../BASE_TERRITORIAL_SILVER.md), genera las dos primeras
+tablas: `municipios` y `recintos_municipales`, con 542 filas cada una y relación uno
+a uno por código. Se verifican las huellas de entrada, las claves y geometrías,
+la cobertura respecto a los tres recintos provinciales y el autonómico, y la
+conservación de atributos y geometría tras exportar Parquet/GeoParquet. No se
+necesitan reparaciones ni exclusiones geométricas. Se conservan 58 diferencias
+de nombre entre INE e IGN, con los códigos como referencia de correspondencia.
+Las fechas INE 2025 y consulta IGN 2026 permanecen separadas. El informe detallado
+y las salidas quedan fuera de Git; se versionan código, reglas y pruebas.
+
+La auditoría permite concretar las transformaciones necesarias. La base territorial
+de Silver está materializada y el resto de Silver y Gold siguen pendientes.
+La cobertura municipal de DGT queda resuelta
+para la aproximación adoptada y las referencias territoriales están incorporadas;
+faltan las transformaciones por fuente desde la fase 3,
+además de la unidad final y el criterio temporal que se justificarán para Gold.
 Silver aplicará validaciones y formatos explícitos con trazabilidad; Gold definirá
 qué representa cada fila y qué variables aporta a la fase siguiente. No se presentan
 estos pasos como completados ni se ha entrenado un modelo.

@@ -4,6 +4,18 @@ Fecha: **14 de octubre de 2026**. Finalidad: comprobar si las copias reales perm
 preparar un sistema de apoyo a la localización de recarga en la Comunitat Valenciana.
 Esta auditoría precede a Silver y Gold; no certifica todavía un dataset listo para ML.
 
+**Actualización del 15 de octubre:** se ha verificado una tabla municipal DGT que
+cubre los 542 municipios, adoptando Distintivo 0 como aproximación documentada.
+El [informe de cobertura municipal](DGT_COBERTURA_MUNICIPAL.md) desarrolla la
+solución y sus límites. Los hallazgos siguientes siguen describiendo las copias
+originales auditadas, incluido el TXT con supresión municipal.
+
+Las [referencias territoriales incorporadas](REFERENCIAS_TERRITORIALES.md) confirman
+los 542 municipios mediante INE e IGN y resuelven la vigencia del código 12066 de
+renta: es histórico y el código actual es 46902. Se identifican las tablas INE
+de población y renta, conservando las diferencias de versión observadas. Estos
+contrastes no modifican los recuentos originales de la auditoría siguiente.
+
 ## Método y reproducción
 
 Se han leído los cinco ficheros tabulares y los 17 GeoPackages, incluyendo las
