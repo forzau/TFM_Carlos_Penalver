@@ -4,6 +4,19 @@ Fecha: **15 de octubre de 2026**. Cierra las decisiones técnicas de la fase 1
 del [plan](PLAN_SILVER.md), junto con el [diccionario](DICCIONARIO_SILVER.md).
 Se han probado formatos y muestras de lectura. Posteriormente se han generado y
 validado las tablas de la [fase 2, base territorial](BASE_TERRITORIAL_SILVER.md).
+La [fase 3](DEMOGRAFIA_PARQUE_SILVER.md) aplica los tipos tabulares a DGT, población
+y renta, con lectura secuencial y trabajo temporal en disco para el TXT nacional.
+La [fase 4](RECARGA_SILVER.md) prepara las entidades MITECO sin geometrías:
+lector específico con contenido literal y reconstrucción de registros, potencia
+exacta y fecha con hora; el datum sigue pendiente.
+La [fase 5](TRAFICO_RED_SILVER.md) materializa aforos y red viaria, manteniendo
+incidencias y Z; usa una base temporal con `storage_compatibility_version=v1.5.0`
+para admitir columnas geométricas con CRS en disco. Esto no cambia los Parquet
+previos ni requiere actualizar DuckDB 1.5.0, ya instalado.
+La [fase 6](POI_OSM_SILVER.md) aplica CRS84→25830 a OSM, exige la definición WKT
+comprobada y mantiene las seis capas y sus claves técnicas. Contrasta la unión de
+recintos Silver sin asignación municipal; originales, base y exportaciones se
+verifican por huella. La selección por categoría y ámbito no elimina filas.
 Las comprobaciones completas del resto se ejecutarán al preparar cada fuente.
 
 ## Herramientas y formatos
@@ -109,7 +122,7 @@ No se presentan áreas como superficies oficiales ni distancias planas como ruta
 | Red IGN | EPSG:4258; geometrías leídas como longitud / latitud, con Z. Transformar el plano horizontal a 25830 conservando Z; no se acredita ni transforma aquí un datum vertical. |
 | OSM | WKT de la copia identifica OGC:CRS84: longitud / latitud WGS84. El `srs_id=100000` es interno del GeoPackage y no se enviará como `EPSG:100000` al transformador. |
 | Recintos IGN GeoJSON | Interpretar como OGC:CRS84, longitud / latitud, por el contrato GeoJSON y el contraste adicional descrito abajo. El lector lo etiqueta como EPSG:4326; se controla el orden XY expresamente. |
-| MITECO | Columnas longitud / latitud legibles; admisión geométrica pendiente de contrastar el datum del recurso en su fase. Conservar valores y texto necesario, sin declararlas ya integradas. |
+| MITECO | El catálogo oficial del CSV declara EPSG:4258. Capa materializada en EPSG:25830 con X=longitud/Y=latitud y always_xy=true. Se conserva la salvedad OCPI; la asignación municipal exige recinto único y declaración concordante. Hay 133 conflictos conservados, sin corrección automática. |
 | i-DE | X/Y UTM conservadas como texto hasta acreditar formato, huso y datum. Sin geometría admitida por ahora. |
 
 La copia GeoJSON IGN no tiene miembro `crs`, mientras las capacidades WFS declaran
@@ -154,6 +167,11 @@ la huella completa del GeoPackage OSM también coincide con el manifiesto Bronze
 
 La fase 1 queda cerrada como diseño y compatibilidad básica. La **fase 2** ya
 dispone de una base territorial de 542 municipios validada y materializada.
-Siguen pendientes los controles de las restantes fuentes, escala semántica de
-algunos campos, referencias espaciales de MITECO/i-DE y decisiones de Gold.
+Las fases 3–7 posteriores aplican estas convenciones a sus fuentes. i-DE conserva
+los campos originales y prepara medidas y banderas en Parquet, con ausencias
+explícitas y sin geometría. MITECO tiene CRS declarado EPSG:4258 identificado;
+su capa está materializada y contrastada con 133 conflictos municipales pendientes.
+Siguen pendientes la validación conjunta, la referencia espacial i-DE
+y decisiones de Gold. Las cinco geometrías viarias degeneradas de fase 5 quedan
+señaladas para no admitirlas en operaciones métricas.
 No se ha elegido cuadrícula, año común, modelo ni distancias por red.

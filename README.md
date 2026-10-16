@@ -38,11 +38,23 @@ incluidas las referencias territoriales oficiales, con un manifiesto local de
 integridad para 39 archivos de datos y documentación.
 
 [Plan de trabajo de Silver](docs/PLAN_SILVER.md): ocho fases con salidas y
-condiciones de cierre. Las fases 1 y 2 están cerradas: convenciones aceptadas, un
+condiciones de cierre. Las fases 1–3 están cerradas: convenciones aceptadas, un
 [diccionario de campos y claves](docs/DICCIONARIO_SILVER.md) y la
 [configuración técnica comprobada](docs/CONFIGURACION_SILVER.md).
 La [base territorial Silver](docs/BASE_TERRITORIAL_SILVER.md) contiene los 542
-municipios y sus recintos verificados. Las restantes fuentes aún no se han transformado.
+municipios y sus recintos verificados. También están preparados
+[parque DGT, población y renta](docs/DEMOGRAFIA_PARQUE_SILVER.md).
+La [recarga MITECO](docs/RECARGA_SILVER.md) tiene sus entidades tabulares
+preparadas. Su [capa y contraste municipal](docs/RECARGA_ESPACIAL_SILVER.md)
+conservan las 1.526 instalaciones, con 1.393 asignaciones admitidas y 133
+discrepancias municipales pendientes de revisión.
+La [fase 5, aforos y red viaria](docs/TRAFICO_RED_SILVER.md), está preparada con
+sus incidencias señaladas. La [fase 6, POI de OSM](docs/POI_OSM_SILVER.md), conserva
+elementos, clasificación de interés y posibles correspondencias sin fusionarlos.
+La [fase 7, capacidad de demanda i-DE](docs/CAPACIDAD_DEMANDA_SILVER.md), está
+preparada como tabla, pendiente de fecha y referencia espacial acreditadas.
+La fase 8 está iniciada con el bloque espacial MITECO; la validación conjunta
+y la revisión de sus incidencias siguen pendientes.
 
 ## Reproducción
 
@@ -147,4 +159,91 @@ entradas, prepara y comprueba 542 municipios y recintos, y guarda una ejecución
 nueva bajo `resultados/silver/base_territorial/`, sin red. `actual.json` señala la
 última ejecución validada; una ejecución fallida no sustituye la anterior.
 El [informe de fase 2](docs/BASE_TERRITORIAL_SILVER.md) recoge resultados y límites.
-El siguiente bloque es la fase 3 de Silver: parque DGT, población y renta.
+
+### Preparación de parque, población y renta
+
+Con la base territorial validada y las copias Bronze disponibles:
+
+```powershell
+.\.venv\Scripts\python.exe src/preparar_demografia_parque.py --manifiesto-bronze resultados/bronze/manifiesto_20261015T151441821178Z.json
+```
+
+El proceso verifica las cinco entradas implicadas y prepara las tablas por
+entidad, conservando años, ausencias y códigos históricos separados. El TXT DGT
+se procesa secuencialmente con atributos seleccionados en una base temporal en
+disco y límite de memoria del motor de 1 GB; necesita espacio temporal libre.
+Las salidas Parquet y el informe quedan bajo `resultados/silver/demografia_parque/`,
+con `actual.json` como indicador de la última ejecución validada. No descarga
+datos ni requiere nuevas dependencias. El [informe de fase 3](docs/DEMOGRAFIA_PARQUE_SILVER.md)
+recoge controles y limitaciones. La fase 4 posterior prepara la recarga MITECO.
+
+### Preparación de recarga existente
+
+```powershell
+.\.venv\Scripts\python.exe src/preparar_recarga.py --manifiesto-bronze resultados/bronze/manifiesto_20261015T151441821178Z.json
+```
+
+Se comprueba la copia Bronze, se conservan las comillas interiores del exportador
+y se separan instalaciones, puntos y conectores, sin perder los atributos variables
+del detalle. Las salidas Parquet y su informe quedan en `resultados/silver/recarga/`,
+con `actual.json` tras validar. El [informe de fase 4](docs/RECARGA_SILVER.md)
+documenta recuentos y límites, además de la identificación posterior del CRS
+declarado EPSG:4258. El script reproduce las tablas originales sin geometría;
+la fase 8 incorporará la capa y su contraste territorial. Funciona sin red ni
+nuevas dependencias. La fase 5 posterior prepara tráfico y red.
+
+### Preparación de aforos y red viaria
+
+```powershell
+.\.venv\Scripts\python.exe src/preparar_trafico_red.py --manifiesto-bronze resultados/bronze/manifiesto_20261015T151441821178Z.json
+```
+
+Con `spatial` instalado, prepara las 17 capas anuales GVA y separa geometrías de
+tramo IGN de sus asociaciones con viales. Las capas conservan EPSG:25830 explícito;
+IGN se transforma desde EPSG:4258 manteniendo Z. La base temporal usa almacenamiento
+v1.5.0, memoria del motor de 1 GB y dos hilos; necesita espacio temporal libre.
+Guarda salidas e informe en `resultados/silver/trafico_red/`, con `actual.json`
+solo tras validar. El [informe de fase 5](docs/TRAFICO_RED_SILVER.md) recoge las
+incidencias conservadas, la cobertura y los límites para usar estos datos.
+La fase 6 posterior prepara los puntos de interés OSM.
+
+### Preparación de puntos de interés OSM
+
+```powershell
+.\.venv\Scripts\python.exe src/preparar_poi_osm.py --manifiesto-bronze resultados/bronze/manifiesto_20261015T151441821178Z.json
+```
+
+Con la base territorial y `spatial` disponibles, conserva seis capas de puntos y
+áreas, marca su relación con el ámbito y selecciona categorías para revisión.
+Los objetos exteriores y las posibles correspondencias se conservan; no se
+deduplican establecimientos. El [informe de fase 6](docs/POI_OSM_SILVER.md)
+detalla reglas y límites. Salidas e informe quedan en `resultados/silver/poi_osm/`,
+con `actual.json` tras validar. Siguiente bloque: fase 7, capacidad de demanda i-DE.
+
+### Preparación de capacidad de demanda i-DE
+
+```powershell
+.\.venv\Scripts\python.exe src/preparar_capacidad_demanda.py --manifiesto-bronze resultados/bronze/manifiesto_20261015T151441821178Z.json
+```
+
+Conserva los 17 campos de los puntos publicados en las tres provincias, con
+medidas y banderas tipadas, estados y procedencia. Las salidas Parquet y su
+informe quedan en `resultados/silver/capacidad_demanda/`, con `actual.json`
+tras validar. El [informe de fase 7](docs/CAPACIDAD_DEMANDA_SILVER.md) explica
+las ausencias y los límites de uso. Funciona sin red ni nuevas dependencias;
+no genera geometría mientras el huso y datum sigan pendientes.
+La fase 8 posterior revisará relaciones y calidad conjunta de Silver.
+
+### Capa y contraste municipal de recarga
+
+```powershell
+.\.venv\Scripts\python.exe src/georreferenciar_recarga.py --metadatos-miteco resultados/investigacion_datum_miteco/20261016/catalogo.json
+```
+
+Requiere las tablas de recarga, la base territorial y la copia de metadatos
+con su recibo conservados en la investigación del datum. Prepara GeoParquet
+EPSG:25830 desde el CRS declarado EPSG:4258, conserva todas las instalaciones y
+separa relaciones admitidas de discrepantes. El [informe espacial](docs/RECARGA_ESPACIAL_SILVER.md)
+documenta reglas y controles. Resultados e informe quedan en
+`resultados/silver/recarga_espacial/`, con `actual.json` después de validar.
+No altera las tablas de fase 4 ni utiliza red o dependencias adicionales.

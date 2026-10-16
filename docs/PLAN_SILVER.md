@@ -1,7 +1,11 @@
 # Plan de trabajo de Silver
 
-Fecha: **15 de octubre de 2026**. Estado: **fases 1 y 2 cerradas; base territorial
-preparada y fases 3–8 pendientes**. Este documento concreta el orden de preparación a
+Fecha: **16 de octubre de 2026**. Estado: **fases 1–3 cerradas; base territorial,
+parque DGT, población y renta preparados; fase 4 tabular preparada y capa de
+recarga materializada con incidencias; fases 5–6 preparadas con limitaciones; fase 7 tabular
+preparada con integración espacial pendiente; fase 8 iniciada con capa y
+contraste municipal MITECO, con incidencias pendientes**.
+Este documento concreta el orden de preparación a
 partir del [catálogo Bronze](CATALOGO_BRONZE.md), la
 [auditoría](AUDITORIA_FUENTES.md) y las
 [referencias territoriales](REFERENCIAS_TERRITORIALES.md).
@@ -27,8 +31,13 @@ conservarán su unidad original.
 
 ## Orden de ejecución
 
-Las fases **1 y 2 están completadas**. Se continúa con **3 y 4** para disponer del núcleo
-de parque, población, renta y recarga existente. Después se preparan **5 y 6**.
+Las fases **1–3 están completadas**. La **4** tiene las entidades tabulares de
+recarga preparadas; EPSG:4258 se ha identificado como CRS declarado de su CSV,
+con capa y contraste territorial materializados en fase 8 y conflictos pendientes.
+La **5** tiene aforos y red viaria preparados con incidencias explícitas.
+La **6** conserva POI, clasificación de interés y posibles correspondencias.
+La **7** conserva la capacidad de demanda i-DE como tabla, con fecha y CRS pendientes.
+Se continúa con **8**, relaciones y validación conjunta.
 La investigación técnica de **7** puede avanzar desde el principio; una duda de
 i-DE no impide preparar y verificar las demás fuentes. **8** reúne las salidas
 admitidas y deja explícitos los componentes que sigan pendientes.
@@ -43,8 +52,9 @@ un contacto con proveedores requeriría una instrucción específica del usuario
 ### Convenciones comunes aceptadas
 
 El 15 de octubre de 2026 se acepta la primera propuesta de reglas comunes.
-Estas convenciones ya se aplican a la base territorial; las otras fuentes
-siguen pendientes. Los campos y claves
+Estas convenciones ya se aplican a la base territorial, DGT, población, renta,
+recarga, aforos, red viaria y POI OSM;
+las otras fuentes siguen pendientes. Los campos y claves
 mínimos por fuente se concretan en el
 [diccionario inicial de Silver](DICCIONARIO_SILVER.md), distinguiendo las claves
 previstas de las comprobaciones pendientes de cada preparación.
@@ -139,7 +149,99 @@ resueltas para la correspondencia mediante códigos, sin reescribir etiquetas.
 Las salidas Parquet/GeoParquet y el informe de ejecución están materializados
 fuera de Git, con entradas verificadas, trazabilidad y comprobación de conservación
 tras escribir. La diferencia temporal INE 2025 / consulta IGN 2026 sigue explícita.
-El siguiente paso es la fase 3: parque, población y renta.
+La fase 3 posterior prepara parque, población y renta.
+
+## Cierre de la fase 3
+
+El [informe de parque, población y renta](DEMOGRAFIA_PARQUE_SILVER.md) documenta
+las salidas validadas: 542 registros de parque municipal, tres PP000 separados,
+4.124.363 registros DGT del ámbito, 8.130 observaciones de población y 262.710 de
+renta vigente. Se conservan aparte las 54 filas históricas de 12066, sin remapearlas.
+Las 7.114 ausencias de renta vigente permanecen nulas y documentadas.
+
+Las claves son únicas; los recuentos DGT reconcilian y población conserva sexo/año,
+con Total = Hombres + Mujeres. No hay errores de conversión. Se comprueban huellas
+de entrada y conservación completa tras escribir Parquet. El TXT se procesa sin
+cargarlo entero en memoria Python ni deduplicar por atributos. Se conservan las
+limitaciones del indicador Distintivo 0 y del municipio no publicado en el detalle.
+La fase 4 posterior prepara la recarga existente MITECO.
+
+## Estado de la fase 4
+
+La [preparación de recarga](RECARGA_SILVER.md) conserva las 5.244 filas CV como
+conectores, vinculadas a 4.402 puntos y 1.526 instalaciones. El lector conserva
+comillas interiores y campos multilínea, con reconstrucción exacta de registros.
+Claves y relaciones comprobadas; sin errores de conversión. Las seis repeticiones
+nacionales quedan explicadas fuera del ámbito y se conservan los atributos
+variables en el detalle, sin seleccionar una primera variante.
+
+La salida tabular está preparada. La investigación posterior del 16-10-2026
+identifica **EPSG:4258, ETRS89 geográfico, declarado en el recurso CSV del catálogo
+oficial**. Se documenta en el informe de recarga, junto con la salvedad sobre
+WGS84 en el modelo OCPI de entrada. Se adopta el metadato específico del CSV
+como referencia documental, sin certificar el datum real de cada registro.
+La integración posterior se documenta en el avance de fase 8: capa y contraste
+municipal materializados, con 133 conflictos conservados para revisión.
+Las salidas e informe originales se conservan, sin reescribir sus estados históricos.
+
+## Cierre de la fase 5 con limitaciones
+
+El [informe de tráfico y red](TRAFICO_RED_SILVER.md) documenta 9.041 aforos de
+2009–2025, 1.118.309 tramos por copia provincial y 1.197.446 asociaciones tramo–vial.
+No se pierde ninguna asociación ni se selecciona una geometría entre variantes
+en conflicto. Claves, relaciones, huellas, tipos, atributos, CRS y relectura WKB
+comprobados. Los tipos de medida y unidades se contrastan con el modelo GVA.
+
+Se mantienen 107 incidencias: 45 IMD cero, 55 tipos vacíos, dos códigos `F` no
+documentados y cinco geometrías IGN que degeneran a longitud cero tras proyectar.
+Estas cinco quedan marcadas y no se consideran admitidas para operaciones métricas;
+no se reparan ni se eliminan. No hay errores de conversión numérica. Los años de
+aforos no forman un panel fijo; la red aún no está validada para rutas.
+La fase 6 posterior prepara OSM. El contraste espacial de MITECO queda para fase 8.
+
+## Cierre de la fase 6 con limitaciones
+
+El [informe OSM](POI_OSM_SILVER.md) documenta 269.287 elementos conservados de seis
+capas, procedencia por capa/fid y geometrías admitidas. Se marcan 519 objetos
+exteriores sin eliminarlos, incluidos terminales de ferry alejados inspeccionados.
+Hay 17.794 elementos de categorías seleccionadas que intersectan el ámbito para
+revisión posterior; no se presentan como ubicaciones viables confirmadas.
+
+Se mantienen las repeticiones de identificador y se registran 77 posibles
+correspondencias punto–área, sin fusionar por identidad supuesta ni calcular
+establecimientos únicos. Huellas Bronze y territoriales, claves, referencias,
+recuentos y relectura de atributos/WKB comprobados. Sin incidencias de geometría
+o conversión en la ejecución. La siguiente fase es i-DE; Gold sigue pendiente.
+
+## Estado de la fase 7
+
+El [informe i-DE](CAPACIDAD_DEMANDA_SILVER.md) documenta 423 puntos de conexión
+seleccionados por provincia declarada, sin pérdidas. Se conservan los 17 campos
+originales, medidas exactas en kV/MW, posiciones, banderas interpretadas y estados.
+Claves nacionales y CV, recuentos, huellas y relectura Parquet comprobados.
+No hay errores de conversión; se mantienen 344 ausencias en cada campo de posiciones.
+
+La tabla está preparada; la integración espacial sigue pendiente de acreditar
+huso y datum de esta copia. La fecha de referencia permanece desconocida.
+No se asigna municipio, geometría o distancia. Capacidad informativa, sin suma
+de nudos ni garantía de conexión. La siguiente fase es la 8; MITECO tiene
+CRS declarado EPSG:4258 identificado y capa materializada, con conflictos municipales.
+Cinco geometrías IGN siguen sin admisión métrica.
+
+## Avance de fase 8: recarga espacial
+
+El [informe espacial MITECO](RECARGA_ESPACIAL_SILVER.md) documenta 1.526 puntos
+geométricos válidos, cada uno en un único municipio y con provincia concordante.
+Se admiten 1.393 asignaciones municipales que también concuerdan con la etiqueta
+oficial resuelta desde MITECO. Las otras 133 quedan como conflictos, conservadas
+con coordenadas, candidatos y atributos originales. No se corrigen nombres o
+posiciones automáticamente ni se fuerza asignación por proximidad.
+
+Se mantienen 4.402 puntos y 5.244 conectores al relacionar con la capa; la admisión
+municipal alcanza 3.965 y 4.751, respectivamente. Sin pérdida ni multiplicación.
+Claves, huellas, ejes, CRS, vuelta de proyección y relectura completa comprobados;
+77 pruebas superadas. Queda revisar los conflictos y continuar las relaciones y
+validación conjunta de otras fuentes. No se declara Silver completa.
 
 ## Criterios para declarar Silver preparada
 

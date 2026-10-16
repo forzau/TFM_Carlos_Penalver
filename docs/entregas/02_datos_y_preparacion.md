@@ -2,7 +2,7 @@
 
 **Proyecto:** localización de nuevos puntos de recarga para vehículos eléctricos en la Comunitat Valenciana.
 
-**Estado:** apartados 1-3 redactados y apartado 4 en curso, con Bronze formalizado y base territorial Silver preparada el 15 de octubre de 2026. Se adopta Distintivo 0 como aproximación documentada. El resto de Silver, Gold y apartado 5 siguen pendientes. Las salvedades de uso se recogen en el apartado 3 y en el catálogo del nuevo recurso.
+**Estado:** apartados 1-3 redactados y apartado 4 en curso. Bronze formalizado y Silver materializada por fuentes hasta la fase 7 a 16 de octubre de 2026: base territorial, parque DGT, población, renta, recarga tabular, aforos, red viaria, POI OSM y capacidad de demanda i-DE tabular. La capa de recarga está materializada en EPSG:25830 desde el CRS declarado EPSG:4258, con 133 conflictos municipales conservados. i-DE mantiene fecha y referencia espacial pendientes; las incidencias y límites de otras fuentes siguen explícitos. Se adopta Distintivo 0 como aproximación documentada. La fase 8 está iniciada con recarga espacial; quedan la revisión de sus incidencias y la validación conjunta. Gold y apartado 5 siguen pendientes. Las salvedades de uso se recogen en el apartado 3 y en el catálogo del nuevo recurso.
 
 ## 1. Qué datos necesita vuestro producto
 
@@ -189,7 +189,7 @@ respuestas y recibos de adquisición sin recortar ni simplificar las geometrías
 El código adicional `12066` de renta corresponde al código histórico de Gátova;
 el vigente es `46902`, ya presente en los datos. Las 54 filas de 12066 no aportan
 valores informados. Se mantiene Bronze intacta y se documenta su separación
-posterior en Silver, evitando contar otro municipio o reemplazar el código a
+en la fase 3 de Silver, evitando contar otro municipio o reemplazar el código a
 ciegas y generar repeticiones.
 
 Se identifican las tablas INE **68065** (población) y **30824** (renta), así como el
@@ -203,7 +203,7 @@ consultada en 2026 no acredita por sí sola la geometría histórica de cada añ
 `src/auditar_referencias.py` reproduce las comprobaciones sin red. El manifiesto
 inicial se conserva y el ampliado mantiene las huellas de sus 31 entradas.
 
-### Silver: base territorial preparada; restantes fuentes y Gold pendientes
+### Silver: base territorial y preparación por fuentes
 
 Se documenta un [plan de Silver en ocho fases](../PLAN_SILVER.md): reglas comunes,
 base territorial, parque/población/renta, recarga existente, tráfico/red viaria,
@@ -218,8 +218,9 @@ filtrada a CV; conserva horarios, servicios y pagos en el detalle cuando varían
 dentro de instalaciones o puntos. La [configuración técnica](../CONFIGURACION_SILVER.md)
 cierra la fase 1 con Parquet/GeoParquet, tipos explícitos y DuckDB espacial,
 probados sobre muestras. Se adopta EPSG:25830 para las operaciones métricas
-regionales admitidas y se conservan como pendientes las referencias espaciales de
-MITECO e i-DE. Los PK de aforos mantienen su notación textual y las modificaciones
+regionales admitidas. Inicialmente se dejaron pendientes las referencias espaciales
+MITECO e i-DE; la investigación posterior identifica el CRS declarado de MITECO.
+Los PK de aforos mantienen su notación textual y las modificaciones
 MITECO conservan fecha y hora en el diseño.
 
 La [fase 2, base territorial](../BASE_TERRITORIAL_SILVER.md), genera las dos primeras
@@ -232,12 +233,88 @@ de nombre entre INE e IGN, con los códigos como referencia de correspondencia.
 Las fechas INE 2025 y consulta IGN 2026 permanecen separadas. El informe detallado
 y las salidas quedan fuera de Git; se versionan código, reglas y pruebas.
 
-La auditoría permite concretar las transformaciones necesarias. La base territorial
-de Silver está materializada y el resto de Silver y Gold siguen pendientes.
+La [fase 3](../DEMOGRAFIA_PARQUE_SILVER.md), ejecutada el 16-10-2026, prepara el
+parque municipal de los 542 municipios, tres agrupaciones PP000 separadas y
+4.124.363 registros del TXT seleccionados para CV. El procesamiento nacional es
+secuencial, con atributos seleccionados en una base temporal en disco y sin
+deduplicación por atributos. Los totales reconcilian con el Excel municipal.
+El detalle sigue publicando municipio solo en 106 códigos; sus 845.077 registros
+sin municipio se conservan nulos, sin imputarles una ubicación.
+
+Se preparan 8.130 observaciones de población, por municipio/sexo/año (2021–2025),
+y 262.710 de renta vigente por nivel/indicador/año (2015–2023). Las 54 filas del
+código histórico `12066` quedan aparte; las 7.114 ausencias de renta vigente se
+mantienen nulas y con su símbolo original. No hay errores de conversión ni claves
+duplicadas. Se comprueban cobertura, jerarquía y cifras de control, huellas de
+entrada y conservación completa de valores/tipos tras exportar Parquet.
+La verificación de fase 3 aprobó 37 pruebas sin omisiones en el equipo de ejecución.
+
+La [fase 4, recarga MITECO](../RECARGA_SILVER.md), prepara 1.526 instalaciones,
+4.402 puntos y 5.244 conectores del ámbito, sin pérdida de registros ni claves
+repetidas. La lectura específica conserva las comillas interiores que una lectura
+permisiva alteraba en ocho registros CV. Las seis repeticiones nacionales se
+localizan fuera del ámbito, con variantes de horario y pago, sin deduplicarlas.
+Se mantienen horarios, servicios y pagos por conector cuando varían dentro del padre.
+Potencia exacta en kW y modificación con hora conservadas; no hay errores de
+conversión. Claves, relaciones y relectura Parquet verificadas.
+
+La investigación posterior del 16-10-2026 identifica **EPSG:4258, ETRS89 geográfico**
+en `reference_system` de la [distribución CSV del catálogo oficial](https://catalogo.datosabiertos.miteco.gob.es/catalogo/dataset/6ee8d46f-93bd-478f-8e29-3ba4f6d8405c/resource/047c1f64-7552-44da-a639-2291292e650d).
+Se adopta como referencia declarada del proveedor, sin certificar el datum real
+de cada registro. El [informe de recarga](../RECARGA_SILVER.md) documenta la
+salvedad respecto a WGS84 en el modelo OCPI de entrada y las evidencias conservadas.
+La [capa complementaria y su contraste territorial](../RECARGA_ESPACIAL_SILVER.md) ya están materializados con longitud/latitud y transformación explícita a EPSG:25830. Se conservan las 1.526 instalaciones, con geometría válida e intersección municipal única; 1.393 concuerdan con el municipio declarado y 133 quedan como conflictos sin corrección automática. No hay discrepancias provinciales. La asignación municipal admitida comprende 3.965 puntos y 4.751 conectores; los 4.402 y 5.244 originales se conservan sin multiplicación. La suite completa pasa 77 pruebas, sin omisiones. Las tablas originales de fase 4 no se modifican retrospectivamente.
+La suma de potencias de conectores no prueba capacidad simultánea de la instalación.
+La [fase 5, aforos y red viaria](../TRAFICO_RED_SILVER.md), conserva las 9.041
+observaciones de aforos por tramo/año (2009–2025) y separa 1.118.309 tramos IGN de
+sus 1.197.446 asociaciones con viales. Se evita multiplicar la geometría por cada
+asociación al medir la red. El modelo oficial confirma unidades y tipos de medida,
+incluidos los datos estimados. Se conservan 45 IMD cero, 55 tipos vacíos y dos
+códigos no documentados, sin atribuirles ausencia de tráfico ni una metodología.
+Cinco geometrías IGN degeneran a longitud cero al proyectarlas; se conservan,
+marcadas como no admitidas, sin reparación automática. No hay errores de
+conversión numérica. Claves, relaciones, procedencia y relectura de atributos y
+WKB verificados; GeoParquet con EPSG:25830 y Z conservada en IGN.
+La suite completa tras la fase 5 pasa 53 pruebas sin omisiones.
+
+Las tablas de base territorial, parque, población, renta, recarga, aforos y red
+viaria, además de los POI OSM, están materializadas; recarga queda pendiente de
+integración espacial y la red no constituye aún un sistema de rutas. La capacidad
+i-DE se prepara como tabla en fase 7; relaciones conjuntas y Gold siguen pendientes.
+
+La [fase 6, POI OSM](../POI_OSM_SILVER.md), conserva 269.287 elementos de seis
+capas de puntos y áreas. Se definen doce categorías de interés para revisión,
+con 17.794 elementos de geometría admitida que intersectan el ámbito valenciano.
+No se interpretan como establecimientos únicos ni ubicaciones viables confirmadas.
+Se conservan 519 objetos exteriores señalados, incluidos los terminales de ferry
+alejados inspeccionados; no se borran por distancia. La instantánea es 09-09-2026.
+Las repeticiones de identificador se mantienen con su clave capa/fid y se registran
+77 posibles correspondencias punto–área sin fusión. Las geometrías se conservan
+como puntos o polígonos, transformadas de CRS84 a EPSG:25830, sin centroides ni
+recortes. Claves, procedencia, ámbito y exportaciones verificados, sin incidencias
+de geometría o conversión. La suite completa tras esta fase pasa 61 pruebas.
+
+La [fase 7, capacidad de demanda i-DE](../CAPACIDAD_DEMANDA_SILVER.md), conserva
+423 puntos de conexión de las provincias declaradas: 130 Alicante, 78 Castellón
+y 215 Valencia. Se comprueban claves únicas de los 3.019 registros nacionales
+antes de seleccionar el ámbito. Se mantienen los 17 campos originales, medidas
+en kV/MW, posiciones y banderas tipadas con estados y trazabilidad. Las 344 ausencias
+de cada campo de posiciones permanecen nulas; no hay errores de conversión.
+Huellas, recuentos y conservación de tipos y valores tras exportar comprobados;
+la suite completa pasa 69 pruebas sin omisiones. Los datos por punto permanecen
+locales, excluidos de Git.
+
+La tabla i-DE queda preparada, pero su integración espacial está pendiente de
+acreditar huso y datum de la copia. La fecha de referencia sigue desconocida;
+no se crean geometrías ni asignaciones municipales. Capacidad orientativa,
+sin garantía de conexión ni suma de puntos como independientes. El estado de
+ejecución refleja esta limitación; MITECO tiene su CRS declarado identificado,
+con capa y contraste materializados y 133 conflictos municipales pendientes de revisión.
+
 La cobertura municipal de DGT queda resuelta
 para la aproximación adoptada y las referencias territoriales están incorporadas;
-faltan las transformaciones por fuente desde la fase 3,
-además de la unidad final y el criterio temporal que se justificarán para Gold.
+falta validar las relaciones conjuntas (fase 8) y tratar las referencias espaciales
+todavía pendientes. La unidad final y el criterio temporal se justificarán para Gold.
 Silver aplicará validaciones y formatos explícitos con trazabilidad; Gold definirá
 qué representa cada fila y qué variables aporta a la fase siguiente. No se presentan
 estos pasos como completados ni se ha entrenado un modelo.

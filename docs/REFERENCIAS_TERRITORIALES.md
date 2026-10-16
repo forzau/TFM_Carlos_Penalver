@@ -74,7 +74,9 @@ valores de renta cero. Se conserva íntegro en Bronze. Para Silver queda definid
 la necesidad de separar esas filas históricas sin datos del conjunto vigente,
 con trazabilidad; **no sustituir automáticamente 12066 por 46902**, porque el
 código vigente ya existe y el reemplazo produciría claves repetidas. Esta
-comprobación documenta el tratamiento; todavía no lo ejecuta.
+comprobación inicial documentó el tratamiento. La [fase 3 de Silver](DEMOGRAFIA_PARQUE_SILVER.md)
+ya lo ejecuta, conservando las 54 filas en una tabla histórica separada y sin
+modificar las copias Bronze.
 
 ## Metadatos recuperados y límites de la recuperación
 
@@ -83,7 +85,7 @@ comprobación documenta el tratamiento; todavía no lo ejecuta.
 | Población INE | Tabla **68065**, «Población según municipio y sexo»; exportación completa CSV con `;`, periodos 2021–2025. La descarga actual y la copia local tienen el mismo tamaño y SHA-256. El índice indica publicación 02-12-2025. | Fecha en la que se adquirió originalmente la copia local. |
 | Renta INE | Tabla **30824**, «Indicadores de renta media y mediana», identificada en el índice y selector oficial de descargas. Serie 2015–2023; contraste completo detecta que el descargable actual difiere del local. | Edición exacta y adquisición original. La publicación indicada por el índice actual (21-10-2025) no acredita identidad con la copia conservada. |
 | Aforos GVA | Identificado el recurso CKAN **aeac4d25-cd33-46c2-a9f3-3be342da167f** y su petición WFS de exportación GeoPackage para las 17 capas 2009–2025. | Edición exacta y adquisición de la copia local. La fecha del recurso y la de modificación de la ficha no fechan la exportación. |
-| Recarga MITECO | Confirmado recurso CSV **047c1f64-7552-44da-a639-2291292e650d** y endpoint de exportación. La ficha CKAN declara versión **1.0**. | La versión 1.0 es metadato de catálogo; no fecha ni identifica por sí sola la instantánea CSV conservada. |
+| Recarga MITECO | Confirmado recurso CSV **047c1f64-7552-44da-a639-2291292e650d** y endpoint de exportación. La ficha CKAN declara versión **1.0** y `reference_system` **EPSG:4258**. La investigación del 16-10 confirma que ese CRS ya figuraba en la copia de la ficha del 15-10. | La versión 1.0 no fecha la instantánea CSV. El CRS es declaración del proveedor, sin validación geodésica por registro; salvedad OCPI y contraste espacial con incidencias documentados en los informes de recarga. |
 | Red de transporte IGN | GeoPackages sin `gpkg_metadata`; documentación local e interfaz del modelo identificadas. | Edición oficial de las tres copias provinciales. `last_change`, `alta_db` y versiones del modelo no acreditan edición del dato. |
 | OSM/Geofabrik | README acredita instantánea **09-09-2026, 20:21:20 UTC**. | Adquisición original y enlace histórico de descarga equivalente; `latest` es mutable. |
 | DGT | Mensual provisional diciembre de 2025 y tabla municipal 2025 identificados. Referencia del parque municipal: 31-12-2025; nueva descarga municipal: 15-10-2026. | Fecha de adquisición original del TXT nacional. |

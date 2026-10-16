@@ -22,11 +22,11 @@ INPUTS = {path + suffix: resource for path, resource in
           for suffix in ('', '.adquisicion.json')}
 
 
-def verify_inputs(root, manifest):
+def verify_inputs(root, manifest, inputs=INPUTS):
     if manifest.get('version_manifiesto') != 1:
         raise ValueError('Versión de manifiesto Bronze no admitida')
     verified = []
-    for relative, resource in INPUTS.items():
+    for relative, resource in inputs.items():
         records = [row for row in manifest['archivos'] if row['ruta'] == relative]
         if len(records) != 1 or records[0]['recurso_id'] != resource:
             raise ValueError(f'Entrada Bronze ausente o incoherente: {relative}')
