@@ -126,6 +126,24 @@ proyectarse en coma flotante. Se conservan geometría, Z, asociaciones e inciden
 sin alargar, desplazar ni borrar el segmento. Se excluyen de la admisión para
 operaciones métricas mediante `estado_geometria`, no mediante pérdida de filas.
 
+El contraste puntual del 19-10-2026 confirma dos vértices en cada segmento,
+diferencias X de entre `1,11e-16` y `3,33e-16` grados y diferencias Y cero en
+origen. La prueba de `ST_MakeValid` sobre las cinco geometrías proyectadas,
+realizada solo en memoria, devuelve **POINT** en los cinco casos: recupera
+validez geométrica, pero no un tramo lineal. No se aplica esa conversión a
+Silver. Una reconstrucción lineal requiere evidencia adicional del proveedor o
+un estudio explícito de los nodos y tramos vecinos; no se deduce de la longitud
+nula. La exclusión métrica no acredita por sí sola que sean irrelevantes para
+la conectividad de una futura red de rutas. El diagnóstico se conserva en
+`resultados/revision_ign/20261019/diagnostico_cinco.json`, fuera de Git.
+
+**Criterio vigente, 19-10-2026:** conservar estos cinco registros con su incidencia
+y excluir sus geometrías de los cálculos métricos y de los cruces que requieren
+una línea admitida. Se aplaza su reparación o reconstrucción; el tratamiento ya
+está aplicado mediante `estado_geometria`, sin borrar registros o asociaciones.
+Reabrir la revisión si se incorpora una edición oficial corregida o se necesita
+validar su función en la conectividad de una futura red de rutas.
+
 **Estas salidas no constituyen una red enrutable.** No se han construido nodos,
 resuelto conexiones o comprobado restricciones de circulación. Tampoco se unen
 aforos GVA con tramos IGN por el nombre de carretera. Edición exacta IGN y

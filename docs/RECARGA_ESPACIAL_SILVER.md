@@ -109,6 +109,20 @@ La suite completa pasa **77 pruebas, sin omisiones**. Las ocho nuevas cubren
 ejes/proyección, nombres, conflictos, límites compartidos, coordenadas no admitidas,
 provincia, ambigüedad de etiquetas, metadatos, cardinalidad y exportación.
 
-Queda revisar los 133 conflictos antes de usarlos en agregaciones municipales
-automáticas y continuar la validación conjunta. No se certifica precisión fina,
-exhaustividad u operatividad; Gold e i-DE espacial siguen pendientes.
+## Revisión complementaria de fase 8 (18-10-2026)
+
+La [validación conjunta](VALIDACION_CONJUNTA_SILVER.md) revisa los 133 conflictos y
+admite 81 relaciones municipales mediante revisión explícita de establecimientos
+y direcciones oficiales; véase la [ampliación de recarga](REVISION_RECARGA_SILVER.md). La
+salida complementaria `recarga_municipio_validado` contiene 1.474 instalaciones,
+con 4.231 puntos y 5.053 conectores asociados; 52/171/191 mantienen pendiente
+su asignación. Se conservan las 1.526/4.402/5.244 entidades y todos sus atributos.
+Este resultado no sobrescribe la capa ni las 1.393 relaciones del informe del
+16-10-2026. Para usos municipales posteriores se empleará la relación vigente
+de la validación conjunta y sus restricciones. El resto de Silver queda validado
+operativamente con limitaciones; la suite de cierre pasa 104 pruebas.
+
+Quedan 52 asignaciones pendientes antes de admitirlas en agregaciones municipales
+automáticas. No se certifica precisión fina, exhaustividad u operatividad.
+La ampliación del 19-10 incorpora i-DE espacial y eleva la suite a 120 pruebas;
+véase la validación conjunta vigente. Gold sigue sin materializar.

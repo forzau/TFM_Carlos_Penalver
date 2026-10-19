@@ -89,7 +89,7 @@ modificar las copias Bronze.
 | Red de transporte IGN | GeoPackages sin `gpkg_metadata`; documentación local e interfaz del modelo identificadas. | Edición oficial de las tres copias provinciales. `last_change`, `alta_db` y versiones del modelo no acreditan edición del dato. |
 | OSM/Geofabrik | README acredita instantánea **09-09-2026, 20:21:20 UTC**. | Adquisición original y enlace histórico de descarga equivalente; `latest` es mutable. |
 | DGT | Mensual provisional diciembre de 2025 y tabla municipal 2025 identificados. Referencia del parque municipal: 31-12-2025; nueva descarga municipal: 15-10-2026. | Fecha de adquisición original del TXT nacional. |
-| i-DE | Esquema de capacidad de demanda ya comprobado y página pública del mapa identificada. | Edición, referencia temporal y descargable exacto de la copia CSV; tampoco se atribuye un huso/datum por suposición. |
+| i-DE | Revisión 19-10-2026: CSV local idéntico al descargable histórico de 04-09-2026. Periodo agosto según formato mensual CNMC; EPSG:25830 acreditado en el anexo de demanda BOE-A-2025-9913 citado por i-DE. | Día/hora exactos de corte y adquisición original. Capa Silver incorporada con 423 relaciones municipales contrastadas en 116 municipios. Véase [informe i-DE](CAPACIDAD_DEMANDA_SILVER.md). |
 
 Fuentes de estas identificaciones: [tabla 68065](https://www.ine.es/jaxiT3/Tabla.htm?t=68065),
 [descarga de la tabla 30824](https://www.ine.es/jaxiT3/dlgExport.htm?t=30824&L=0),

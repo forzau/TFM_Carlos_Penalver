@@ -1,10 +1,11 @@
 # Plan de trabajo de Silver
 
-Fecha: **16 de octubre de 2026**. Estado: **fases 1–3 cerradas; base territorial,
+Fecha: **19 de octubre de 2026**. Estado: **fases 1–3 cerradas; base territorial,
 parque DGT, población y renta preparados; fase 4 tabular preparada y capa de
 recarga materializada con incidencias; fases 5–6 preparadas con limitaciones; fase 7 tabular
-preparada con integración espacial pendiente; fase 8 iniciada con capa y
-contraste municipal MITECO, con incidencias pendientes**.
+preparada y capa complementaria con 423 relaciones municipales admitidas; fase 8 cerrada operativamente
+con relaciones verificadas y limitaciones explícitas**. Hay 52 asignaciones
+municipales de recarga pendientes, tras resolver 81 de las 133 discrepancias.
 Este documento concreta el orden de preparación a
 partir del [catálogo Bronze](CATALOGO_BRONZE.md), la
 [auditoría](AUDITORIA_FUENTES.md) y las
@@ -36,8 +37,13 @@ recarga preparadas; EPSG:4258 se ha identificado como CRS declarado de su CSV,
 con capa y contraste territorial materializados en fase 8 y conflictos pendientes.
 La **5** tiene aforos y red viaria preparados con incidencias explícitas.
 La **6** conserva POI, clasificación de interés y posibles correspondencias.
-La **7** conserva la capacidad de demanda i-DE como tabla, con fecha y CRS pendientes.
-Se continúa con **8**, relaciones y validación conjunta.
+La **7** conserva la tabla histórica i-DE y añade capa complementaria EPSG:25830:
+423 puntos con relación municipal admitida en 116 municipios. Publicación
+04-09-2026 y periodo agosto según formato mensual CNMC, con corte exacto desconocido.
+La **8** está cerrada operativamente con el alcance y las restricciones del
+[informe conjunto](VALIDACION_CONJUNTA_SILVER.md). El siguiente trabajo es diseñar
+Gold, justificando la unidad final y el criterio temporal antes de construirlo;
+antes se amplía la revisión de las restricciones de recarga e i-DE.
 La investigación técnica de **7** puede avanzar desde el principio; una duda de
 i-DE no impide preparar y verificar las demás fuentes. **8** reúne las salidas
 admitidas y deja explícitos los componentes que sigan pendientes.
@@ -221,9 +227,10 @@ originales, medidas exactas en kV/MW, posiciones, banderas interpretadas y estad
 Claves nacionales y CV, recuentos, huellas y relectura Parquet comprobados.
 No hay errores de conversión; se mantienen 344 ausencias en cada campo de posiciones.
 
-La tabla está preparada; la integración espacial sigue pendiente de acreditar
-huso y datum de esta copia. La fecha de referencia permanece desconocida.
-No se asigna municipio, geometría o distancia. Capacidad informativa, sin suma
+La tabla histórica está preparada. La incorporación del 19-10 aplica publicación
+04-09-2026, periodo agosto según formato mensual CNMC y CRS EPSG:25830 en una
+capa complementaria de 423 puntos, todos con relación municipal concordante
+en 116 municipios. No se desplazan puntos ni se fusionan subestaciones. Capacidad informativa, sin suma
 de nudos ni garantía de conexión. La siguiente fase es la 8; MITECO tiene
 CRS declarado EPSG:4258 identificado y capa materializada, con conflictos municipales.
 Cinco geometrías IGN siguen sin admisión métrica.
@@ -243,7 +250,53 @@ Claves, huellas, ejes, CRS, vuelta de proyección y relectura completa comprobad
 77 pruebas superadas. Queda revisar los conflictos y continuar las relaciones y
 validación conjunta de otras fuentes. No se declara Silver completa.
 
+## Cierre operativo de fase 8 con limitaciones (18-10, ampliado el 19-10-2026)
+
+La [validación conjunta](VALIDACION_CONJUNTA_SILVER.md) verifica las 30 salidas de
+ocho bloques, sus claves, esquemas, huellas, dependencias y periodos; comprueba
+integridad referencial, conservación de atributos y ausencia de multiplicación
+al relacionar municipios o instalaciones. Se conservan los periodos, nulos,
+PP000, 12066 y el detalle DGT sin municipio, sin nuevas imputaciones.
+
+Las 133 discrepancias MITECO tienen una revisión trazable: 81 relaciones resueltas
+con evidencia primaria de establecimientos o direcciones oficiales y 52 pendientes. La relación
+complementaria admite 1.474 instalaciones, 4.231 puntos y 5.053 conectores;
+las entidades originales permanecen intactas. El caso Catadau conserva su
+incertidumbre pese a la dirección comercial coincidente.
+
+Se materializan 1.430.940 relaciones entre POI/aforos/tramos/puntos i-DE y
+municipios, con 1.397.060 estados que incluyen exteriores, intersecciones múltiples y las cinco
+geometrías no admitidas. No se reparten indicadores entre municipios. La
+ampliación del 19-10 incorpora la capa i-DE y sus 423 relaciones municipales;
+las ejecuciones anteriores se conservan.
+Las seis salidas se han releído y verificado con reglas v4; 120 pruebas aprobadas
+sin omisiones. La tabla y la capa i-DE mantienen publicación y mes informado
+separados; no se acredita un día exacto de corte.
+Los originales y las ejecuciones previas se conservan.
+
+Silver queda **preparada con limitaciones**, no libre de incidencias ni homogénea
+en el tiempo. Gold aún debe definir unidad, periodos y tratamiento de las
+relaciones múltiples o pendientes. No se ha iniciado scoring, modelo o web.
+
 ## Criterios para declarar Silver preparada
+
+### Limitaciones conservadas para el diseño de Gold (19-10-2026)
+
+- Los cinco segmentos IGN degenerados se conservan con bandera y fuera de los
+  cálculos métricos/cruces que exigen una línea admitida. Reparación aplazada;
+  revisar ante una edición corregida o necesidades concretas de conectividad.
+- Las 52 asignaciones municipales de recarga siguen pendientes, con registros
+  y evidencia preservados. No se imputan municipios ni se interpretan como cero
+  cargadores. Su revisión no bloquea plantear Gold.
+- Gold contemplará comunicar la incertidumbre de asignación, con una propuesta
+  de etiqueta como «Zona con incertidumbre en la asignación de puntos de recarga».
+  La unidad, delimitación y efecto en indicadores se decidirán en su diseño;
+  no se presume falta general de datos ni se materializa un indicador todavía.
+
+Estas decisiones cierran el tratamiento actual de las incidencias para avanzar
+al planteamiento de Gold, manteniendo trazabilidad y posibilidad de revisión.
+
+### Criterios generales
 
 1. Tablas y capas identificadas, con significado de fila, claves, tipos,
    unidades y referencia temporal/espacial documentados.

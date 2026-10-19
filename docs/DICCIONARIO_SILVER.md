@@ -1,14 +1,18 @@
 # Diccionario inicial de salidas Silver
 
-Versión **10, 16 de octubre de 2026**. Define campos, unidades de observación y
+Versión **15, 19 de octubre de 2026**. Define campos, unidades de observación y
 claves de las salidas que se prepararán según el [plan de Silver](PLAN_SILVER.md).
 Las convenciones comunes han sido aceptadas; **municipios, recintos, parque DGT,
 población y renta están preparados**. Recarga tiene las entidades tabulares
 preparadas; su capa EPSG:25830 está materializada, con 133 conflictos municipales
 conservados. Aforos y red viaria están preparados con
 incidencias señaladas. OSM está preparado con clasificación y correspondencias
-sin fusión; i-DE está preparado como tabla, con fecha y CRS pendientes.
-Las relaciones conjuntas están iniciadas con MITECO; su validación global sigue pendiente.
+sin fusión; i-DE tiene tabla histórica y capa complementaria con publicación
+04-09-2026, periodo 2026-08 y CRS EPSG:25830 acreditados y aplicados.
+La validación conjunta está cerrada operativamente con limitaciones: se conserva
+el contraste original y una relación complementaria con 1.474 instalaciones
+admitidas y 52 pendientes. i-DE incorpora 423 relaciones municipales admitidas;
+Gold pendiente.
 Se han contrastado cabeceras, esquemas y claves auditadas, con una comprobación
 adicional de relaciones en MITECO. Esto no sustituye la validación al materializar
 cada fuente.
@@ -377,7 +381,7 @@ No se equipara automáticamente a una subestación única.
 | `punto_conexion_id`, `nombre_punto_conexion` | texto | `Identificador del Punto de Conexión`, `Denominación del Punto de Conexión`. |
 | `gestor_red`, `provincia_nombre_origen`, `municipio_nombre_origen` | texto | `Gestor de red`, `Provincia`, `Municipio`. |
 | `subestacion_origen` | texto | `Subestación`. |
-| `x_utm_origen`, `y_utm_origen` | texto | `Coordenada UTM X`, `Coordenada UTM Y`, con toda la precisión textual. Formato con coma comprobado; huso y datum pendientes. |
+| `x_utm_origen`, `y_utm_origen` | texto | `Coordenada UTM X`, `Coordenada UTM Y`, con toda la precisión textual. Formato con coma comprobado; CRS declarado EPSG:25830 acreditado el 19-10. Los textos originales se conservan. |
 | `nivel_tension_kv` | decimal, admite nulo | `Nivel de Tensión (kV)`. |
 | `capacidad_firme_disponible_mw` | decimal, admite nulo | `Capacidad firme disponible (MW)`. |
 | `capacidad_ocupada_mw` | decimal, admite nulo | `Capacidad de acceso firme de demanda ocupada (MW)`. |
@@ -387,8 +391,8 @@ No se equipara automáticamente a una subestación única.
 | `compromiso_regulatorio`, `nudo_0_asterisco` | BOOLEAN, admiten nulo | `0` → false y `1` → true, según instrucciones i-DE. Vacío → nulo; otro código → nulo e incidencia. |
 | `comentarios_origen` | texto | `Comentarios`, incluidos vacíos. |
 | `origen_id`, `registro_origen`, `codigo_provincia` | texto, BIGINT, texto | Recurso y huella, ordinal nacional antes de filtrar y código provincial por etiqueta exacta (`03`, `12`, `46`). |
-| `fecha_referencia` | fecha, admite nulo | Desconocida en la copia; no se completa con fecha de registro. |
-| `estado_fecha`, `estado_coordenadas` | texto | Actualmente `no_acreditada` y `pendiente_crs`. Coordenadas vacías o con formato no admitido producen estado e incidencia específicos. |
+| `fecha_referencia` | fecha, admite nulo | Nula en la ejecución histórica del 16-10. Acreditación posterior: publicación 04-09-2026 y periodo 2026-08 según regla mensual; día exacto de corte desconocido. No confundir estos conceptos. |
+| `estado_fecha`, `estado_coordenadas` | texto | Estados históricos del 16-10: `no_acreditada` y `pendiente_crs`; la acreditación documental del 19-10 se conserva aparte, vinculada a la huella del original. Coordenadas vacías o con formato no admitido producen estado e incidencia específicos. |
 
 Las cuatro medidas decimales son `DECIMAL(18,2)`: tensión positiva en kV y
 capacidades no negativas en MW. Se conserva además el campo textual
@@ -403,12 +407,47 @@ banderas. Nudo 0* no convierte un cero publicado en capacidad positiva.
 No se suman capacidades de diferentes puntos o tensiones. La tabla no contiene
 geometría ni municipio asignado. `incidencias` contiene `origen_id`,
 `punto_conexion_id`, `campo`, `valor_origen`, `motivo` y `registro_origen`;
-actualmente cero filas. Los pendientes temporales y espaciales se expresan
-en estados y metadatos, sin repetirlos como errores de conversión.
+actualmente cero filas. El [informe i-DE](CAPACIDAD_DEMANDA_SILVER.md) distingue
+estos estados históricos de la acreditación posterior de publicación, periodo
+y CRS. La capa y relaciones aún no se han materializado.
 
-La normalización numérica no acredita posición espacial ni posibilidad de
-conexión. La fuente puede prepararse como tabla con limitaciones, manteniendo
-pendiente la geometría y la integración territorial si no se resuelve la referencia.
+La normalización numérica no acredita precisión posicional ni posibilidad de
+conexión. El bloque original conserva sus estados históricos, complementados
+por la capa siguiente; no se suman capacidades.
+
+### 9.1. Capacidad de demanda espacial
+
+Bloque `capacidad_demanda_espacial`, preparado el 19-10-2026. La capa
+**`capacidad_demanda_geo`** conserva los atributos de la tabla original y añade
+los campos siguientes. Clave: `punto_conexion_id`; 423 puntos, sin fusión de
+coordenadas o subestaciones compartidas.
+
+| Campo | Tipo lógico | Regla |
+| --- | --- | --- |
+| `estado_fecha_preparacion`, `estado_coordenadas_preparacion` | texto | Estados originales de la tabla del 16-10, renombrados para conservarlos. |
+| `fecha_publicacion` | DATE | 2026-09-04, acreditada por identidad binaria del CSV histórico. |
+| `periodo_referencia` | texto | 2026-08; mes informado derivado de la regla mensual CNMC. |
+| `fecha_referencia` | DATE, nula | Conservada de la tabla original; no inventar un día exacto de corte. |
+| `estado_fecha`, `estado_coordenadas` | texto | `periodo_mensual_acreditado` y `crs_acreditado`. La validez de la geometría se expresa aparte. |
+| `crs_origen` | texto | EPSG:25830, declarado por el formato del proveedor para el ámbito peninsular. |
+| `x_utm`, `y_utm` | DOUBLE | Conversión de los textos X/Y sin desplazar ni reproyectar. El texto con toda su precisión sigue conservado. |
+| `geometria` | GEOMETRY('EPSG:25830') | Punto X/Y en metros, con CRS GeoParquet explícito. |
+| `estado_geometria` | texto | `admitida`, `coordenadas_no_admitidas` o `geometria_no_admitida`. |
+| `numero_municipios_intersectados` | BIGINT | Todas las intersecciones con recintos; no seleccionar por cercanía. |
+| `codigo_municipio_espacial`, `nombre_municipio_espacial` | texto, admiten nulo | Solo cuando existe un único recinto intersectado. |
+| `codigo_municipio_declarado` | texto, admite nulo | Resolución unívoca por provincia y nombres/variantes oficiales INE/IGN; sin fuzzy. |
+| `estado_contraste_territorial` | texto | `concordante`, `geometria_no_admitida`, `fuera_ambito`, `limite_ambiguo`, `provincia_discrepante`, `nombre_no_resuelto` o `municipio_discrepante`. |
+| `distancia_municipio_declarado_m` | DOUBLE, admite nulo | Distancia diagnóstica al recinto declarado; no regla de corrección o admisión. |
+| `admitida_asignacion_municipal` | BOOLEAN | Verdadero solo si estado `concordante`. |
+
+**`capacidad_municipios_candidatos`**: `punto_conexion_id` y
+`codigo_municipio`, clave conjunta; todas las intersecciones. **`entidad_municipio`**:
+una relación admitida por `punto_conexion_id`, con `codigo_municipio` y
+`metodo_asignacion=interseccion_unica_y_nombre_oficial`. **`incidencias_espaciales`**:
+`punto_conexion_id` y `motivo`; una fila por punto no admitido.
+Resultado actual: 423 candidatos y 423 admitidos en 116 municipios; cero incidencias.
+Las variantes separadas por `/` se admiten solo si identifican un código único
+en la provincia. Los originales y la tabla previa no se reescriben.
 
 ## 10. Relaciones y control de preparación
 
@@ -422,6 +461,40 @@ segura se registran como incidencias, sin forzar un municipio ficticio.
 Una línea o polígono puede tener relaciones con varios municipios. El método
 de asignación y la necesidad de fraccionar geometrías se justificarán según las
 operaciones requeridas, sin multiplicar inadvertidamente indicadores o entidades.
+
+La [validación conjunta](VALIDACION_CONJUNTA_SILVER.md) implementa seis salidas
+complementarias. Cada ejecución conserva sus propios informes y no sustituye
+las tablas ni los estados históricos de las fuentes:
+
+| Tabla | Unidad y clave | Campos y significado |
+| --- | --- | --- |
+| `revision_recarga` | Una instalación discrepante; `instalacion_id`. | Nombre, dirección, municipios/códigos originales contrastados, distancia diagnóstica, `indicio_textual`, `estado_revision`, `codigo_municipio_validado` nullable, URL y motivo. Estados: `resuelta_documentalmente`, `pendiente_evidencia_documental_no_concluyente`, `pendiente_contraste_externo`. Un indicio no admite una relación. |
+| `recarga_municipio_validado` | Una instalación con relación admitida; `instalacion_id`. | `codigo_municipio`, `metodo`, `url_evidencia` nullable. Combina la admisión previa y las decisiones documentales explícitas; no cambia las coordenadas ni el municipio publicado. |
+| `relaciones_espaciales` | Una intersección entidad–municipio; `tabla_entidad` + `clave_entidad` + `codigo_municipio`. | `metodo`, `dimension_interseccion` SMALLINT, `longitud_interseccion_m` y `superficie_interseccion_m2` DOUBLE nullable. Longitud solo en dimensión 1; área solo en dimensión 2. Contactos de dimensión 0 tienen ambas medidas nulas. No son un reparto de indicadores. |
+| `estado_relaciones_espaciales` | Una entidad espacial; `tabla_entidad` + `clave_entidad`. | `estado_geometria`, `numero_municipios` BIGINT y `estado_relacion`: `interseccion_unica`, `interseccion_multiple`, `sin_interseccion_cv` o `geometria_no_admitida`. Conserva todos los objetos de entrada de cada capa contrastada. |
+| `cobertura_estadistica` | Tabla/periodo/segmento/municipio; clave con esos cuatro campos. | `registros`, `valores_informados`, `valores_ausentes`, todos BIGINT. `periodo` conserva fecha o año de origen como texto; `segmento` distingue sexo en población y un array JSON de nivel/indicador en renta. Solo diagnostica cobertura, no agrega valores estadísticos ni crea Gold. |
+| `estado_fuentes` | Un bloque; `bloque`. | `estado`, `integracion_municipal` y `limitacion` VARCHAR. Separa preparación tabular de integración territorial admitida o pendiente. |
+
+`clave_entidad` es un array JSON de textos con orden explícito: OSM
+`[origen_id,fid_origen]`; aforos `[tramo_aforo_id,anio]`; red
+`[provincia_origen,tramo_id]`; puntos i-DE `[punto_conexion_id]`. No se concatenan claves con un separador que pueda
+aparecer en sus componentes. Las repeticiones entre copias provinciales y las
+correspondencias OSM conservan su alcance, sin deduplicación física supuesta.
+Todos los demás campos citados son VARCHAR salvo indicación contraria.
+Las relaciones espaciales usan las geometrías completas en 2D, sin centroides
+o asignación exclusiva de líneas/áreas. Un contacto de frontera queda registrado;
+no acredita que se pueda sumar longitud, superficie o IMD entre municipios.
+
+Los métodos de `recarga_municipio_validado` diferencian
+`interseccion_unica_y_nombre_oficial`, `revision_documental_establecimiento`,
+`revision_cartografica_portal_cartociudad` y
+`revision_cartografica_via_cartociudad` y `revision_visual_y_documental`.
+La revisión visual exige identificación explícita del recinto, fuente primaria
+y evidencias fijadas por huella; acredita el municipio del emplazamiento, sin
+certificar cada plaza. Un vial valida únicamente la referencia
+municipal de la calle, sin acreditar número de portal ni posición del cargador.
+La correspondencia textual es una decisión revisada, no un ajuste fuzzy.
+Véase la [revisión de recarga](REVISION_RECARGA_SILVER.md).
 
 **Incidencias y metadatos**, por salida: identificación del origen y registro,
 tabla/campo afectados, motivo, valor leído necesario y acción aplicada o pendiente.
@@ -450,4 +523,6 @@ paso es recarga MITECO.
 Las claves y dependencias que requieren comprobaciones de registros volverán a
 validarse al preparar su fuente; no se presentan como unicidad universal garantizada.
 Las entidades de las fases 4–7 están materializadas con los límites indicados;
-las relaciones de fase 8 están iniciadas con recarga y su validación global sigue pendiente.
+las relaciones y la validación de fase 8 están materializadas con sus limitaciones
+documentadas en el informe conjunto. Las incidencias conservadas no se convierten
+en asignaciones o valores observados al cerrar Silver.

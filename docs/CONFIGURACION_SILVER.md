@@ -123,7 +123,7 @@ No se presentan áreas como superficies oficiales ni distancias planas como ruta
 | OSM | WKT de la copia identifica OGC:CRS84: longitud / latitud WGS84. El `srs_id=100000` es interno del GeoPackage y no se enviará como `EPSG:100000` al transformador. |
 | Recintos IGN GeoJSON | Interpretar como OGC:CRS84, longitud / latitud, por el contrato GeoJSON y el contraste adicional descrito abajo. El lector lo etiqueta como EPSG:4326; se controla el orden XY expresamente. |
 | MITECO | El catálogo oficial del CSV declara EPSG:4258. Capa materializada en EPSG:25830 con X=longitud/Y=latitud y always_xy=true. Se conserva la salvedad OCPI; la asignación municipal exige recinto único y declaración concordante. Hay 133 conflictos conservados, sin corrección automática. |
-| i-DE | X/Y UTM conservadas como texto hasta acreditar formato, huso y datum. Sin geometría admitida por ahora. |
+| i-DE | ETRS89 / UTM 30N, EPSG:25830 acreditado y aplicado el 19-10-2026. Capa complementaria desde X/Y, sin reproyección; 423 relaciones municipales admitidas. Tabla histórica conservada. |
 
 La copia GeoJSON IGN no tiene miembro `crs`, mientras las capacidades WFS declaran
 EPSG:4258 como referencia por defecto. No se ha confundido esa declaración con el
@@ -169,9 +169,25 @@ La fase 1 queda cerrada como diseño y compatibilidad básica. La **fase 2** ya
 dispone de una base territorial de 542 municipios validada y materializada.
 Las fases 3–7 posteriores aplican estas convenciones a sus fuentes. i-DE conserva
 los campos originales y prepara medidas y banderas en Parquet, con ausencias
-explícitas y sin geometría. MITECO tiene CRS declarado EPSG:4258 identificado;
-su capa está materializada y contrastada con 133 conflictos municipales pendientes.
-Siguen pendientes la validación conjunta, la referencia espacial i-DE
-y decisiones de Gold. Las cinco geometrías viarias degeneradas de fase 5 quedan
+explícitas; su capa complementaria aplica EPSG:25830 y metadatos temporales acreditados. MITECO tiene CRS declarado EPSG:4258 identificado;
+su capa histórica conserva 133 conflictos originales; la revisión conjunta
+posterior resuelve 81 y mantiene 52 asignaciones pendientes.
+La [validación conjunta](VALIDACION_CONJUNTA_SILVER.md) está cerrada operativamente
+con limitaciones desde el 18-10-2026, ampliada el 19-10: 30 entradas verificadas y seis salidas
+complementarias. El 19-10 se aplican fecha de publicación y referencia espacial
+i-DE (véase su informe), conservando las siete preparaciones anteriores.
+El [planteamiento de Gold](PLANTEAMIENTO_GOLD.md) fija la dirección inicial;
+su contrato técnico y materialización siguen pendientes. Las cinco geometrías viarias degeneradas de fase 5 quedan
 señaladas para no admitirlas en operaciones métricas.
-No se ha elegido cuadrícula, año común, modelo ni distancias por red.
+No se ha elegido cuadrícula, año común ni distancias por red. El enfoque
+multicriterio y de selección espacial queda aceptado para desarrollar Gold,
+sin formulación definitiva ni modelo entrenado.
+
+La fase 8 se reproduce con `src/validar_silver.py --evidencias-recarga
+resultados/revision_recarga/20261018_revision_manual/decisiones.json` desde el entorno del proyecto.
+Usa las mismas dependencias, 1 GB del motor y dos hilos. El cruce IGN se ejecuta
+por copias provinciales; el cálculo de un solo lote sufría una caída nativa al
+cerrar la conexión en este equipo. Los resultados por lotes son idénticos por
+SHA-256, el cierre ha terminado normalmente y se han aprobado 120 pruebas.
+La relación municipal de recarga complementaria admite 1.474 instalaciones;
+52 quedan pendientes. Las salidas históricas mantienen sus estados y recuentos.

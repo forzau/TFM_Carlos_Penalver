@@ -1,8 +1,12 @@
 # Capacidad de demanda i-DE en Silver
 
-Fecha: **16 de octubre de 2026**. Fase 7 del [plan de Silver](PLAN_SILVER.md).
-La tabla está preparada; su integración espacial sigue pendiente de acreditar
-el huso y datum de la copia. Tampoco se conoce su fecha de referencia.
+Actualizado: **19 de octubre de 2026**. Fase 7 del [plan de Silver](PLAN_SILVER.md).
+La fecha de publicación y el CRS de la copia están acreditados documentalmente:
+**04-09-2026** y **ETRS89 / UTM 30N, EPSG:25830** para Comunitat Valenciana.
+El periodo informado es **agosto de 2026**, derivado de la regla mensual del
+formato CNMC. La capa complementaria ya contiene **423 puntos válidos y 423
+relaciones municipales admitidas en 116 municipios**, sin incidencias espaciales.
+La tabla del 16-10 y los originales se conservan.
 
 ## Entrada y ámbito
 
@@ -62,7 +66,8 @@ En la copia seleccionada:
 - Compromiso regulatorio publicado como cero en los 423 registros; no se
   extrapola a otras fechas ni a toda la red.
 - **Cero incidencias de conversión o coherencia** en esta ejecución. La fecha
-  y la georreferenciación pendientes figuran en estados y límites explícitos.
+  y la georreferenciación figuraban pendientes en la tabla histórica; la capa
+  complementaria aplica los metadatos acreditados.
 
 Según las [instrucciones y nota metodológica de i-DE](https://www.i-de.es/es/conexion-red-electrica/suministro-electrico/mapa-capacidad-consumo),
 consultadas el 16-10-2026, se trata de capacidad orientativa de **demanda**, no
@@ -74,23 +79,113 @@ solicitudes pendientes vinculadas a concurso en transporte. La capacidad ocupada
 no aplica los coeficientes de simultaneidad descritos por el proveedor; no se
 utiliza para reconstruir un supuesto total de capacidad.
 
-## Fecha y referencia espacial pendientes
+## Acreditación de fecha y referencia espacial
 
-La copia carece de campo de fecha. `fecha_referencia` permanece nula y
-`estado_fecha=no_acreditada`; la fecha UTC de proceso queda en el informe.
-Ni la modificación local, ni la publicación de la web actual, ni la actualización
-mensual declarada acreditan la edición de este CSV.
+El 19-10-2026 se contrasta el histórico de la
+[página oficial de i-DE](https://www.i-de.es/es/conexion-red-electrica/suministro-electrico/mapa-capacidad-consumo).
+El [CSV de 04-09-2026](https://www.i-de.es/documents/d/guest/2026_09_04_r1-001_demanda-1-)
+es idéntico byte por byte a `Fuentes/Demanda_energetica.csv`: **344.722 bytes**,
+SHA-256 `1e486a6a825bcc712ac507a3c8ff3323226a64929224c77ccb4781b1d961f524`.
+Coinciden los 17 campos y los 3.019 registros nacionales, incluidos los 423 CV.
+El PDF de la misma edición imprime esa fecha en sus 56 páginas. El CSV de
+02-10-2026 difiere en 360 registros; se conserva solo como contraste y no
+sustituye la copia histórica.
 
-Las X/Y presentan formato numérico con coma decimal; se conserva toda su
-precisión textual, sin reducirla a dos decimales ni asignar un EPSG por parecido
-de rangos o localización provincial. Las 423 filas tienen
-`estado_coordenadas=pendiente_crs`. No se crean geometrías ni distancias,
-asignaciones municipales espaciales o relaciones de proximidad con POI.
+| Metadato acreditado | Valor y alcance |
+| --- | --- |
+| Fecha de publicación | **2026-09-04**, identificada por igualdad binaria con el descargable histórico. |
+| Periodo de referencia | **2026-08**, derivado de la regla del formato CNMC: publicación en los cinco primeros días del mes siguiente al informado. |
+| Día/hora exactos de corte | **No acreditados**; no convertir el mes en un supuesto corte a 31 de agosto. |
+| Adquisición original | Desconocida. La nueva conservación de evidencia del 19-10 no fecha la descarga histórica. |
+| Referencia espacial CV | **ETRS89 / UTM huso 30N, EPSG:25830**, X este e Y norte, en metros. |
 
-La documentación pública revisada no vincula inequívocamente esta copia con un
-huso y datum. Un [PDF histórico de i-DE de septiembre de 2025](https://www.i-de.es/documents/2803098/3276069/2025_09_09_R1-001_Demanda.pdf/ee65f0db-9a4a-6932-a592-1f4cad84efb7?download=true&t=1764598399660&version=1.0)
-menciona ETRS89 en sus cabeceras, pero tiene otro esquema y no acredita la
-referencia del CSV local. No se hereda ese dato automáticamente.
+i-DE declara que publica según el formato de la resolución CNMC de 30-04-2025.
+Su [anexo de demanda, BOE-A-2025-9913](https://www.boe.es/buscar/doc.php?id=BOE-A-2025-9913),
+define expresamente **ambas coordenadas** como ETRS89 UTM huso 30 peninsular.
+Se acredita así la referencia declarada por el formato del proveedor, sin
+deducirla por rangos ni certificar la exactitud posicional de cada subestación.
+La revisión preliminar no había localizado esa definición en el anexo; esta
+comprobación rectifica aquella limitación. No es necesario heredar el CRS de
+otro esquema histórico ni usar el modelo de comunicación de otra circular.
+
+Copias y recibos conservados fuera de Git en
+`resultados/investigacion_ide/20261019/`: descargables CSV/PDF/XLSX, extracto
+documental del sitio, norma y `metadatos.json` con rutas relativas y huellas.
+La comprobación se reproduce sin red ni dependencias nuevas:
+
+```powershell
+.\.venv\Scripts\python.exe src/verificar_metadatos_ide.py --evidencias resultados/investigacion_ide/20261019/metadatos.json
+```
+
+El verificador comprueba huellas antes y después, igualdad binaria, esquema,
+claves y recuentos, enlace del histórico, declaración del proveedor, definición
+de X/Y en el apartado de demanda y coherencia del periodo mensual. Esta
+acreditación no regenera Silver ni produce geometrías o asignaciones municipales.
+
+## Estado de las tablas ya materializadas
+
+La ejecución `20261016T124247391438Z` conserva los estados conocidos al generarla:
+`fecha_referencia=null`, `estado_fecha=no_acreditada` y
+`estado_coordenadas=pendiente_crs`. Son metadatos históricos de esa ejecución;
+la evidencia posterior queda registrada por separado, vinculada al SHA-256 del
+original. Tampoco se reescriben las salidas de validación conjunta del 18-10.
+
+Las X/Y conservan toda su precisión textual con coma decimal. La nueva capa
+aplica la evidencia posterior sin reescribir la preparación tabular histórica.
+
+## Capa espacial y contraste municipal
+
+`src/georreferenciar_capacidad_demanda.py` verifica las evidencias, la tabla de
+fase 7, su correspondencia literal con el CSV y los recintos vigentes. Genera
+puntos directamente desde X/Y en EPSG:25830, sin reproyectar ni desplazar las
+coordenadas. Cada identificador de punto de conexión se conserva, aunque varios
+compartan subestación o coordenadas; no se fusionan ni suman capacidades.
+
+La admisión municipal exige geometría válida, intersección con un único recinto,
+provincia concordante y nombre oficial resuelto sin ambigüedad. Se contrastan
+nombres INE/IGN y cada variante oficial separada por `/`, con normalización de
+acentos, puntuación y espacios. No se emplea similitud aproximada ni municipio
+más cercano. Esto permite reconocer seis registros con `Castelló de la Plana`
+frente a la denominación oficial bilingüe, sin cambiar el texto original.
+
+| Provincia declarada | Puntos conservados | Relaciones admitidas | Pendientes |
+| --- | ---: | ---: | ---: |
+| Alicante/Alacant | 130 | 130 | 0 |
+| Castellón/Castelló | 78 | 78 | 0 |
+| Valencia/València | 215 | 215 | 0 |
+| Total | **423** | **423** | **0** |
+
+Todos los puntos intersectan un solo municipio y concuerdan. Los **116 municipios**
+son cobertura contrastada de esta copia i-DE, sin afirmar cobertura de toda la
+red de distribución. La capa queda `preparada`; las reservas de uso, precisión
+posicional y capacidad orientativa permanecen. La distancia al recinto declarado
+es diagnóstica y no interviene en la admisión.
+
+```powershell
+.\.venv\Scripts\python.exe src/georreferenciar_capacidad_demanda.py --metadatos-ide resultados/investigacion_ide/20261019/metadatos.json
+```
+
+Nueva ejecución `20261019T094517138707Z`, bajo
+`resultados/silver/capacidad_demanda_espacial/`, con cuatro salidas:
+
+| Tabla | Filas | Función |
+| --- | ---: | --- |
+| `capacidad_demanda_geo` | 423 | Atributos originales, metadatos acreditados, coordenadas numéricas, geometría EPSG:25830 y contraste territorial. |
+| `capacidad_municipios_candidatos` | 423 | Todas las intersecciones punto–municipio, sin asumir admisión por el mero cruce. |
+| `entidad_municipio` | 423 | Relaciones admitidas, con clave `punto_conexion_id` y código municipal. |
+| `incidencias_espaciales` | 0 | Puntos no admitidos, con motivo; esquema conservado aunque esté vacía. |
+
+En la capa se separan `fecha_publicacion=2026-09-04`,
+`periodo_referencia=2026-08`, `estado_fecha=periodo_mensual_acreditado` y
+`estado_coordenadas=crs_acreditado`. `fecha_referencia` sigue nula porque no
+se acredita un día exacto de corte. Los estados anteriores se conservan como
+`estado_fecha_preparacion` y `estado_coordenadas_preparacion`.
+
+La comparación completa conserva los 39 campos de la preparación original,
+con esos dos cambios de nombre explícitos. Las cuatro salidas se reabren y
+comparan en ambos sentidos, incluidos tipos, nulos y WKB; el GeoParquet declara
+EPSG:25830. `actual.json` solo se actualiza después de cerrar y reverificar las
+entradas. No requiere red ni dependencias nuevas; motor de 1 GB y dos hilos.
 
 ## Reproducción y comprobaciones
 
@@ -118,12 +213,29 @@ La exportación Parquet ZSTD se relee y compara íntegramente en ambos sentidos,
 incluidos tipos, nulos y textos. También se contrastan los 17 campos originales
 con las filas CV del CSV. No se sobrescriben ejecuciones anteriores.
 
-La suite completa pasa **69 pruebas**, sin omisiones: ocho nuevas cubren
+En el cierre original del 16-10 pasaron **69 pruebas**, sin omisiones: ocho nuevas cubrieron
 precisión y límites, ausente frente a cero, banderas, claves nacionales,
 conservación literal, incidencias, límites espaciales/temporales y exportación.
 El material público contiene código, reglas y recuentos agregados; los valores
 por punto se conservan únicamente en los resultados locales.
 
-La siguiente fase es la **8: relaciones y validación conjunta**. Deberá distinguir
-esta preparación tabular de una integración espacial admitida, igual que en
-MITECO. Silver completa, Gold, unidad final y criterio temporal siguen pendientes.
+Al acreditar los metadatos el 19-10 pasaron **111 pruebas**, sin omisiones. Siete nuevas
+comprueban identidad e integridad de las copias, referencia específica del
+apartado de demanda, vínculo del descargable con el histórico y separación entre
+publicación, periodo informado y corte exacto desconocido. La comprobación real
+de `metadatos.json` también termina correctamente; el inventario sigue en
+32 tablas y 314 columnas en aquel punto previo a la incorporación espacial.
+
+Tras incorporar la capa pasan **120 pruebas**, sin omisiones. Nueve nuevas
+cubren variantes oficiales y ambiguas, puntos coincidentes, límites, exteriores,
+coordenadas inválidas, discrepancias de municipio/provincia, exportación
+GeoParquet e integridad conjunta ante desplazamientos o fechas inventadas.
+
+La fase **8, relaciones y validación conjunta**, está cerrada operativamente con
+limitaciones desde el 18-10. La incorporación de i-DE del 19-10 aplica los
+metadatos acreditados y materializa capa y relaciones. Gold, unidad final y
+criterio temporal común siguen pendientes.
+
+La validación conjunta vigente `20261019T094606691147Z` (reglas v4) verifica
+la conservación de atributos i-DE, las 423 relaciones admitidas, fecha/periodo
+y CRS frente a la evidencia, e incorpora 423 intersecciones y estados al conjunto.

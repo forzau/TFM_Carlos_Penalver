@@ -1,6 +1,6 @@
 {
-  "version_catalogo": 1,
-  "fecha_revision": "2026-10-15",
+  "version_catalogo": 2,
+  "fecha_revision": "2026-10-19",
   "criterio": "Registro de copias sin transformar. null significa no confirmado; la fecha de modificación local no acredita descarga ni edición. Las URL de acceso no prueban identidad con la copia local.",
   "recursos": [
     {
@@ -228,12 +228,12 @@
       "nombre": "Capacidad de acceso para demanda",
       "proveedor": "i-DE Redes Eléctricas Inteligentes",
       "pagina": "https://www.i-de.es/es/conexion-red-electrica/suministro-electrico/mapa-capacidad-consumo",
-      "descarga": null,
-      "version": null,
-      "periodo": null,
-      "evidencia_temporal": "La copia no acredita fecha de referencia ni edición.",
+      "descarga": "https://www.i-de.es/documents/d/guest/2026_09_04_r1-001_demanda-1-",
+      "version": "Publicación 2026-09-04; identidad binaria con la copia local comprobada el 2026-10-19",
+      "periodo": "2026-08",
+      "evidencia_temporal": "Publicación 2026-09-04 identificada por igualdad binaria completa del CSV histórico. Periodo agosto de 2026 derivado de la regla mensual del anexo BOE-A-2025-9913; día/hora exactos de corte no acreditados.",
       "fecha_descarga": null,
-      "cobertura": "Nudos publicados por i-DE; extensión y referencia espacial por confirmar",
+      "cobertura": "3019 puntos nacionales de la red publicada por i-DE; 423 en las provincias declaradas de Comunitat Valenciana. No representa todas las distribuidoras.",
       "unidad_original": "Nudo eléctrico con capacidad de acceso para demanda",
       "formato": "CSV",
       "uso": "Viabilidad eléctrica orientativa; no es consumo observado ni garantía de conexión.",
@@ -246,9 +246,8 @@
       },
       "pendientes": [
         "Condiciones aplicables al CSV",
-        "Edición, fecha de referencia y adquisición",
-        "URL exacta de descarga",
-        "Huso y datum de coordenadas"
+        "Fecha original de adquisición",
+        "Día y hora exactos de corte de los datos"
       ],
       "entradas": [
         {
@@ -256,7 +255,20 @@
           "rol": "datos"
         }
       ],
-      "evidencia_edicion": "El CSV no contiene un campo de fecha de referencia en su esquema auditado. La página pública del mapa describe un recurso actualizable; no acredita la edición concreta de esta copia."
+      "evidencia_edicion": "CSV del histórico oficial de 04-09-2026 idéntico byte por byte: 344722 bytes, SHA-256 1e486a6a825bcc712ac507a3c8ff3323226a64929224c77ccb4781b1d961f524. Copias y comprobación en resultados/investigacion_ide/20261019/. No se modifican los manifiestos históricos.",
+      "fecha_publicacion": "2026-09-04",
+      "criterio_periodo": "Mes anterior a publicación según formato CNMC; no acredita día/hora de corte",
+      "fecha_corte_exacta": null,
+      "referencia_espacial": {
+        "estado": "acreditada_documentalmente",
+        "sistema": "ETRS89 / UTM huso 30N",
+        "epsg": 25830,
+        "ambito": "Comunitat Valenciana, peninsular",
+        "ejes": "X este, Y norte, metros",
+        "evidencia": "https://www.boe.es/buscar/doc.php?id=BOE-A-2025-9913",
+        "motivo": "El proveedor declara seguir este formato; el anexo de demanda define ambas coordenadas en ETRS89 UTM30 peninsular. No certifica precisión posicional.",
+        "revision": "2026-10-19"
+      }
     },
     {
       "id": "ign_red_transporte",

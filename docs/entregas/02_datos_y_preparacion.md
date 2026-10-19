@@ -2,7 +2,7 @@
 
 **Proyecto:** localización de nuevos puntos de recarga para vehículos eléctricos en la Comunitat Valenciana.
 
-**Estado:** apartados 1-3 redactados y apartado 4 en curso. Bronze formalizado y Silver materializada por fuentes hasta la fase 7 a 16 de octubre de 2026: base territorial, parque DGT, población, renta, recarga tabular, aforos, red viaria, POI OSM y capacidad de demanda i-DE tabular. La capa de recarga está materializada en EPSG:25830 desde el CRS declarado EPSG:4258, con 133 conflictos municipales conservados. i-DE mantiene fecha y referencia espacial pendientes; las incidencias y límites de otras fuentes siguen explícitos. Se adopta Distintivo 0 como aproximación documentada. La fase 8 está iniciada con recarga espacial; quedan la revisión de sus incidencias y la validación conjunta. Gold y apartado 5 siguen pendientes. Las salvedades de uso se recogen en el apartado 3 y en el catálogo del nuevo recurso.
+**Estado a 19-10-2026:** apartados 1-3 redactados y apartado 4 en curso. Bronze formalizado y Silver preparada con limitaciones tras la fase 8: fuentes, relaciones y validación conjunta materializadas. Se conservan las 1.526 instalaciones de recarga, con 1.474 relaciones municipales admitidas y 52 pendientes tras la revisión. i-DE tiene publicación 04-09-2026 y CRS EPSG:25830 acreditados documentalmente (periodo agosto según regla mensual CNMC), con 423 relaciones municipales admitidas en 116 municipios; las incidencias y límites de las demás fuentes siguen explícitos. Distintivo 0 se conserva como aproximación municipal documentada. Gold y apartado 5 siguen pendientes. Las salvedades de uso se recogen en el apartado 3 y en el catálogo del nuevo recurso.
 
 ## 1. Qué datos necesita vuestro producto
 
@@ -54,7 +54,7 @@ Se utilizarán descargas públicas y exportaciones de los proveedores, conservan
 | **INE - [Censo anual de población](https://ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736176992&idp=1254735572981&menu=resultados).** Selección y descarga de tablas; copia localizada en CSV. | Nacional, con resultados municipales y serie localizada 2021-2025. Información anual. Los códigos municipales permitirán seleccionar el ámbito; se comprobarán tabla concreta, categorías agregadas y detalle de las variables. |
 | **MITECO - [Puntos de Recarga de Vehículos Eléctricos](https://catalogo.datosabiertos.miteco.gob.es/catalogo/es/dataset/6ee8d46f-93bd-478f-8e29-3ba4f6d8405c).** El catálogo enlaza una [exportación pública en CSV](https://energia.serviciosmin.gob.es/Ripree/ExportarInstalaciones/Export). | Infraestructura de acceso público en España; registro actualizado con información remitida por operadores. Se conservará una exportación fechada. Hay valores `DESCONOCIDO` y `NODISPONIBLE`; falta revisar cobertura y relaciones instalación/punto/conector para evitar recuentos duplicados. |
 | **INE - [Atlas de Distribución de Renta de los Hogares](https://www.ine.es/dynt3/inebase/index.htm?capsel=12384&padre=5608).** Descarga de tablas territoriales; copia con serie 2015-2023. | Municipios, distritos y secciones censales; serie anual con desfase de publicación. Los nulos requieren interpretar el nivel territorial. La renta no acredita por sí sola demanda de recarga. |
-| **i-DE - [Mapa de capacidad de consumo](https://www.i-de.es/es/conexion-red-electrica/suministro-electrico/mapa-capacidad-consumo).** Consulta y descarga de los ficheros tabulares ofrecidos. | Puntos de conexión de su propia red; actualización mínima mensual declarada. La copia contiene capacidad de demanda; cobertura efectiva, fecha y CRS pendientes de verificar. Capacidad informativa, sin garantía de conexión. CNMC queda como posible contraste, sin dataset equivalente confirmado. |
+| **i-DE - [Mapa de capacidad de consumo](https://www.i-de.es/es/conexion-red-electrica/suministro-electrico/mapa-capacidad-consumo).** Consulta y descarga de los ficheros tabulares ofrecidos. | Puntos de conexión de su propia red; actualización mínima mensual declarada. La copia contiene capacidad de demanda; publicación 04-09-2026 identificada por igualdad binaria y periodo agosto según formato mensual CNMC. CRS EPSG:25830 acreditado para CV y aplicado en capa complementaria: 423 puntos con relación municipal contrastada en 116 municipios. Capacidad informativa, sin garantía de conexión. CNMC queda como posible contraste, sin dataset equivalente confirmado. |
 | **IGN/CNIG - [Redes de Transporte](https://centrodedescargas.cnig.es/CentroDescargas/catalogo.do?Serie=REDTR).** Descarga de GeoPackages provinciales de Alicante, Castellón y Valencia. | Producto nacional con nuevas versiones cartográficas. Los tres archivos se abrieron preliminarmente en QGIS. Falta comprobar atributos y geometrías: disponer de líneas viarias no garantiza una red preparada para calcular rutas. |
 | **OpenStreetMap, distribuido por [Geofabrik - Valencia](https://download.geofabrik.de/europe/spain/valencia.html).** Extracto regional en GeoPackage, Shapefile o PBF. | Información colaborativa, con extractos renovados y fechados. Se conservará una versión concreta. Deben comprobarse cobertura y categorías; no garantiza inventario completo de servicios. Los elementos alejados deben inspeccionarse antes de excluirlos. |
 
@@ -136,7 +136,7 @@ Los principales hallazgos que condicionan Silver son:
   valores ausentes/protegidos en renta. Hay un código de renta adicional pendiente de vigencia.
 - IGN/OSM/GVA: relaciones entre entidades, puntos y polígonos y distintos CRS;
   requieren definición de recuentos y comprobación espacial antes de integrar.
-- i-DE: esquema de capacidad de demanda confirmado; CRS, fecha y reutilización pendientes.
+- i-DE: esquema de capacidad de demanda confirmado. Revisión 19-10: publicación 04-09-2026 y CRS EPSG:25830 acreditados; periodo agosto según formato mensual CNMC. Capa y relaciones materializadas; corte exacto y condiciones de reutilización pendientes.
 
 ### Alternativa municipal DGT verificada
 
@@ -278,9 +278,10 @@ WKB verificados; GeoParquet con EPSG:25830 y Z conservada en IGN.
 La suite completa tras la fase 5 pasa 53 pruebas sin omisiones.
 
 Las tablas de base territorial, parque, población, renta, recarga, aforos y red
-viaria, además de los POI OSM, están materializadas; recarga queda pendiente de
-integración espacial y la red no constituye aún un sistema de rutas. La capacidad
-i-DE se prepara como tabla en fase 7; relaciones conjuntas y Gold siguen pendientes.
+viaria, además de los POI OSM, están materializadas. La capa de recarga y sus
+relaciones admitidas están disponibles con incidencias explícitas; la red no
+constituye aún un sistema de rutas. i-DE se prepara como tabla en fase 7;
+el cierre conjunto posterior de fase 8 se describe al final. Gold sigue pendiente.
 
 La [fase 6, POI OSM](../POI_OSM_SILVER.md), conserva 269.287 elementos de seis
 capas de puntos y áreas. Se definen doce categorías de interés para revisión,
@@ -304,17 +305,49 @@ Huellas, recuentos y conservación de tipos y valores tras exportar comprobados;
 la suite completa pasa 69 pruebas sin omisiones. Los datos por punto permanecen
 locales, excluidos de Git.
 
-La tabla i-DE queda preparada, pero su integración espacial está pendiente de
-acreditar huso y datum de la copia. La fecha de referencia sigue desconocida;
-no se crean geometrías ni asignaciones municipales. Capacidad orientativa,
+La tabla i-DE queda preparada. El 19-10 se acredita identidad binaria completa
+con el descargable de publicación 04-09-2026 y el CRS EPSG:25830 por el formato
+CNMC que i-DE declara seguir. El periodo es agosto según la regla mensual,
+sin inventar día exacto de corte. Véase [acreditación i-DE](../CAPACIDAD_DEMANDA_SILVER.md).
+La tabla del 16-10 conserva sus estados históricos. Una capa complementaria del
+19-10 aplica los metadatos, conserva los 423 puntos y admite sus relaciones
+municipales en 116 municipios. No se reproyecta ni desplaza X/Y ni se fusionan
+puntos con coordenadas compartidas. Capacidad orientativa,
 sin garantía de conexión ni suma de puntos como independientes. El estado de
 ejecución refleja esta limitación; MITECO tiene su CRS declarado identificado,
-con capa y contraste materializados y 133 conflictos municipales pendientes de revisión.
+con capa y contraste materializados y 133 conflictos originales conservados,
+revisados posteriormente en la fase 8.
 
-La cobertura municipal de DGT queda resuelta
-para la aproximación adoptada y las referencias territoriales están incorporadas;
-falta validar las relaciones conjuntas (fase 8) y tratar las referencias espaciales
-todavía pendientes. La unidad final y el criterio temporal se justificarán para Gold.
-Silver aplicará validaciones y formatos explícitos con trazabilidad; Gold definirá
-qué representa cada fila y qué variables aporta a la fase siguiente. No se presentan
-estos pasos como completados ni se ha entrenado un modelo.
+La [fase 8, relaciones y validación conjunta](../VALIDACION_CONJUNTA_SILVER.md),
+queda cerrada operativamente el 18-10-2026 y se amplía el 19-10 con i-DE espacial.
+Se verifican las 30 salidas de ocho bloques, sus huellas, esquemas, claves, recuentos y dependencias, además de la
+integridad entre instalaciones/puntos/conectores, tramo/vial, correspondencias
+OSM y códigos territoriales. Se conservan periodos, ausencias y niveles de renta.
+No se repite el procesamiento nacional DGT ni se alteran los originales.
+
+Se revisan los 133 conflictos municipales de recarga. Se resuelven 81 mediante
+evidencia primaria de establecimientos/operadores y direcciones oficiales
+CartoCiudad; 52 mantienen pendiente su asignación. El contraste distingue
+portales y viales: estos últimos no acreditan un número de portal ni la posición
+fina del cargador. La selección es explícita y se preserva la evidencia.
+La relación complementaria admite 1.474 instalaciones, 4.231 puntos y 5.053
+conectores; conserva las 1.526/4.402/5.244 entidades originales sin multiplicarlas.
+El informe conjunto documenta la evidencia y sus límites, incluido un caso de
+frontera con dirección comercial coincidente pero coordenadas contradictorias.
+
+Se materializan 1.430.940 relaciones espaciales de POI, aforos, tramos y puntos
+i-DE con los municipios, con estados para las 1.397.060 entidades contrastadas. Se mantienen
+intersecciones múltiples, contactos de frontera, 519 POI y 150 tramos exteriores,
+y las cinco geometrías IGN no admitidas. Las medidas de intersección son
+diagnósticas: no reparten tráfico ni convierten relaciones en nuevas entidades.
+La procedencia provincial no acredita contención ni se deduplican físicamente
+las copias IGN. La ampliación del 19-10 añade la capa i-DE y sus relaciones
+municipales contrastadas.
+
+Las seis salidas complementarias, sus claves y el informe se verifican por
+relectura y huellas. La ejecución reproducible mantiene DuckDB 1.5.0, 1 GB del
+motor y dos hilos, con el cruce IGN por copias provinciales; 120 pruebas aprobadas
+sin omisiones. Silver queda preparada con estas limitaciones explícitas.
+Gold todavía debe justificar la unidad final, el criterio temporal y el tratamiento
+de asignaciones pendientes o múltiples antes de construir sus indicadores.
+No se ha iniciado scoring, entrenamiento de modelos o aplicación web.

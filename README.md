@@ -33,6 +33,9 @@ planificación de infraestructura de recarga.
 
 [Fuentes de datos](docs/FUENTES.md).
 
+[Inventario de tablas y columnas Silver](docs/TABLAS_Y_COLUMNAS_SILVER.md):
+36 tablas materializadas, con sus columnas, tipos y recuentos comprobados.
+
 [Catálogo de Bronze](docs/CATALOGO_BRONZE.md): once recursos de nueve bloques,
 incluidas las referencias territoriales oficiales, con un manifiesto local de
 integridad para 39 archivos de datos y documentación.
@@ -47,14 +50,32 @@ municipios y sus recintos verificados. También están preparados
 La [recarga MITECO](docs/RECARGA_SILVER.md) tiene sus entidades tabulares
 preparadas. Su [capa y contraste municipal](docs/RECARGA_ESPACIAL_SILVER.md)
 conservan las 1.526 instalaciones, con 1.393 asignaciones admitidas y 133
-discrepancias municipales pendientes de revisión.
+discrepancias en la ejecución inicial; la revisión posterior deja 52 pendientes,
+como se detalla en la fase 8.
 La [fase 5, aforos y red viaria](docs/TRAFICO_RED_SILVER.md), está preparada con
 sus incidencias señaladas. La [fase 6, POI de OSM](docs/POI_OSM_SILVER.md), conserva
 elementos, clasificación de interés y posibles correspondencias sin fusionarlos.
 La [fase 7, capacidad de demanda i-DE](docs/CAPACIDAD_DEMANDA_SILVER.md), está
-preparada como tabla, pendiente de fecha y referencia espacial acreditadas.
-La fase 8 está iniciada con el bloque espacial MITECO; la validación conjunta
-y la revisión de sus incidencias siguen pendientes.
+preparada como tabla y capa EPSG:25830, con 423 relaciones municipales admitidas
+en 116 municipios. Publicación 04-09-2026 y periodo agosto según formato CNMC;
+el día exacto de corte sigue desconocido.
+La [fase 8, relaciones y validación conjunta](docs/VALIDACION_CONJUNTA_SILVER.md),
+está cerrada operativamente con limitaciones: 1.430.940 relaciones espaciales,
+las 133 discrepancias de recarga revisadas y 81 resueltas documentalmente.
+Quedan 52 asignaciones municipales de recarga pendientes; i-DE ya está
+integrada espacialmente. Silver queda preparada con estas restricciones; Gold sigue pendiente.
+
+Se conservan las cinco geometrías IGN señaladas y excluidas de cálculos métricos,
+y las 52 asignaciones de recarga pendientes. El diseño de Gold contemplará
+comunicar esta incertidumbre de asignación, sin interpretarla como ausencia de
+cargadores. Su tratamiento actual permite avanzar al planteamiento de Gold.
+
+[Planteamiento inicial de Gold](docs/PLANTEAMIENTO_GOLD.md): punto de partida,
+finalidad de la capa y orientación acordada: recarga de destino primero,
+combinando demanda y cobertura, con la secuencia zonas → candidatos. Incluye
+indicadores, método y evaluación aceptados como dirección de trabajo; versión
+temporal, contrato de tablas y parámetros finales pendientes. Gold todavía no
+está implementada.
 
 ## Reproducción
 
@@ -231,8 +252,17 @@ medidas y banderas tipadas, estados y procedencia. Las salidas Parquet y su
 informe quedan en `resultados/silver/capacidad_demanda/`, con `actual.json`
 tras validar. El [informe de fase 7](docs/CAPACIDAD_DEMANDA_SILVER.md) explica
 las ausencias y los límites de uso. Funciona sin red ni nuevas dependencias;
-no genera geometría mientras el huso y datum sigan pendientes.
-La fase 8 posterior revisará relaciones y calidad conjunta de Silver.
+reproduce la preparación tabular histórica. La capa complementaria se genera,
+sin red, después de verificar los metadatos acreditados:
+
+```powershell
+.\.venv\Scripts\python.exe src/georreferenciar_capacidad_demanda.py --metadatos-ide resultados/investigacion_ide/20261019/metadatos.json
+```
+
+Conserva los 423 puntos y todas sus medidas, sin fusionar coordenadas compartidas
+ni sumar capacidades. Las 423 relaciones municipales están contrastadas; el
+informe de fase 7 distingue publicación, periodo mensual y corte desconocido.
+La validación conjunta de fase 8 incorpora esta capa y verifica sus relaciones.
 
 ### Capa y contraste municipal de recarga
 
@@ -247,3 +277,22 @@ separa relaciones admitidas de discrepantes. El [informe espacial](docs/RECARGA_
 documenta reglas y controles. Resultados e informe quedan en
 `resultados/silver/recarga_espacial/`, con `actual.json` después de validar.
 No altera las tablas de fase 4 ni utiliza red o dependencias adicionales.
+
+### Relaciones y validación conjunta de Silver
+
+```powershell
+.\.venv\Scripts\python.exe src/validar_silver.py --evidencias-recarga resultados/revision_recarga/20261018_revision_manual/decisiones.json
+```
+
+Verifica las 30 salidas vigentes de ocho bloques y sus informes/manifiestos,
+comprueba integridad y periodos, conserva las decisiones documentales de recarga
+y relaciona POI, aforos y tramos con los recintos, sin asignación exclusiva ni
+reparto de indicadores. Las seis salidas e informe quedan en
+`resultados/silver/validacion_conjunta/`; `actual.json` solo cambia después de
+validar y cerrar la ejecución. El [informe de fase 8](docs/VALIDACION_CONJUNTA_SILVER.md)
+explica los insumos de evidencia que se deben conservar, los lotes provinciales,
+las incidencias y las 120 pruebas aprobadas. No requiere nuevas dependencias ni
+vuelve a procesar el TXT nacional DGT.
+
+La [revisión ampliada de recarga](docs/REVISION_RECARGA_SILVER.md) documenta las
+80 asignaciones adicionales admitidas, sus fuentes y los 52 casos pendientes.
