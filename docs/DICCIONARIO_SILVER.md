@@ -1,6 +1,6 @@
 # Diccionario inicial de salidas Silver
 
-Versión **15, 19 de octubre de 2026**. Define campos, unidades de observación y
+Versión **16, 20 de octubre de 2026**. Define campos, unidades de observación y
 claves de las salidas que se prepararán según el [plan de Silver](PLAN_SILVER.md).
 Las convenciones comunes han sido aceptadas; **municipios, recintos, parque DGT,
 población y renta están preparados**. Recarga tiene las entidades tabulares
@@ -12,7 +12,10 @@ sin fusión; i-DE tiene tabla histórica y capa complementaria con publicación
 La validación conjunta está cerrada operativamente con limitaciones: se conserva
 el contraste original y una relación complementaria con 1.474 instalaciones
 admitidas y 52 pendientes. i-DE incorpora 423 relaciones municipales admitidas;
-Gold pendiente.
+La [estructura Gold](PLANTEAMIENTO_GOLD.md) ya está preparada. La ampliación del
+20-10 añade `recarga_versionada` como entrada
+seleccionada para Gold: 1.466 instalaciones con municipio admitido, 51 pendientes
+y nueve ausencias históricas conservadas por separado; véase la sección 11.
 Se han contrastado cabeceras, esquemas y claves auditadas, con una comprobación
 adicional de relaciones en MITECO. Esto no sustituye la validación al materializar
 cada fuente.
@@ -501,6 +504,46 @@ tabla/campo afectados, motivo, valor leído necesario y acción aplicada o pendi
 Se conservarán además los orígenes de la salida, huellas, versión de reglas/código,
 fecha UTC de proceso y recuentos de control. No hace falta repetir este conjunto
 de metadatos en cada fila de datos ni crear una plataforma adicional para registrarlo.
+
+## 11. Recarga versionada para la entrada de Gold
+
+Bloque `recarga_versionada`, adquirido el 18-10 y preparado el 20-10-2026,
+sin sustituir las ejecuciones históricas. Los campos y claves de sus tablas
+tabulares y espaciales reutilizan las definiciones de recarga anteriores.
+`revision_recarga` y `recarga_municipio_validado` conservan las definiciones
+de la validación conjunta, aplicadas a la nueva copia.
+
+La relación final para Gold es `recarga_versionada/recarga_municipio_validado`,
+con 1.466 instalaciones; las 51 presentes pendientes no se asignan por defecto.
+La capa conserva el contraste básico: 1.385 admisiones iniciales y 132
+discrepancias, de las que 81 se resuelven documentalmente. No confundir esos
+estados con el resultado final. Véase [preparación versionada](RECARGA_VERSIONADA_SILVER.md).
+
+**`recarga_ausentes`**: una fila por ID de instalación de la capa histórica
+ausente en la copia principal. Clave: `instalacion_id`. Nueve filas. Conserva
+los 25 campos y la geometría EPSG:25830 de `recarga_instalaciones_geo` histórico,
+sin incluir esos registros en los recuentos de oferta presente. Añade:
+
+| Campo | Tipo | Regla |
+| --- | --- | --- |
+| `puntos_registrados_historicos` | `BIGINT` | Recuento de claves instalación/punto de la copia histórica, sin duplicar por conectores. |
+| `conectores_registrados_historicos` | `BIGINT` | Recuento de claves instalación/punto/conector de la copia histórica. |
+| `codigo_municipio_admitido_historico` | `VARCHAR`, nulo permitido | Admisión municipal anterior; no una nueva admisión de la versión principal. |
+| `metodo_admision_historica` | `VARCHAR`, nulo permitido | Método que sustentaba la relación histórica; nulo si pendiente. |
+| `estado_presencia` | `VARCHAR` | `ausente_exportacion_sin_cierre_acreditado`. No informa de cierre u operación. |
+
+Los nueve IDs reúnen 43 puntos y 43 conectores históricos; ocho tenían municipio
+admitido y uno seguía pendiente. Se conserva su procedencia en el informe de
+ejecución; adquisición original desconocida, sin atribuirle la fecha del proceso.
+
+**`recarga_ausentes_municipios_candidatos`**: vínculos espaciales de los nueve
+IDs ausentes en la capa histórica. Campos `instalacion_id` y `codigo_municipio`,
+ambos `VARCHAR`, clave conjunta. Nueve filas en esta versión. Conserva todos los
+candidatos originales, sin darles condición de municipio admitido.
+
+Los doce esquemas del bloque están en el [inventario físico](TABLAS_Y_COLUMNAS_SILVER.md).
+La validación conjunta histórica no se recalcula o sustituye al añadir este
+bloque; los demás bloques Silver permanecen íntegros.
 
 ## Estado de preparación
 

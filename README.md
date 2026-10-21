@@ -8,9 +8,15 @@ Tema elegido: **localización óptima de nuevos puntos de recarga para vehículo
 eléctricos en la Comunitat Valenciana**. El objetivo es apoyar decisiones sobre
 dónde ampliar la infraestructura pública de recarga utilizando datos reales y públicos.
 
+**Estado a 21-10-2026:** datos y preparación completados hasta Gold, con la
+Entrega 02 redactada. El diseño del modelo queda en pausa, pendiente de
+orientación académica antes de concretar reglas de combinación y ponderaciones.
+Las comparaciones de sensibilidad se conservan como evidencia; no hay pesos
+definitivos, prioridad combinada o aplicación web implementados.
+
 La auditoría técnica de las copias locales se documenta en
-[Auditoría de fuentes](docs/AUDITORIA_FUENTES.md). La granularidad y la integración
-se definirán después de resolver sus hallazgos.
+[Auditoría de fuentes](docs/AUDITORIA_FUENTES.md). Sus hallazgos y la preparación
+hasta Gold se recogen en la [Entrega 02](docs/entregas/02_datos_y_preparacion.md).
 
 ## Estructura
 
@@ -31,10 +37,16 @@ se definirán después de resolver sus hallazgos.
 Recoge las tres propuestas iniciales; posteriormente se ha seleccionado la
 planificación de infraestructura de recarga.
 
+[Entrega 2: datos y preparación](docs/entregas/02_datos_y_preparacion.md).
+Cinco apartados actualizados al 21-10-2026: fuentes, condiciones de uso,
+flujo reproducible, trece tablas Gold preparadas y limitaciones. No requiere
+entrenamiento o un ranking para esta entrega.
+
 [Fuentes de datos](docs/FUENTES.md).
 
 [Inventario de tablas y columnas Silver](docs/TABLAS_Y_COLUMNAS_SILVER.md):
-36 tablas materializadas, con sus columnas, tipos y recuentos comprobados.
+48 tablas materializadas, incluidas las doce de recarga versionada, con sus
+columnas, tipos y recuentos comprobados. Las versiones de oferta no se suman.
 
 [Catálogo de Bronze](docs/CATALOGO_BRONZE.md): once recursos de nueve bloques,
 incluidas las referencias territoriales oficiales, con un manifiesto local de
@@ -63,19 +75,75 @@ La [fase 8, relaciones y validación conjunta](docs/VALIDACION_CONJUNTA_SILVER.m
 está cerrada operativamente con limitaciones: 1.430.940 relaciones espaciales,
 las 133 discrepancias de recarga revisadas y 81 resueltas documentalmente.
 Quedan 52 asignaciones municipales de recarga pendientes; i-DE ya está
-integrada espacialmente. Silver queda preparada con estas restricciones; Gold sigue pendiente.
+integrada espacialmente. Silver queda preparada con estas restricciones; la
+primera etapa municipal Gold ya está materializada con los límites descritos abajo.
 
 Se conservan las cinco geometrías IGN señaladas y excluidas de cálculos métricos,
-y las 52 asignaciones de recarga pendientes. El diseño de Gold contemplará
-comunicar esta incertidumbre de asignación, sin interpretarla como ausencia de
-cargadores. Su tratamiento actual permite avanzar al planteamiento de Gold.
+y las 52 asignaciones de recarga pendientes de la versión histórica. La Gold
+municipal comunica la incertidumbre de la entrada seleccionada y sus ausencias
+entre exportaciones, sin interpretarlas como ausencia física de cargadores.
 
 [Planteamiento inicial de Gold](docs/PLANTEAMIENTO_GOLD.md): punto de partida,
 finalidad de la capa y orientación acordada: recarga de destino primero,
 combinando demanda y cobertura, con la secuencia zonas → candidatos. Incluye
 indicadores, método y evaluación aceptados como dirección de trabajo; versión
-temporal, contrato de tablas y parámetros finales pendientes. Gold todavía no
-está implementada.
+temporal resuelta para la entrada de recarga y parámetros finales pendientes.
+La [preparación versionada](docs/RECARGA_VERSIONADA_SILVER.md) utiliza la copia
+adquirida el 18-10, con 1.466 asignaciones municipales admitidas y 51 pendientes,
+conservando nueve ausencias históricas por separado. El [contrato inicial de tablas
+Gold](docs/CONTRATO_GOLD.md) define contexto municipal, resumen de instalaciones
+y relaciones de incertidumbre, con campos, fórmulas, periodos y controles.
+La [primera etapa Gold municipal](docs/GOLD_MUNICIPAL.md) está materializada:
+542 municipios, 1.526 registros de instalación y 112 vínculos de incertidumbre.
+El [contrato de candidatos y proximidad](docs/CONTRATO_CANDIDATOS_GOLD.md)
+define la segunda etapa: 16.377 elementos OSM preseleccionados para revisión,
+sus vínculos municipales, correspondencias y proximidad por escenarios.
+La [segunda etapa Gold](docs/CANDIDATOS_GOLD.md) ya materializa esas cuatro
+tablas: 16.377 elementos, 16.484 vínculos, 75 correspondencias y 49.131 filas
+de proximidad. Estas dos etapas reúnen siete tablas; cobertura de personas, priorización
+y aplicación siguen pendientes.
+
+La [revisión de ejemplos territoriales](docs/REVISION_EJEMPLOS_GOLD.md)
+contrasta doce municipios y una muestra de distancias. Los indicadores son
+útiles para explorar, pero antes de priorizar se necesitan diagnósticos de
+recarga que intersecta áreas, solapamientos entre candidatos y posible oferta
+exterior al inventario CV. La revisión conserva las siete tablas sin cambios.
+Los [tres controles espaciales](docs/CONTROLES_ESPACIALES_GOLD.md) ya están
+materializados en un bloque propio: coincidencias de áreas con recarga,
+intersecciones entre candidatos y avisos de posible influencia exterior.
+Estas etapas reúnen diez tablas; estos diagnósticos no fusionan lugares ni acreditan
+funcionamiento, acceso o suficiencia.
+
+La [definición de variables y normalización](docs/VARIABLES_NORMALIZACION_GOLD.md)
+selecciona volumen potencial municipal y distancia mínima a la geometría del
+candidato, con escala logarítmica y contraste lineal sobre referencias fijas.
+La etapa de variables añade tres tablas: referencias, demanda municipal y
+separación por candidato/escenario, incluido el aviso de borde adaptado a la
+geometría. Se conservan las diez anteriores; Gold reúne trece tablas.
+No hay puntuación combinada o ranking calculado.
+
+La [comparación de sensibilidad](docs/SENSIBILIDAD_GOLD.md), posterior al cierre
+de datos y preparación, contrasta escalas y escenarios sin aplicar pesos ni
+modificar Gold. Se conservan ambas escalas para el siguiente ensayo de ponderación.
+La entrega de preparación ya está documentada; revisión y publicación se gestionan
+por separado del desarrollo analítico posterior.
+
+```powershell
+.venv\Scripts\python.exe src/preparar_gold_municipal.py
+.venv\Scripts\python.exe src/preparar_gold_candidatos.py
+.venv\Scripts\python.exe src/preparar_controles_gold.py
+.venv\Scripts\python.exe src/preparar_variables_gold.py
+```
+
+[Comparación de versiones MITECO](docs/COMPARACION_RECARGA_MITECO.md): contraste
+completo de la copia original y la adquirida el 18-10-2026, compatibilidad de la
+evidencia municipal y recomendación temporal para Gold, sin sustituir Silver.
+
+La preparación versionada se reproduce con:
+
+```powershell
+.venv\Scripts\python.exe src/preparar_recarga_versionada.py --comparacion resultados/comparacion_recarga/20261020T143417939020Z/informe.json --evidencias-recarga resultados/revision_recarga/20261018_revision_manual/decisiones.json
+```
 
 ## Reproducción
 

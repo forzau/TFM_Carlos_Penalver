@@ -1,8 +1,13 @@
 # Punto de partida, dirección del producto y planteamiento de Gold
 
 Fecha: **19-10-2026**. Diseño inicial aceptado para desarrollar la primera
-versión. Gold no materializada; esquema físico, radios, normalización, pesos
-definitivos y formulación de la selección espacial todavía pendientes.
+versión. Actualización 20-10-2026: [contrato inicial de tablas](CONTRATO_GOLD.md)
+implementado para contexto municipal, instalaciones e incertidumbre en la
+[primera etapa Gold](GOLD_MUNICIPAL.md). Las [variables y normalización](VARIABLES_NORMALIZACION_GOLD.md)
+cuentan con un bloque propio; radios, pesos definitivos y formulación de la
+selección espacial siguen pendientes. El
+[contrato de candidatos y proximidad](CONTRATO_CANDIDATOS_GOLD.md) concreta
+la segunda etapa, [materializada y validada](CANDIDATOS_GOLD.md).
 
 ## Acuerdo de diseño y punto de reanudación
 
@@ -19,20 +24,30 @@ sencillos y sensibilidad a datos y supuestos. Se distinguirá información no
 evaluable (gris) de incertidumbre parcial (trama o símbolo con explicación),
 sin convertir los pendientes de asignación en ausencia de cargadores.
 
-**Próximo paso:** resolver la versión temporal de recarga mediante contraste de
-la copia original y la exportación adquirida el 18-10-2026; documentar la versión
-adoptada y la revisión que necesiten sus diferencias. Después especificar las
-primeras tablas Gold: claves, unidad de fila, periodos, indicadores, integración,
-estados de incertidumbre y controles. No sustituir Silver ni trasladar evidencia
-a registros cambiados automáticamente. La construcción de Gold queda pendiente.
+**Actualización 20-10-2026:** [comparación de copias MITECO](COMPARACION_RECARGA_MITECO.md)
+completada. Se prepara una versión diferenciada con la exportación
+adquirida el 18-10, conservando nueve ausencias como incertidumbre y sin inferir
+cierres. Las 81 admisiones documentales mantienen identidad y ubicación.
+La elección y la [preparación diferenciada](RECARGA_VERSIONADA_SILVER.md) se han
+completado después de la comparación: 1.517 instalaciones presentes, 1.466
+admisiones y 51 pendientes; nueve ausencias históricas conservadas por separado.
+Silver original no se sustituye.
+Las primeras tablas quedan especificadas en el [contrato inicial](CONTRATO_GOLD.md):
+claves, unidad de fila, periodos, indicadores, integración, estados de
+incertidumbre y controles. No sustituir Silver ni trasladar evidencia
+a registros cambiados automáticamente. Las tres tablas iniciales están
+materializadas y validadas; la etapa de candidatos añade cuatro tablas verificadas.
+La priorización queda pendiente.
 
 ## Dónde estamos
 
 Bronze conserva las copias originales y su procedencia. Silver prepara las
 entidades de cada fuente, mantiene sus claves, tipos, geometrías y periodos,
 y comprueba relaciones y calidad. El [inventario vigente](TABLAS_Y_COLUMNAS_SILVER.md)
-recoge 36 tablas y 376 columnas; la [validación conjunta](VALIDACION_CONJUNTA_SILVER.md)
-está cerrada operativamente con limitaciones explícitas.
+recoge 48 tablas y 502 columnas, incluidas doce de recarga versionada; la
+[validación conjunta histórica](VALIDACION_CONJUNTA_SILVER.md) conserva sus 36
+tablas y cierre operativo con limitaciones explícitas. No se suman las dos
+versiones de recarga.
 
 Disponemos de una referencia de 542 municipios de Comunitat Valenciana; parque
 DGT y Distintivo 0 como aproximación de demanda potencial; población y renta;
@@ -58,6 +73,17 @@ El producto apoyará a administraciones públicas y operadores en la decisión d
 merecen atención prioritaria**, mostrando los factores que justifican la
 comparación y sus límites. La salida final se orienta a una aplicación web,
 según el alcance descrito en la [Entrega 02](entregas/02_datos_y_preparacion.md).
+
+Las preguntas principales confirmadas el 20-10 son «¿Qué zonas necesitan la
+instalación de cargadores eléctricos?» y «¿Hay suficiente oferta de cargadores
+en la zona?». El producto las abordará como priorización relativa de zonas y
+contraste de oferta registrada con demanda potencial y proximidad. No acreditará
+necesidad exacta o suficiencia operativa sin datos de uso y un criterio adecuado.
+
+La tercera pregunta, sobre infraestructura necesaria para instalar cargadores,
+es opcional. La aportación posible de i-DE se limita a contexto orientativo
+de red eléctrica publicada; no acredita viabilidad integral de un emplazamiento.
+El [contrato Gold](CONTRATO_GOLD.md) concreta qué parte responde cada etapa.
 
 El recorrido previsto es:
 
@@ -114,8 +140,9 @@ Un dato de vehículos o renta municipal seguirá siendo contexto del municipio:
 no se repartirá entre POI como si se hubiese observado en cada aparcamiento.
 
 Antes de considerar cada POI un candidato físico único habrá que revisar
-categorías, correspondencias punto/área y criterios de elegibilidad. La regla
-para representar puntos y polígonos o localizar candidatos aún está pendiente.
+su uso y las correspondencias punto/área. El contrato de candidatos define
+la preselección de destino, las relaciones sin fusión y el punto representativo
+de cada geometría; queda pendiente materializarlo y revisar lugares físicos.
 Una cuadrícula u otra unidad territorial puede evaluarse si aporta una mejora
 demostrable; no se adopta por defecto ni se utiliza para aparentar mayor detalle
 en los datos municipales.
@@ -161,8 +188,14 @@ no está validada para calcular tiempos o distancias por carretera.
 
 ### Indicadores iniciales recomendados
 
+Actualización 21-10: la [definición de variables y normalización](VARIABLES_NORMALIZACION_GOLD.md)
+concreta dos dimensiones, escalas y referencias. Propone distancia mínima
+a la geometría original como brecha espacial, conservando el representante
+como contraste. La definición está ensayada, aún sin tablas normalizadas o pesos.
+
 Se recomienda separar demanda, oferta, cobertura y calidad para evitar que un
-único índice oculte el motivo de la prioridad. Los cálculos aún no se han ejecutado.
+único índice oculte el motivo de la prioridad. Los indicadores de contexto y
+proximidad al representante ya están preparados; la nueva comparación está pendiente.
 
 | Indicador | Definición y escala | Uso y límite |
 | --- | --- | --- |
@@ -206,9 +239,12 @@ de modificación de cada conector no equivale al corte del inventario ni a su
 instalación. Existe otra exportación adquirida el 18-10-2026 y conservada para
 la [revisión documental](REVISION_RECARGA_SILVER.md). Esa adquisición aporta una
 observación fechada, no una fecha común de medición de todos sus registros.
-Antes de materializar Gold, comparar versiones y documentar cuál se adopta y
-qué revisión necesitan sus cambios; no sustituir silenciosamente Silver ni
-trasladar automáticamente las resoluciones municipales a registros diferentes.
+La [comparación completa](COMPARACION_RECARGA_MITECO.md) del 20-10 propone usar
+la copia adquirida el 18-10 en una versión diferenciada, conservando nueve
+ausencias como incertidumbre. Su preparación diferenciada ya está validada,
+con las 81 admisiones documentales revalidadas y las históricas conservadas.
+La etapa municipal Gold ya está materializada; no trasladar automáticamente
+las resoluciones municipales a registros diferentes en versiones posteriores.
 
 La renta o población antiguas pueden ser útiles como contexto, pero la
 estabilidad de medias y la evolución del parque se contrastarán con la serie
@@ -230,6 +266,42 @@ y [contenido al pasar el cursor o recibir foco](https://www.w3.org/WAI/WCAG22/Un
 La calidad acompaña a la prioridad y no actúa como penalización automática
 contra territorios peor documentados. La regla geográfica de afectación aún
 debe definirse sin asumir que todos los municipios candidatos estén confirmados.
+
+### Modos de consulta del mapa, acordados el 21-10-2026
+
+La visualización avanzará desde dos lecturas independientes, demanda potencial
+y oferta registrada, hasta la prioridad relativa para estudiar nuevas
+instalaciones. Se propone un selector de tres modos sobre el mismo territorio:
+
+| Modo | Qué representa | Representación y límite |
+| --- | --- | --- |
+| Demanda potencial | Número municipal de vehículos con Distintivo 0 | Municipios coloreados por valor; es una aproximación, no un recuento exacto de vehículos recargables ni demanda observada. |
+| Oferta registrada | Número municipal de puntos de recarga admitidos del escenario principal | Municipios coloreados y ubicaciones de instalaciones consultables; distinguir instalaciones, puntos y conectores, sin sumarlos como unidades equivalentes. |
+| Prioridad de estudio | Combinación interpretable de demanda y separación respecto a la oferta | Mostrar componentes, escenario e incertidumbre; respetar el nivel municipal de demanda y la geometría de cada candidato. Pendiente de calcular y evaluar. |
+
+La estética puede inspirarse en mapas de temperatura, con gradientes y una
+leyenda clara. La demanda conocida es municipal: no interpolar sus totales
+entre centroides ni dibujar variaciones dentro de un municipio como si se
+conociera dónde están los vehículos. El primer diseño usará polígonos
+municipales coloreados. La existencia de coordenadas de instalaciones permite
+mostrar ubicaciones de oferta, pero no acredita su disponibilidad operativa.
+
+La prioridad tampoco será una superficie continua inventada entre POI: el
+contexto municipal y los candidatos conservarán sus unidades de observación.
+Una mayor separación geométrica no demuestra por sí sola necesidad de recarga.
+El tercer modo se denominará prioridad de estudio; no se presentará como
+predicción de uso o número de cargadores necesarios.
+
+Cada modo tendrá título, unidad, periodo y leyenda propios. Mantener sus
+referencias de escala al filtrar el territorio y separar cero observado de
+valor desconocido. La transformación visual se declarará si se comprimen
+valores; no confundir la leyenda de recuentos con una puntuación normalizada.
+Los pendientes de asignación y ausencias históricas seguirán como escenarios
+e incertidumbre, sin agregarse silenciosamente a la oferta principal.
+
+Este acuerdo define la presentación futura y no añade mapas ejecutables
+ni un ranking. Las variables y normalización se preparan en un bloque propio,
+antes de contrastar sensibilidad y ponderar.
 
 ### Método acordado y forma de evaluarlo
 
@@ -282,13 +354,23 @@ predictiva, rentabilidad demostrada o impacto causal de las ubicaciones propuest
 
 Una especificación de Gold con objetivo de decisión, unidad de fila, tablas,
 claves, indicadores, periodos, reglas de integración y controles de calidad.
-Después se podrán materializar y verificar las primeras tablas desde Silver,
-y explorar si sus variables permiten distinguir situaciones útiles para el
+Las primeras tablas ya están materializadas y verificadas desde Silver; queda
+revisar si sus variables permiten distinguir situaciones útiles para el
 producto. Ranking, modelos, optimización y aplicación se abordarán según esas
 conclusiones y el alcance acordado.
 
-El siguiente paso de diseño es cerrar la versión temporal de recarga y redactar
-el contrato de las primeras tablas e indicadores, con estas preferencias como
-marco. Radios, normalización, pesos definitivos, elegibilidad y evaluación de
+El contrato de las primeras tablas e indicadores está definido como propuesta
+inicial del 20-10. La entrada temporal de recarga ya está preparada y validada;
+la [revisión de ejemplos y sensibilidad](REVISION_EJEMPLOS_GOLD.md) está completada.
+Los [tres diagnósticos espaciales](CONTROLES_ESPACIALES_GOLD.md) ya están
+materializados, conservando las tablas anteriores. La [definición de variables
+y normalización](VARIABLES_NORMALIZACION_GOLD.md) añade referencias, variables
+municipales y por candidato, con aviso de borde coherente con la geometría.
+La [comparación de sensibilidad](SENSIBILIDAD_GOLD.md) está completada, sin cambiar
+Gold. La fase de datos y preparación está terminada técnicamente. El diseño del
+modelo queda en pausa, pendiente de orientación académica: antes de ensayar
+ponderaciones se concretarán las reglas de combinación y el plan de evaluación.
+Radios, pesos definitivos, revisión física y evaluación de
 la selección conjunta se concretarán antes de su cálculo. Las fuentes, tablas
-Silver y ejecuciones validadas se conservan; Gold aún no está implementada.
+Silver y ejecuciones validadas se conservan; las etapas municipal y de candidatos
+están implementadas, sin ranking calculado.

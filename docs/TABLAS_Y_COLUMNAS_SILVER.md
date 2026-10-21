@@ -1,8 +1,13 @@
 # Tablas y columnas de Silver
 
-Fecha de comprobación: **19 de octubre de 2026**. Inventario de los **36 archivos
-Parquet/GeoParquet vigentes**, con **376 columnas en total**
+Fecha de comprobación: **20 de octubre de 2026**. Inventario de los **48 archivos
+Parquet/GeoParquet materializados**, con **502 columnas en total**
 (contadas por tabla, incluidas las que se repiten en varias tablas).
+
+Se conservan las 36 tablas del cierre anterior y se añaden doce de
+`recarga_versionada`, seleccionada para la entrada de Gold. Son versiones
+diferenciadas: no se suman sus inventarios de oferta. La validación conjunta
+histórica conserva su ejecución y sus recuentos.
 
 Los esquemas y recuentos se han leído directamente con DuckDB y coinciden
 con los informes de las ejecuciones señaladas por `actual.json`. Solo se
@@ -63,6 +68,18 @@ Los tipos no expresan por sí solos si un campo es obligatorio o admite nulos.
 | `validacion_conjunta/estado_relaciones_espaciales` | 1.397.060 | 5 | `tabla_entidad` — `VARCHAR`<br>`clave_entidad` — `VARCHAR`<br>`estado_geometria` — `VARCHAR`<br>`numero_municipios` — `BIGINT`<br>`estado_relacion` — `VARCHAR` |
 | `validacion_conjunta/cobertura_estadistica` | 96.476 | 7 | `tabla_entidad` — `VARCHAR`<br>`periodo` — `VARCHAR`<br>`segmento` — `VARCHAR`<br>`codigo_municipio` — `VARCHAR`<br>`registros` — `BIGINT`<br>`valores_informados` — `BIGINT`<br>`valores_ausentes` — `BIGINT` |
 | `validacion_conjunta/estado_fuentes` | 8 | 4 | `bloque` — `VARCHAR`<br>`estado` — `VARCHAR`<br>`integracion_municipal` — `VARCHAR`<br>`limitacion` — `VARCHAR` |
+| `recarga_versionada/recarga_instalaciones` | 1.517 | 15 | `instalacion_id` — `VARCHAR`<br>`nombre_instalacion` — `VARCHAR`<br>`operador_id` — `VARCHAR`<br>`nombre_operador` — `VARCHAR`<br>`provincia_nombre_origen` — `VARCHAR`<br>`municipio_nombre_origen` — `VARCHAR`<br>`direccion` — `VARCHAR`<br>`codigo_postal` — `VARCHAR`<br>`latitud_origen` — `VARCHAR`<br>`longitud_origen` — `VARCHAR`<br>`localizacion_origen` — `VARCHAR`<br>`tipo_horario_origen` — `VARCHAR`<br>`latitud` — `DOUBLE`<br>`longitud` — `DOUBLE`<br>`estado_coordenadas` — `VARCHAR` |
+| `recarga_versionada/recarga_puntos` | 4.359 | 4 | `instalacion_id` — `VARCHAR`<br>`punto_id` — `VARCHAR`<br>`codigo_punto_origen` — `VARCHAR`<br>`accesibilidad_origen` — `VARCHAR` |
+| `recarga_versionada/recarga_conectores` | 5.202 | 18 | `instalacion_id` — `VARCHAR`<br>`punto_id` — `VARCHAR`<br>`conector_id` — `VARCHAR`<br>`tipo_conector` — `VARCHAR`<br>`tipo_carga` — `VARCHAR`<br>`formato_conector` — `VARCHAR`<br>`potencia_maxima_origen` — `VARCHAR`<br>`fecha_ultima_modificacion_origen` — `VARCHAR`<br>`horario_apertura_origen` — `VARCHAR`<br>`servicios_origen` — `VARCHAR`<br>`metodos_pago_origen` — `VARCHAR`<br>`voltaje_origen` — `VARCHAR`<br>`intensidad_origen` — `VARCHAR`<br>`registro_origen` — `BIGINT`<br>`potencia_maxima_kw` — `DECIMAL(18,2)`<br>`estado_potencia` — `VARCHAR`<br>`fecha_ultima_modificacion` — `TIMESTAMP`<br>`estado_fecha` — `VARCHAR` |
+| `recarga_versionada/incidencias` | 0 | 5 | `tabla` — `VARCHAR`<br>`registro_origen` — `BIGINT`<br>`campo` — `VARCHAR`<br>`valor_origen` — `VARCHAR`<br>`motivo` — `VARCHAR` |
+| `recarga_versionada/recarga_instalaciones_geo` | 1.517 | 25 | `instalacion_id` — `VARCHAR`<br>`nombre_instalacion` — `VARCHAR`<br>`operador_id` — `VARCHAR`<br>`nombre_operador` — `VARCHAR`<br>`provincia_nombre_origen` — `VARCHAR`<br>`municipio_nombre_origen` — `VARCHAR`<br>`direccion` — `VARCHAR`<br>`codigo_postal` — `VARCHAR`<br>`latitud_origen` — `VARCHAR`<br>`longitud_origen` — `VARCHAR`<br>`localizacion_origen` — `VARCHAR`<br>`tipo_horario_origen` — `VARCHAR`<br>`latitud` — `DOUBLE`<br>`longitud` — `DOUBLE`<br>`estado_coordenadas` — `VARCHAR`<br>`codigo_provincia_declarada` — `VARCHAR`<br>`geometria` — `GEOMETRY('EPSG:25830')`<br>`estado_geometria` — `VARCHAR`<br>`numero_municipios_intersectados` — `BIGINT`<br>`codigo_municipio_espacial` — `VARCHAR`<br>`codigo_municipio_declarado` — `VARCHAR`<br>`nombre_municipio_espacial` — `VARCHAR`<br>`estado_contraste_territorial` — `VARCHAR`<br>`distancia_municipio_declarado_m` — `DOUBLE`<br>`admitida_asignacion_municipal` — `BOOLEAN` |
+| `recarga_versionada/recarga_municipios_candidatos` | 1.517 | 2 | `instalacion_id` — `VARCHAR`<br>`codigo_municipio` — `VARCHAR` |
+| `recarga_versionada/entidad_municipio` | 1.385 | 5 | `tabla_entidad` — `VARCHAR`<br>`clave_entidad` — `VARCHAR`<br>`codigo_municipio` — `VARCHAR`<br>`metodo_asignacion` — `VARCHAR`<br>`estado_asignacion` — `VARCHAR` |
+| `recarga_versionada/incidencias_espaciales` | 132 | 3 | `instalacion_id` — `VARCHAR`<br>`campo` — `VARCHAR`<br>`motivo` — `VARCHAR` |
+| `recarga_versionada/revision_recarga` | 132 | 13 | `instalacion_id` — `VARCHAR`<br>`nombre_instalacion` — `VARCHAR`<br>`direccion` — `VARCHAR`<br>`municipio_declarado` — `VARCHAR`<br>`municipio_espacial` — `VARCHAR`<br>`codigo_municipio_declarado` — `VARCHAR`<br>`codigo_municipio_espacial` — `VARCHAR`<br>`distancia_recinto_declarado_m` — `DOUBLE`<br>`indicio_textual` — `VARCHAR`<br>`estado_revision` — `VARCHAR`<br>`codigo_municipio_validado` — `VARCHAR`<br>`url_evidencia` — `VARCHAR`<br>`motivo` — `VARCHAR` |
+| `recarga_versionada/recarga_municipio_validado` | 1.466 | 4 | `instalacion_id` — `VARCHAR`<br>`codigo_municipio` — `VARCHAR`<br>`metodo` — `VARCHAR`<br>`url_evidencia` — `VARCHAR` |
+| `recarga_versionada/recarga_ausentes` | 9 | 30 | `instalacion_id` — `VARCHAR`<br>`nombre_instalacion` — `VARCHAR`<br>`operador_id` — `VARCHAR`<br>`nombre_operador` — `VARCHAR`<br>`provincia_nombre_origen` — `VARCHAR`<br>`municipio_nombre_origen` — `VARCHAR`<br>`direccion` — `VARCHAR`<br>`codigo_postal` — `VARCHAR`<br>`latitud_origen` — `VARCHAR`<br>`longitud_origen` — `VARCHAR`<br>`localizacion_origen` — `VARCHAR`<br>`tipo_horario_origen` — `VARCHAR`<br>`latitud` — `DOUBLE`<br>`longitud` — `DOUBLE`<br>`estado_coordenadas` — `VARCHAR`<br>`codigo_provincia_declarada` — `VARCHAR`<br>`geometria` — `GEOMETRY('EPSG:25830')`<br>`estado_geometria` — `VARCHAR`<br>`numero_municipios_intersectados` — `BIGINT`<br>`codigo_municipio_espacial` — `VARCHAR`<br>`codigo_municipio_declarado` — `VARCHAR`<br>`nombre_municipio_espacial` — `VARCHAR`<br>`estado_contraste_territorial` — `VARCHAR`<br>`distancia_municipio_declarado_m` — `DOUBLE`<br>`admitida_asignacion_municipal` — `BOOLEAN`<br>`puntos_registrados_historicos` — `BIGINT`<br>`conectores_registrados_historicos` — `BIGINT`<br>`codigo_municipio_admitido_historico` — `VARCHAR`<br>`metodo_admision_historica` — `VARCHAR`<br>`estado_presencia` — `VARCHAR` |
+| `recarga_versionada/recarga_ausentes_municipios_candidatos` | 9 | 2 | `instalacion_id` — `VARCHAR`<br>`codigo_municipio` — `VARCHAR` |
 
 ## Ejecuciones inventariadas
 
@@ -77,8 +94,16 @@ Los tipos no expresan por sí solos si un campo es obligatorio o admite nulos.
 | `recarga_espacial` | `20261016T135403818794Z` | 4 |
 | `capacidad_demanda_espacial` | `20261019T094517138707Z` | 4 |
 | `validacion_conjunta` | `20261019T094606691147Z` | 6 |
+| `recarga_versionada` | `20261020T150602650091Z` | 12 |
 
 ## Lectura de las tablas de recarga
+
+Para la entrada seleccionada de Gold, usar
+`recarga_versionada/recarga_municipio_validado`: **1.466 instalaciones admitidas**
+y **51 pendientes**. Sus nueve ausencias históricas se conservan en tablas
+separadas y no se incluyen en la oferta principal. La
+[preparación versionada](RECARGA_VERSIONADA_SILVER.md) explica el contraste básico
+y la revisión final. El párrafo siguiente describe la versión histórica.
 
 Para la asignación municipal admitida después de la revisión, utilizar
 `validacion_conjunta/recarga_municipio_validado`: contiene **1.474 instalaciones**.
