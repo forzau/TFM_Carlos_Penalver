@@ -1,11 +1,17 @@
 # Originales y salidas pesadas: se sincronizan con OneDrive.
 /[Ff]uentes/
 /datos/bronze/
-/docs/inventario_fuentes.csv
+# Material de trabajo interno: conservar copias locales y publicar solo la entrega.
+/docs/*
+!/docs/entregas/
+/src/*
+!/src/preparar_dataset.py
+/tests/
+/test/
+
 # Notas personales e instrucciones locales: conservar mediante OneDrive.
 /contexto/
 /AGENTS.md
-/docs/CONTINUIDAD*.md
 /resultados/*
 !/resultados/.gitkeep
 
