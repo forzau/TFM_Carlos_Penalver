@@ -2,7 +2,7 @@
 
 **Proyecto:** localización de nuevos puntos de recarga para vehículos eléctricos en la Comunitat Valenciana.
 
-**Estado a 21-10-2026:** flujo Bronze → Silver → Gold implementado y validado con limitaciones explícitas. Gold reúne trece tablas y 135 columnas para contexto municipal, candidatos, oferta, diagnósticos y variables normalizadas. Se conservan los originales y las versiones anteriores. La suite completa pasa 194 pruebas; todavía no se han calculado un ranking, predicciones de uso ni mapas. Esta entrega prepara los datos que consumirá la fase analítica posterior.
+**Estado a 22-10-2026:** preparación Bronze → Silver → Gold completada y reproducible mediante un único script. Gold reúne trece tablas y 135 columnas para contexto municipal, oferta, candidatos y variables normalizadas. La entrega deja los datos preparados para la fase analítica posterior, con sus limitaciones explícitas; todavía no hay ranking, predicciones de uso ni mapas.
 
 ## 1. Qué datos necesita vuestro producto
 
@@ -42,9 +42,7 @@ No se fuerza un año común: se distinguen periodo de referencia, publicación y
 
 ## 2. Fuentes reales y viabilidad
 
-Los ocho bloques principales se han localizado y descargado, junto con referencias oficiales complementarias. La auditoría del 14 de octubre de 2026 y las comprobaciones posteriores documentan las copias locales; el apartado 4 recoge su preparación hasta Gold. La integración funciona con limitaciones explícitas, sin acreditar por ello calidad suficiente para cualquier modelo. Los detalles iniciales se conservan en el [diagnóstico técnico](../AUDITORIA_FUENTES.md) y los vigentes en el [catálogo Bronze](../CATALOGO_BRONZE.md) y el [inventario Silver](../TABLAS_Y_COLUMNAS_SILVER.md).
-
-Se utilizarán descargas públicas y exportaciones de los proveedores, conservando versiones fijas para el TFM y sin depender inicialmente de scraping.
+Los ocho bloques principales y las referencias oficiales complementarias se han descargado y preparado. Los enlaces siguientes permiten acceder a las fuentes; el apartado 4 explica su transformación hasta Gold. Se conservan copias fijas y sus metadatos para reproducir el trabajo, ya que una descarga posterior puede cambiar.
 
 ### Fuentes y acceso
 
@@ -59,7 +57,7 @@ Se utilizarán descargas públicas y exportaciones de los proveedores, conservan
 | **IGN/CNIG - [Redes de Transporte](https://centrodedescargas.cnig.es/CentroDescargas/catalogo.do?Serie=REDTR).** Descarga de GeoPackages provinciales de Alicante, Castellón y Valencia. | Atributos, relaciones y geometrías preparados, con cinco líneas degeneradas conservadas y excluidas de métricas. La red no está validada para calcular rutas; se utilizan distancias planas en Gold. |
 | **OpenStreetMap, distribuido por [Geofabrik - Valencia](https://download.geofabrik.de/europe/spain/valencia.html).** Extracto regional en GeoPackage, Shapefile o PBF. | Copia fechada a 09-09-2026, categorías y relación territorial verificadas. Los elementos exteriores se conservan señalados, incluidos los alejados inspeccionados. La selección de candidatos no acredita cobertura exhaustiva, negocios únicos o disponibilidad del terreno. |
 
-Se incorporan además la relación oficial de municipios INE de 2025 y los recintos del servicio WFS de unidades administrativas IGN, conservados el 15-10-2026. Sus 542 códigos coinciden con población y DGT; las geometrías se mantienen sin simplificación. El [informe territorial](../REFERENCIAS_TERRITORIALES.md) documenta adquisición y comprobaciones. La cobertura municipal DGT se completa con el [Excel municipal oficial de 2025](https://www.dgt.es/menusecundario/dgt-en-cifras/dgt-en-cifras-resultados/dgt-en-cifras-detalle/Datos-municipales-informacion-general-2025/), cuya preparación no requiere imputar municipios pequeños desde los microdatos.
+Se incorporan además la [relación oficial de municipios INE de 2025](https://www.ine.es/daco/daco42/codmun/25codmun.xlsx) y los recintos del [servicio de unidades administrativas IGN](https://www.ign.es/web/es/ign/portal/ide-area-nodo-ide-ign), obtenidos por WFS y conservados el 15-10-2026. Sus 542 códigos coinciden con población y DGT; las geometrías se mantienen sin simplificación. La cobertura municipal DGT se completa con el [Excel municipal oficial de 2025](https://www.dgt.es/menusecundario/dgt-en-cifras/dgt-en-cifras-resultados/dgt-en-cifras-detalle/Datos-municipales-informacion-general-2025/), sin imputar municipios pequeños desde los microdatos.
 
 ### Estabilidad y alternativas
 
@@ -110,13 +108,9 @@ Los originales y las salidas de datos se conservan fuera de Git. El repositorio 
 
 | Capa | Tratamiento y salida |
 | --- | --- |
-| **Bronze/Raw** | Copias originales en `Fuentes/` y adquisiciones complementarias en `datos/bronze/`, fuera de Git. El catálogo registra once recursos de nueve bloques; manifiestos con rutas relativas, tamaños y SHA-256 identifican las copias sin modificarlas. Las exportaciones posteriores de recarga conservan su propio recibo y huella. |
-| **Silver** | Tipos, claves, unidades, nulos, niveles territoriales y geometrías preparados por fuente. Parquet para tablas y GeoParquet EPSG:25830 para capas métricas. El inventario vigente reúne 48 tablas y 502 columnas, incluidas doce de recarga versionada; las copias no se suman como entidades distintas. |
-| **Gold** | Trece tablas y 135 columnas de contexto municipal, oferta, candidatos, relaciones, diagnósticos y variables normalizadas. Cada bloque tiene una ejecución identificada, manifiesto, informe y `actual.json`, que se actualiza tras validar. Sin entrenamiento, pesos definitivos, ranking o mapas en esta entrega. |
-
-Los [accesos a fuentes](../FUENTES.md), el [catálogo Bronze](../CATALOGO_BRONZE.md),
-el [diccionario Silver](../DICCIONARIO_SILVER.md) y el [inventario de tablas y
-columnas](../TABLAS_Y_COLUMNAS_SILVER.md) permiten inspeccionar procedencia y esquema.
+| **Bronze/Raw** | Originales en `Fuentes/` y adquisiciones complementarias en `datos/bronze/`, fuera de Git. Se registran procedencia, periodos, tamaños y huellas SHA-256 para identificar las copias sin modificarlas. |
+| **Silver** | Tipos, claves, unidades, nulos y geometrías preparados por fuente: 48 tablas y 502 columnas. Parquet para tablas y GeoParquet EPSG:25830 para cálculos en metros. Las versiones de recarga se conservan por separado. |
+| **Gold** | Trece tablas y 135 columnas de contexto municipal, oferta, candidatos, relaciones, diagnósticos y variables normalizadas. El script genera una ejecución nueva con sus datos y un manifiesto de verificación. |
 
 ### Transformaciones principales y decisiones de calidad
 
@@ -126,12 +120,6 @@ columnas](../TABLAS_Y_COLUMNAS_SILVER.md) permiten inspeccionar procedencia y es
 - **Versiones de oferta:** la exportación adquirida el 18-10 contiene 1.517 instalaciones; 1.466 tienen relación municipal admitida y 51 siguen pendientes. La oferta principal suma 4.194 puntos y 5.017 conectores. Nueve instalaciones históricas ausentes se mantienen como incertidumbre, sin declararlas cerradas. Los escenarios añaden primero pendientes y después ausentes, sin mezclar versiones silenciosamente.
 - **Red, tráfico e i-DE:** se separan tramos y asociaciones con viales para no multiplicar geometrías. Los aforos conservan años, tipos y ceros; las cinco líneas IGN degeneradas quedan señaladas y fuera de métricas. i-DE conserva 423 puntos y su contexto en 116 municipios, sin sumar capacidades como si fueran independientes ni garantizar conexión. La red no se utiliza como un sistema de rutas validado.
 - **OSM y relaciones:** se conservan puntos y polígonos, exteriores y posibles correspondencias, sin fusionarlos como negocios únicos. Se preseleccionan 16.377 elementos de aparcamiento, comercio y alojamiento para revisión. Los cruces municipales mantienen relaciones múltiples y no reparten demanda por superficie o número de POI. Para áreas se conserva la geometría original y un representante interior en CV, con estado si no existe superficie evaluable.
-
-La [validación conjunta Silver](../VALIDACION_CONJUNTA_SILVER.md) conserva las
-resoluciones, incidencias y relaciones territoriales. La [comparación de recarga](../COMPARACION_RECARGA_MITECO.md)
-y su [preparación versionada](../RECARGA_VERSIONADA_SILVER.md) explican la selección
-principal. La [revisión de ejemplos Gold](../REVISION_EJEMPLOS_GOLD.md) contrasta
-casos urbanos, rurales y fronterizos y motiva los diagnósticos espaciales.
 
 ### Estructura Gold que consumirá la siguiente fase
 
@@ -147,10 +135,10 @@ representan sesiones, clientes reales, demanda individual o emplazamientos viabl
 | `gold_candidatos` | 16.377 | Elemento OSM: `candidato_id`, categoría, geometría original, representante, municipio de contexto y estado de revisión. | Conservar candidatos para comprobación local. |
 | `gold_candidato_municipio` | 16.484 | Relación candidato–municipio: códigos, dimensión y superficie de intersección. | Mantener todos los vínculos, incluidos los múltiples. |
 | `gold_correspondencias_candidatos` | 75 | Par punto–área con coincidencias de identificador, nombre o posición y estado. | Revisar posibles representaciones del mismo lugar sin fusionarlas. |
-| `gold_proximidad_candidato_recarga` | 49.131 | Candidato–escenario: instalación más cercana al representante, `distancia_plana_m`, empates y estado. | Distancia anterior conservada como contraste de representación. |
+| `gold_proximidad_candidato_recarga` | 49.131 | Candidato–escenario: instalación más cercana al representante, `distancia_plana_m`, empates y estado. | Contrastar la distancia del representante con la de la geometría original. |
 | `gold_control_area_recarga` | 40.332 | Área–escenario: número e IDs de instalaciones que intersectan la geometría original. | Identificar recarga coincidente con un área, sin acreditar acceso o suficiencia. |
 | `gold_solapamientos_candidatos` | 1.269 | Par de candidatos: dimensión/superficie de intersección y cobertura en ambos sentidos. | Revisar redundancias cartográficas, sin deduplicación automática. |
-| `gold_control_borde` | 49.131 | Candidato–escenario: distancia del representante al borde CV, aviso y estado. | Diagnóstico original de posible influencia exterior. |
+| `gold_control_borde` | 49.131 | Candidato–escenario: distancia del representante al borde CV, aviso y estado. | Advertir de posible oferta exterior al ámbito de datos. |
 | `gold_referencias_normalizacion` | 2 | Dimensión: variable, unidad, universo, escenario de referencia, contadores, mínimo, máximo y estado. | Mantener escalas comunes y auditables. |
 | `gold_variables_municipio` | 542 | Municipio: Distintivo 0, `demanda_normalizada_log`, contraste lineal y estado. | Guardar la dimensión de demanda una sola vez por municipio. |
 | `gold_variables_candidato` | 49.131 | Candidato–escenario: contexto exclusivo, `distancia_minima_geometria_m`, escalas log/lineal, distancia al borde de su geometría y aviso. | Comparar separación respecto a oferta, con contexto e incertidumbre explícitos. |
@@ -158,7 +146,7 @@ representan sesiones, clientes reales, demanda individual o emplazamientos viabl
 Las tres filas por candidato corresponden a `principal_admitida`,
 `incluye_pendientes` e `incluye_ausentes_historicas`. Se busca oferta en todo
 el ámbito, también en otros municipios. Distancias planas en metros, sin rutas.
-En la nueva variable, un área con coordenadas de recarga intersectantes tiene
+En la distancia a la geometría original, un área con recarga intersectante tiene
 distancia cero; no demuestra oferta suficiente, acceso o disponibilidad operativa.
 
 La normalización usa `ln(1+x)/ln(1+M)` y conserva el contraste `x/M`, con unidades
@@ -167,68 +155,51 @@ de vehículos y metros explícitas. Las referencias fijas de esta versión son
 principales, respectivamente. No se reajustan por filtro o escenario ni se
 rellenan ausencias. Cero observado, desconocido y fuera de referencia conservan
 estados distintos. El resultado 0–1 no es un porcentaje de necesidad o cobertura.
-El aviso de borde nuevo utiliza la misma geometría que su distancia; se conserva
+El aviso de borde asociado utiliza la misma geometría que su distancia; se conserva
 separado del aviso calculado con el representante.
 
-Todas las tablas incorporan `version_gold`, pero cada bloque tiene su propia
-versión. Los enlaces entre bloques utilizan sus IDs y las versiones compatibles
-que declara el manifiesto; no se unen ejecuciones distintas por compartir un
-nombre de archivo. Los 106 contextos municipales múltiples no reciben demanda
-exclusiva, y los 52 municipios sin candidatos permanecen en el contexto municipal.
-No se calcula cobertura de personas mediante una media de POI.
-
-Los campos, claves, fórmulas y tipos completos se detallan en los contratos
-[municipal](../CONTRATO_GOLD.md) y [de candidatos](../CONTRATO_CANDIDATOS_GOLD.md),
-los [controles espaciales](../CONTROLES_ESPACIALES_GOLD.md) y las
-[variables y normalización](../VARIABLES_NORMALIZACION_GOLD.md).
+Las tablas Gold de una ejecución comparten `version_gold`. Se relacionan mediante
+el código municipal, el identificador de instalación o el de candidato; las
+medidas de cada candidato se enlazan también por escenario. El manifiesto registra
+columnas, tipos y claves para comprobar los enlaces. Las relaciones múltiples
+se mantienen como tales, sin multiplicar la demanda municipal.
 
 ### Acceso, reproducción y verificación
 
-El repositorio contiene referencias e instrucciones de acceso; los originales y
-salidas pesadas están excluidos de Git. El [catálogo](../CATALOGO_BRONZE.md) y la
-[auditoría](../AUDITORIA_FUENTES.md) identifican proveedores, formatos y archivos.
-`src/incorporar_referencias.py` y `src/auditar_dgt_municipal.py` permiten adquirir
-las referencias territoriales y DGT complementarias. Los demás descargables se
-obtienen de los accesos del apartado 2. Las copias existentes se conservan intactas.
+El código entregado es [preparar_dataset.py](../../src/preparar_dataset.py).
+Contiene el recorrido completo en `main()` y las transformaciones agrupadas
+por fuente, sin depender de otros scripts ni de tablas previamente generadas.
 
-Desde cero, el [README](../../README.md#reproducción) ordena entorno Python 3.12,
-DuckDB 1.5.0 y openpyxl 3.1.5, catálogo Bronze, base territorial, demografía/parque,
-recarga, tráfico/red, POI, i-DE y capas espaciales, validación conjunta y recarga
-versionada. La primera preparación instala la extensión oficial `spatial`.
-Los productores verifican entradas, claves, tipos y resultados exportados, con
-1 GB de memoria del motor y dos hilos; necesitan disco temporal disponible.
+Las fuentes se obtienen mediante los enlaces del apartado 2. El bloque
+`ENTRADAS` del script identifica las rutas relativas del catálogo de archivos,
+la exportación principal y las evidencias complementarias. Para repetir la
+selección exacta se necesitan las copias conservadas, sus recibos, los metadatos
+MITECO/i-DE y las decisiones municipales documentadas, fuera de Git. Estas
+decisiones son entradas revisadas, no correcciones automáticas. Una descarga
+actual puede requerir revisar versiones y no garantiza los mismos resultados.
 
-Para repetir exactamente las selecciones validadas se necesitan también las
-copias de metadatos MITECO/i-DE, recibos, exportación fechada y expediente de
-resoluciones municipales que referencian las instrucciones. Son entradas locales
-conservadas fuera de Git; no se regeneran las decisiones documentales como si
-fueran correcciones automáticas. Clonar el código no descarga esos insumos.
-Una reproducción con nuevas versiones requiere adquirirlas, registrar sus
-metadatos y revisar compatibilidad; no garantiza los mismos recuentos o huellas.
-Los comandos con rutas de informes deben apuntar a las copias disponibles.
-
-Con Silver y la recarga versionada validadas, el orden de Gold es:
+Con Python 3.12 instalado, desde la raíz del proyecto:
 
 ```powershell
-.\.venv\Scripts\python.exe src/preparar_gold_municipal.py
-.\.venv\Scripts\python.exe src/preparar_gold_candidatos.py
-.\.venv\Scripts\python.exe src/preparar_controles_gold.py
-.\.venv\Scripts\python.exe src/preparar_variables_gold.py
-.\.venv\Scripts\python.exe -m unittest discover -s tests -v
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install duckdb==1.5.0 openpyxl==3.1.5
+.\.venv\Scripts\python.exe -c "import duckdb; c=duckdb.connect(config={'extension_directory':'.venv/duckdb_extensions'}); c.execute('INSTALL spatial'); c.close()"
+.\.venv\Scripts\python.exe src/preparar_dataset.py --comprobar-entradas
+.\.venv\Scripts\python.exe src/preparar_dataset.py
 ```
 
-Cada etapa crea una ejecución nueva bajo `resultados/gold/`, con Parquet,
-manifiesto e informe. `actual.json` señala la selección validada; no se sobrescribe
-una ejecución anterior. Los informes conservan huellas, esquema, recuentos,
-periodos, reglas y limitaciones. Se comprueba relectura de valores y tipos,
-WKB/CRS donde hay geometría, integridad referencial y escenarios anidados.
+La instalación inicial requiere Internet; la preparación lee las copias locales.
+La opción `--comprobar-entradas` revisa archivos y metadatos antes de transformar.
+Se utiliza disco temporal, con 1 GB de memoria del motor DuckDB y dos hilos.
+Cada ejecución escribe sus tablas y manifiestos en
+`resultados/entrega02/<ejecución>/`, sin sustituir los originales o salidas previas.
+El manifiesto final se guarda tras completar los controles.
 
-El cierre del 21-10-2026 pasa **194 pruebas, sin omisiones**. El bloque de variables
-verifica 223 archivos de entrada/código, y sus 49.131 distancias coinciden con el
-ensayo previo. Treinta áreas se contrastan además contra el borde completo,
-sin diferencias mayores de 1e-8 m. No se interpreta esta validación técnica como
-exactitud predictiva o prueba de necesidad real. El código y los contratos
-permiten inspeccionar el proceso sin publicar los datos pesados.
+**Verificación del 22-10-2026:** 213 pruebas aprobadas y 61 tablas reproducidas
+(48 Silver y 13 Gold), con esquemas, valores y geometrías equivalentes a la
+preparación anterior; solo cambia el identificador de ejecución Gold. Se
+comprueban claves, relaciones, nulos, escenarios, tipos y conservación al
+exportar. Esto acredita la reproducción técnica, no la necesidad real de recarga.
 
 ## 5. Riesgos y limitaciones
 

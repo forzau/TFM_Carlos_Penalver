@@ -147,6 +147,50 @@ La preparación versionada se reproduce con:
 
 ## Reproducción
 
+### Script único para la Entrega 02
+
+[preparar_dataset.py](src/preparar_dataset.py) reúne en un solo archivo las
+transformaciones Bronze → Silver → Gold y sus controles. `main()` muestra el
+recorrido completo; las secciones por fuente contienen los lectores y las
+transformaciones. Es independiente de los demás scripts, que se conservan.
+
+Con el entorno indicado abajo y la extensión `spatial` instalada, ejecutar
+desde la raíz del proyecto:
+
+```powershell
+.\.venv\Scripts\python.exe src/preparar_dataset.py --comprobar-entradas
+.\.venv\Scripts\python.exe src/preparar_dataset.py
+```
+
+Si falta la extensión, se instala una vez con conexión a Internet:
+
+```powershell
+.\.venv\Scripts\python.exe -c "import duckdb; c=duckdb.connect(config={'extension_directory':'.venv/duckdb_extensions'}); c.execute('INSTALL spatial'); c.close()"
+```
+
+La primera orden comprueba archivos, huellas y metadatos sin transformar tablas.
+El bloque `ENTRADAS` del script identifica el catálogo y cuatro entradas
+complementarias: exportación principal MITECO con su recibo, metadatos MITECO,
+metadatos i-DE y decisiones municipales con sus evidencias. Esas copias deben
+estar disponibles junto con los originales; no se descargan al clonar el código.
+Las rutas son relativas y pueden ajustarse a la ubicación de las copias conservadas.
+
+Cada ejecución genera su propio `resultados/entrega02/<ejecución>/`: manifiesto
+Bronze, 48 tablas Silver, 13 tablas Gold y `manifiesto.json` con entradas,
+esquemas, claves, recuentos y controles. La ejecución lee las fuentes y sus
+evidencias, sin utilizar Silver/Gold anteriores ni modificar sus `actual.json`.
+El TXT DGT se procesa secuencialmente, con almacenamiento temporal en disco.
+El manifiesto final identifica una ejecución completada; una carpeta sin él
+corresponde a una preparación interrumpida o fallida.
+
+Validado el 22-10-2026 con Python 3.12.14 y DuckDB 1.5.0: las 61 tablas
+reproducen los esquemas y el contenido de la preparación anterior, comparando
+también todas las geometrías como WKB y excluyendo únicamente el identificador
+de ejecución `version_gold`. La suite completa pasa 213 pruebas, ocho del
+nuevo script. No se requieren dependencias adicionales.
+
+Los apartados siguientes conservan la reproducción histórica por etapas.
+
 Se utiliza Python 3.12 y DuckDB 1.5.0, sin servidor de base de datos. En la raíz
 del proyecto, con Python instalado, preparar el entorno y ejecutar:
 
