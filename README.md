@@ -8,8 +8,11 @@ El proyecto apoyará a administraciones y operadores en la decisión de dónde
 estudiar nuevas instalaciones públicas. Se preparan demanda potencial municipal,
 oferta registrada y candidatos cartográficos, conservando su incertidumbre.
 
-**Estado a 22-10-2026:** preparación de datos completada hasta Gold. Todavía no
-hay pesos definitivos, ranking de prioridad, modelo entrenado o aplicación web.
+**Estado a 06-11-2026:** preparación de datos completada hasta Gold y baseline
+de segmentación por medianas ejecutado y cerrado como referencia. Se trabaja
+con 541 municipios, 433 de desarrollo y 108 reservados para prueba final.
+La alternativa de clustering ML, su comparación y la evaluación final siguen
+pendientes. Todavía no hay un ranking de prioridad ni aplicación web.
 
 ## Entregas
 
@@ -17,6 +20,9 @@ hay pesos definitivos, ranking de prioridad, modelo entrenado o aplicación web.
 - [Entrega 2: datos y preparación](docs/entregas/02_datos_y_preparacion.md).
   Incluye fuentes y acceso, condiciones de uso, transformaciones, estructura
   final de datos y limitaciones.
+- [Entrega 3: Machine Learning](docs/entregas/03_machine_learning.md).
+  Incluye entradas, tratamiento de rentas, separación espacial, protocolo y
+  resultados del baseline; el trabajo de ML continúa en desarrollo.
 
 ## Código y datos
 
@@ -63,6 +69,8 @@ el identificador de ejecución Gold. La validación acumulada pasa 213 pruebas.
 
 - `config/catalogo_bronze.json`: procedencia e identificación de los originales.
 - `requirements.txt`: versiones de las dependencias Python.
+- `config/exclusiones_segmentacion.json`: exclusión documentada de la primera
+  segmentación y su evaluación.
 
 Una descarga actual puede diferir de las copias utilizadas. La preparación
 conserva nulos, asignaciones pendientes y versiones de recarga por separado;

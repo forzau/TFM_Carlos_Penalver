@@ -1,0 +1,11 @@
+{
+  "municipios_excluidos": [
+    {
+      "codigo_municipio": "46201",
+      "nombre_municipio": "Puebla de San Miguel",
+      "fecha_decision": "2026-11-05",
+      "motivo": "El parque domiciliado presenta una desproporción respecto a la población y existe evidencia de concentración de matriculaciones empresariales por fiscalidad favorable. No se considera suficientemente representativo de demanda local para esta primera segmentación.",
+      "fuente": "https://aeaclub.org/ivtm-impuesto-municipal-vehiculos-paraisos-fiscales/"
+    }
+  ]
+}
