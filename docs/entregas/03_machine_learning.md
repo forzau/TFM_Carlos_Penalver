@@ -2,7 +2,7 @@
 
 **Proyecto:** localización de nuevos puntos de recarga para vehículos eléctricos en la Comunitat Valenciana.
 
-**Estado a 06-11-2026:** primera ejecución del baseline completada sobre las cuatro validaciones internas, con estabilidad, sensibilidad de renta y perfiles descriptivos de los 433 municipios de desarrollo. Silhouette media de validación 0,063; ARI medio de estabilidad 0,916. Los 108 municipios de prueba final siguen reservados. Alternativa ML, comparación de modelos y evaluación final pendientes.
+**Estado a 07-11-2026:** baseline y comparación de K-means, GaussianMixture y Bisecting K-means completados en desarrollo, con k de 2 a 10 y contraste específico con ocho grupos. GMM con dos grupos alcanza silhouette media 0,415 y K-means con tres, 0,327; ninguno supera la estabilidad media del baseline. Interpretación y selección final pendientes; los 108 municipios de prueba final siguen reservados.
 
 ## 1. Qué problema resuelve el modelo
 
@@ -193,7 +193,23 @@ La primera ejecución ajusta medianas exclusivamente en el entrenamiento de cada
 
 ### Alternativa de Machine Learning
 
-Pendiente de desarrollo. Se compararán distintos números de clusters en los métodos que requieran fijarlos, utilizando únicamente el desarrollo y su validación interna para seleccionarlos. La elección atenderá conjuntamente a los cuatro objetivos de evaluación del apartado 4. No se fija todavía algoritmo ni rango de búsqueda, y las ocho combinaciones máximas del baseline no determinan el número de clusters de ML.
+Se comparan tres candidatos: **K-means**, **mezclas gaussianas (GaussianMixture)** y **Bisecting K-means**. Los tres permiten asignar municipios no utilizados en el ajuste sin volver a entrenar. K-means agrupa alrededor de centros; las mezclas gaussianas permiten modelar distinta dispersión y orientación y obtener probabilidades de pertenencia; Bisecting K-means divide grupos sucesivamente y aporta una estructura jerárquica, compartiendo familia con K-means. Su selección como candidatos no presupone que superen al baseline.
+
+Se combinan una **comparación con k nominal igual a 8** y una **exploración común de k de 2 a 10**, utilizando únicamente el desarrollo y su validación cruzada interna. El primer análisis controla el número de grupos previsto; el segundo permite estudiar otras resoluciones. Se registrará también el número efectivo de grupos observados en validación, que puede ser menor que el configurado. El baseline conserva sus reglas y hasta ocho combinaciones, sin ajustar sus cortes para cada k. La elección atenderá conjuntamente a los cuatro objetivos del apartado 4; una mejora con otro k no se atribuirá exclusivamente al algoritmo.
+
+#### Configuración fijada antes de la ejecución
+
+Se mantiene la misma representación de tres variables y las mismas cuatro particiones del baseline. No se exploran otras covarianzas, transformaciones o familias durante esta primera comparación:
+
+| Método | Configuración |
+| --- | --- |
+| [K-means](https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html) | Inicialización k-means++, 20 inicios por ajuste, algoritmo Lloyd, máximo 500 iteraciones y tolerancia 0,0001. |
+| [GaussianMixture](https://scikit-learn.org/stable/modules/generated/sklearn.mixture.GaussianMixture.html) | Covarianza completa, inicialización mediante k-means, 10 inicios por ajuste, máximo 500 iteraciones, tolerancia 0,001 y regularización diagonal de covarianza 0,000001. Asignación al componente de mayor probabilidad. |
+| [Bisecting K-means](https://scikit-learn.org/stable/modules/generated/sklearn.cluster.BisectingKMeans.html) | Inicialización k-means++, 10 inicios por bisección, división del grupo de mayor inercia, algoritmo Lloyd, máximo 500 iteraciones y tolerancia 0,0001. |
+
+La semilla principal es 20261107 más el número de partición interna; las perturbaciones espaciales y la sensibilidad de renta conservan esa semilla. Para estudiar inicializaciones se repite el procedimiento completo con cuatro semillas adicionales, sumando 100, 200, 300 y 400, sin elegir la semilla según validación. Los inicios múltiples se eligen con el objetivo de entrenamiento propio de cada método. Los presupuestos de los algoritmos no son equivalentes: en Bisecting K-means los inicios son por bisección.
+
+Cada una de las 27 combinaciones método/k incluye cuatro ajustes principales, 40 perturbaciones espaciales, 16 ajustes con semillas adicionales, cuatro sensibilidades de renta y un descriptivo sobre los 433 de desarrollo: **1.755 ajustes en total**. Los descriptivos sirven para interpretar perfiles, no como evaluación adicional. Se conservan asignaciones, parámetros de preparación, modelos principales, avisos de ajuste y huellas de procedencia. Las probabilidades de GMM pertenecen al modelo y no tienen calibración externa.
 
 ## 4. Validación y evaluación
 
@@ -205,11 +221,11 @@ Se utiliza una cuadrícula de **20 km de lado**, con origen fijo en (0, 0) del s
 
 El conjunto de desarrollo se utilizará para comparar el baseline y las alternativas ML y elegir la preparación y configuración. Las particiones internas respetarán también la agrupación espacial. La prueba final se reservará para evaluar la solución elegida y no se utilizará para seleccionar variables, algoritmo o número de grupos. Ambos enfoques compartirán los mismos municipios de evaluación y las mismas condiciones de preparación, incluidas las cautelas de imputación del apartado 2.
 
-El desarrollo se divide en **cuatro particiones internas de validación**, con 108, 108, 109 y 108 municipios, respectivamente. En cada ajuste se entrenará con las otras tres, 325 municipios o 324 cuando se reserven los 109, sin utilizar nunca la prueba final. Cada municipio de desarrollo aparece exactamente una vez en validación interna y no se comparte ningún bloque con su entrenamiento. Esta cantidad permite representar los cinco tramos en todas las validaciones, incluida una de las cuatro grandes ciudades de desarrollo en cada una; cinco particiones internas no lo permitirían.
+El desarrollo se divide en **cuatro particiones internas de validación**, con 108, 108, 109 y 108 municipios, respectivamente. Este esquema constituye **validación cruzada espacial de cuatro particiones**: en cada ajuste se entrenará con las otras tres, 325 municipios o 324 cuando se reserven los 109, sin utilizar nunca la prueba final. Cada municipio de desarrollo aparece exactamente una vez en validación interna y no se comparte ningún bloque con su entrenamiento. Esta cantidad permite representar los cinco tramos en todas las validaciones, incluida una de las cuatro grandes ciudades de desarrollo en cada una; cinco particiones internas no lo permitirían.
 
 Las asignaciones quedan identificadas por la ejecución `20261106T110046844319Z`, con código municipal, versión Gold, bloque, tramo, conjunto y partición interna. Se conservan en CSV y Parquet junto con un manifiesto de fuentes, huellas, parámetros y recuentos. Se utiliza una búsqueda determinista de 32 asignaciones a partir de la semilla 20261106, equilibrando desviaciones relativas cuadráticas de los conteos por tramo y del total en cinco lotes, uno final y cuatro internos. Cada lote recibe un bloque con una gran ciudad. La semilla elegida es 20261106; el diseño no consulta rentas, parque, oferta ni resultados de modelos. No se cambiará el reparto en función del rendimiento obtenido.
 
-La preparación y el protocolo de métricas se han aplicado al baseline; la comparación con ML y la prueba final siguen pendientes. El resultado final del producto podrá incluir los 541 municipios tras la evaluación; los reservados para prueba no se eliminan del ámbito final.
+La preparación y el protocolo de métricas se han aplicado al baseline y a los tres candidatos ML; la comparación de desarrollo está completada y la prueba final sigue pendiente. El resultado final del producto podrá incluir los 541 municipios tras la evaluación; los reservados para prueba no se eliminan del ámbito final.
 
 ### Estratificación por población aplicada
 
@@ -254,7 +270,7 @@ La sensibilidad de renta repetirá cada ajuste usando solo municipios con renta 
 
 Se buscará mejora consistente frente al baseline, estabilidad y perfiles interpretables; si las opciones ofrecen resultados parecidos, se preferirá la más sencilla y con menos grupos. Se revisarán grupos pequeños o dominantes sin imponer tamaños iguales. No se fija un umbral universal de silhouette ni se suman los objetivos con pesos arbitrarios. Las cuatro validaciones se mostrarán por separado y no se tratarán como observaciones independientes para inventar intervalos de confianza. Una puntuación geométrica favorable no acredita mejores instalaciones.
 
-La preparación, las funciones de métricas y las reglas del baseline han pasado once comprobaciones sintéticas, incluidas alteraciones de validación que no cambian la preparación del entrenamiento, ausencia de donantes, separación de bloques, silhouette degenerada, ARI con códigos reordenados, empates y medianas pares. Las matrices guardadas se han contrastado mediante SQL con los parámetros exclusivos de entrenamiento.
+La preparación, las funciones de métricas y las reglas del baseline han pasado quince comprobaciones sintéticas, incluidas alteraciones de validación que no cambian la preparación del entrenamiento, ausencia de donantes, separación de bloques, silhouette degenerada, ARI con códigos reordenados, empates y medianas pares. Las matrices guardadas se han contrastado mediante SQL con los parámetros exclusivos de entrenamiento.
 
 ### Primera ejecución del baseline
 
@@ -294,10 +310,75 @@ Se observan las ocho combinaciones, con tamaños entre 16 y 82. Los perfiles son
 
 Los controles independientes han recalculado las medianas mediante SQL y verificado las 433 reglas de asignación, la silhouette municipal mediante distancias directas y los 40 ARI de estabilidad y cuatro de sensibilidad mediante tablas de contingencia. Las huellas coinciden y no hay municipios de prueba final entre las salidas.
 
+### Resultados de la comparación ML en desarrollo — 07-11-2026
+
+Se han completado las **27 combinaciones** y los **1.755 ajustes** previstos, sin modificar particiones, preparación o baseline según los resultados. Todos los métodos asignan el 100% de los municipios de validación. La ejecución es `20261107T114151583233Z`; los **108 de prueba final siguen sin evaluar**.
+
+#### Comparación con ocho grupos configurados
+
+Las métricas son medias de las cuatro validaciones; estabilidad resume las 40 perturbaciones y semillas los 16 ajustes adicionales. El baseline tiene hasta ocho combinaciones, sin inicialización aleatoria. El número observado puede ser menor en una validación que no reciba municipios de todos los grupos.
+
+| Método | Silhouette | ARI estabilidad | ARI semillas | ARI renta | Grupos observados en las cuatro validaciones |
+| --- | ---: | ---: | ---: | ---: | --- |
+| Baseline | 0,063 | 0,916 | No procede | 0,961 | 8 / 8 / 8 / 7 |
+| K-means | 0,210 | 0,746 | 0,790 | 0,727 | 8 / 8 / 8 / 7 |
+| GMM | 0,168 | 0,562 | 0,638 | 0,626 | 7 / 6 / 8 / 6 |
+| Bisecting K-means | 0,145 | 0,677 | 0,819 | 0,692 | 8 / 8 / 7 / 7 |
+
+Los tres candidatos mejoran la separación media con k nominal 8, pero los tres presentan menor estabilidad frente a perturbaciones y mayor sensibilidad al retirar rentas estimadas que la referencia. Por tanto, esta comparación no demuestra una mejora conjunta de ML. Tampoco garantiza ocho grupos efectivos en cada validación.
+
+#### Exploración del número de grupos
+
+| k configurado | Silhouette K-means | Silhouette GMM | Silhouette Bisecting K-means |
+| ---: | ---: | ---: | ---: |
+| 2 | 0,311 | 0,415 | 0,309 |
+| 3 | 0,327 | 0,266 | 0,305 |
+| 4 | 0,279 | 0,250 | 0,277 |
+| 5 | 0,215 | 0,229 | 0,201 |
+| 6 | 0,189 | 0,204 | 0,172 |
+| 7 | 0,235 | 0,167 | 0,143 |
+| 8 | 0,210 | 0,168 | 0,145 |
+| 9 | 0,206 | 0,143 | 0,149 |
+| 10 | 0,194 | 0,085 | 0,144 |
+
+La máxima silhouette media de cada método aparece con pocos grupos. La siguiente tabla muestra esos máximos geométricos; no constituye una selección automática del modelo final. Los tamaños pertenecen al ajuste descriptivo de entrenamiento sobre los 433 y no se agregan etiquetas de validaciones distintas.
+
+| Método | k | Silhouette: media [mín.; máx.] | ARI estabilidad: media [mín.] | ARI semillas | ARI renta | Tamaños descriptivos |
+| --- | ---: | --- | --- | ---: | ---: | --- |
+| K-means | 3 | 0,327 [0,268; 0,370] | 0,890 [0,730] | 0,978 | 0,969 | 192 / 43 / 198 |
+| GMM | 2 | 0,415 [0,319; 0,488] | 0,903 [0,598] | 0,972 | 0,968 | 61 / 372 |
+| Bisecting K-means | 2 | 0,309 [0,251; 0,354] | 0,796 [0,016] | 0,914 | 0,855 | 215 / 218 |
+
+**GMM con dos grupos** alcanza la mayor separación media de la búsqueda, 0,415, y ARI de estabilidad 0,903, cercano pero inferior al 0,916 del baseline. Su mínimo de estabilidad es 0,598 frente a 0,727 de la referencia. Produce un grupo de 372 municipios (85,9%) y otro de 61: esa concentración puede limitar la comparación entre municipios parecidos, aunque por sí sola no invalida la solución.
+
+**K-means con tres grupos** alcanza silhouette 0,327, ARI de estabilidad 0,890 y ARI de semillas 0,978. Sus tamaños descriptivos son 192, 43 y 198. Ofrece una alternativa con mayor detalle, menor separación media que GMM de dos grupos y mayor mínimo de estabilidad, 0,730. No se elige únicamente por ese equilibrio numérico: falta cerrar su interpretación para el producto.
+
+Bisecting K-means obtiene su máxima separación con dos grupos, pero su ARI mínimo de estabilidad cae a 0,016, igual que K-means con dos. Con tres grupos Bisecting presenta silhouette 0,305 y estabilidad media 0,848: aumentar grupos puede mejorar estabilidad aun reduciendo ligeramente la silhouette. Las configuraciones de k alto tampoco aportan una mejora clara; GMM con nueve grupos deja un único municipio en uno de sus perfiles descriptivos y con diez deja un grupo de dos.
+
+#### Primera lectura de los dos candidatos más prometedores
+
+Son medianas de entrenamiento, con identificadores arbitrarios sin orden de prioridad. La proporción Distintivo 0 se expresa en porcentaje y la renta en EUR/persona/año de 2023, incluidas las estimaciones documentadas.
+
+| Método | Grupo | Municipios | Vehículos Distintivo 0 | Proporción Distintivo 0 | Renta |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| GMM (k=2) | 0 | 61 | 20,0 | 3,14% | 15632,0 |
+| GMM (k=2) | 1 | 372 | 18,5 | 1,21% | 13276,5 |
+| K-means (k=3) | 0 | 192 | 78,5 | 1,50% | 12858,0 |
+| K-means (k=3) | 1 | 43 | 162,0 | 3,30% | 15842,0 |
+| K-means (k=3) | 2 | 198 | 4,0 | 0,84% | 13959,0 |
+
+GMM distingue principalmente un perfil con mayor proporción de Distintivo 0 y renta mediana, pero volúmenes muy diversos: el grupo de 61 abarca de 1 a 10.246 vehículos. K-means separa además un grupo de bajo volumen, conservando también heterogeneidad. Estas descripciones no acreditan déficit de recarga ni que la renta cause adopción; deben servir para valorar qué comparación municipal resulta útil.
+
+#### Comprobaciones y límites
+
+Las quince pruebas sintéticas de preparación, baseline y candidatos pasan. Se han verificado las huellas, los códigos y las coberturas; se han recalculado independientemente las 108 silhouettes por distancias directas y los 1.620 ARI de las variantes por contingencias, además de comprobar escalas y donantes de las 49 preparaciones. Los errores numéricos máximos son inferiores a 5×10⁻¹⁴ y 2×10⁻¹⁶, respectivamente. Las asignaciones principales coinciden con los modelos guardados; en K-means y GMM se han contrastado además con sus centros y densidades, respectivamente. No se han registrado avisos, ajustes GMM sin convergencia o ajustes que alcancen el límite de 500 iteraciones donde este se informa; Bisecting no expone un contador global equivalente.
+
+Se mantienen las limitaciones de bloques de 20 km sin banda de separación, rentas estimadas y silhouette favorable a grupos compactos y convexos. Los cuatro resultados y las perturbaciones no se tratan como muestras independientes para construir intervalos de confianza. La búsqueda informa la selección en desarrollo; no sustituye la prueba final ni demuestra utilidad de instalación.
+
 ## 5. Decisión y uso en el producto
 
 Se da por **cerrado el diseño, la ejecución y la evaluación inicial del baseline en desarrollo**, conservando la versión `20261106T114636184831Z` como referencia fija para comparar ML. Se han comprobado reglas, cobertura, comportamiento espacial, estabilidad, sensibilidad y perfiles, con una preparación reproducible que respeta entrenamiento y validación. No se necesita optimizar esta referencia sencilla para elevar su puntuación antes de probar ML.
 
 La interpretación es que las reglas producen categorías explicables y generalmente estables, mientras su capacidad para reunir municipios próximos en las tres dimensiones es limitada. Ambas observaciones son compatibles: cortes parecidos pueden reproducir de forma estable perfiles muy amplios. La baja silhouette indica solapamiento en la representación elegida; no demuestra por sí sola que los datos sean inadecuados o que no exista una estructura aprovechable. Las rentas estimadas muestran una influencia limitada sobre la mayoría de las categorías publicadas en la prueba realizada, sin validar los importes.
 
-La alternativa ML deberá justificar su aportación con las mismas entradas, preparación, particiones y criterios. Se considerarán conjuntamente la mejora geométrica, estabilidad, interpretación y número y tamaños de grupos, para evitar atribuir una mejora útil únicamente a un cambio de fragmentación. Todavía no se ha demostrado que ML mejore la referencia, no se decide un modelo final y no se deriva un ranking o una necesidad de nuevas instalaciones de estos perfiles. La evaluación final sobre los 108 reservados sigue pendiente tras seleccionar la solución en desarrollo.
+La comparación ML utiliza las mismas entradas, preparación, particiones y criterios. Con ocho grupos configurados mejora la separación media y empeora la estabilidad respecto al baseline. La exploración de k identifica GMM con dos grupos y K-means con tres como candidatos para revisar sus perfiles y el detalle que necesitan los usuarios del producto. No hay una superioridad conjunta demostrada: ninguna configuración probada supera la estabilidad media del baseline, y el mejor resultado geométrico concentra el 85,9% en un grupo. Se mantiene pendiente la selección final razonada antes de evaluar los 108 reservados. No se deriva un ranking ni una necesidad de nuevas instalaciones de estos perfiles.

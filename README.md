@@ -8,11 +8,12 @@ El proyecto apoyará a administraciones y operadores en la decisión de dónde
 estudiar nuevas instalaciones públicas. Se preparan demanda potencial municipal,
 oferta registrada y candidatos cartográficos, conservando su incertidumbre.
 
-**Estado a 06-11-2026:** preparación de datos completada hasta Gold y baseline
-de segmentación por medianas ejecutado y cerrado como referencia. Se trabaja
-con 541 municipios, 433 de desarrollo y 108 reservados para prueba final.
-La alternativa de clustering ML, su comparación y la evaluación final siguen
-pendientes. Todavía no hay un ranking de prioridad ni aplicación web.
+**Estado a 07-11-2026:** preparación de datos completada hasta Gold, baseline
+por medianas cerrado y comparación de tres métodos de clustering ejecutada
+con k de 2 a 10. Se trabaja con 541 municipios, 433 de desarrollo y 108
+reservados para prueba final. GMM con dos grupos y K-means con tres destacan
+como candidatos para interpretar; selección y evaluación final pendientes.
+Todavía no hay un ranking de prioridad ni aplicación web.
 
 ## Entregas
 
@@ -22,7 +23,7 @@ pendientes. Todavía no hay un ranking de prioridad ni aplicación web.
   final de datos y limitaciones.
 - [Entrega 3: Machine Learning](docs/entregas/03_machine_learning.md).
   Incluye entradas, tratamiento de rentas, separación espacial, protocolo y
-  resultados del baseline; el trabajo de ML continúa en desarrollo.
+  resultados del baseline y comparación ML; la selección final sigue pendiente.
 
 ## Código y datos
 
