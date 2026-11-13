@@ -39,9 +39,25 @@ Todavía no hay un ranking de prioridad ni aplicación web.
 
 ## Código y datos
 
-[preparar_dataset.py](src/preparar_dataset.py) contiene el flujo completo
-Bronze → Silver → Gold en un único archivo. `main()` muestra la secuencia y
-las secciones por fuente reúnen las transformaciones y sus controles.
+La preparación está en [src/datos_y_preparacion/](src/datos_y_preparacion/).
+[flujo.py](src/datos_y_preparacion/flujo.py) muestra la secuencia Bronze →
+Silver → Gold; los módulos separan las transformaciones y sus controles.
+Silver se divide por fuente para evitar otro archivo excesivamente grande.
+
+| Ruta | Responsabilidad |
+| --- | --- |
+| `src/datos_y_preparacion/bronze.py` | Originales, catálogo y comprobación de entradas. |
+| `src/datos_y_preparacion/silver/` | Territorio, demografía, recarga, tráfico, OSM, capacidad e integración. |
+| `src/datos_y_preparacion/gold.py` | Contexto municipal, candidatos, controles y variables. |
+| `src/datos_y_preparacion/comunes.py` | SQL, integridad, conexión y exportación compartidos. |
+| `src/datos_y_preparacion/historico/` | Preparaciones y auditorías anteriores; algunas funciones siguen reutilizándose. |
+| `src/modelado/` | Preparación de experimentos, baseline, comparación, verificadores e imágenes. |
+| `tests/` | Pruebas organizadas por preparación y modelado, incluidas en Git. |
+
+El [mapa de estructura](docs/ESTRUCTURA.md) explica los puntos de entrada y
+distingue los experimentos vigentes de sus antecedentes. La entrada
+[preparar_dataset.py](src/preparar_dataset.py) conserva los comandos de la
+Entrega 2 y delega en el flujo modular.
 
 | Capa | Contenido |
 | --- | --- |
@@ -62,8 +78,8 @@ Con Python 3.12 instalado, desde la raíz del proyecto:
 python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
 .\.venv\Scripts\python.exe -c "import duckdb; c=duckdb.connect(config={'extension_directory':'.venv/duckdb_extensions'}); c.execute('INSTALL spatial'); c.close()"
-.\.venv\Scripts\python.exe src/preparar_dataset.py --comprobar-entradas
-.\.venv\Scripts\python.exe src/preparar_dataset.py
+.\.venv\Scripts\python.exe -m src.datos_y_preparacion --comprobar-entradas
+.\.venv\Scripts\python.exe -m src.datos_y_preparacion
 ```
 
 La instalación inicial requiere Internet. La preparación utiliza las copias
@@ -72,11 +88,22 @@ su motor y dos hilos; el procesamiento requiere espacio temporal en disco.
 
 Cada ejecución crea `resultados/entrega02/<ejecución>/`, con las tablas y sus
 manifiestos. El manifiesto final se guarda al completar los controles e incluye
-procedencia, huellas SHA-256, esquemas, claves y recuentos.
+procedencia, huellas SHA-256 de las entradas y los módulos utilizados,
+esquemas, claves y recuentos.
 
-**Verificación:** el script reproduce las 61 tablas Silver/Gold de la preparación
-anterior con los mismos esquemas, valores y geometrías, excluyendo únicamente
-el identificador de ejecución Gold. La validación acumulada pasa 213 pruebas.
+**Verificación:** antes de modularizar, el flujo reprodujo las 61 tablas
+Silver/Gold con los mismos esquemas, valores y geometrías, excluyendo únicamente
+el identificador de ejecución Gold. La reorganización conserva las funciones
+de transformación y sus esquemas; no se ha repetido la preparación completa.
+Para ejecutar las pruebas desde la raíz:
+
+```powershell
+.\.venv\Scripts\python.exe -m unittest discover -s tests -t .
+```
+
+Las copias originales, las salidas y las versiones antiguas de código asociadas
+a sus huellas permanecen fuera de Git. Docker queda pendiente; todavía no hay
+contenedor ni despliegue automatizado.
 
 ## Archivos de apoyo
 
