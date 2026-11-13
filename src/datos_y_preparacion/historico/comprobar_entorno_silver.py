@@ -86,7 +86,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--instalar-spatial', action='store_true', help='Descarga inicial desde el repositorio oficial; requiere Internet')
     args = parser.parse_args()
-    output = ROOT / 'resultados/diseno_silver'
+    output = ROOT / 'resultados/apoyo/diseno/diseno_silver'
     output.mkdir(parents=True, exist_ok=True)
     cache = ROOT / '.venv/duckdb_extensions'
     cache.mkdir(parents=True, exist_ok=True)
@@ -111,7 +111,7 @@ def main():
         assert types == ('MULTIPOLYGON', "GEOMETRY('EPSG:4326')"), types
         report['geojson_ign'] = {'tipo_muestra': types[0], 'crs_interpretado_por_lector': types[1]}
     (output / 'entorno.json').write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-    print('Formatos, ejes, Z y muestras de ocho capas GeoPackage y un GeoJSON comprobados. Perfil: resultados/diseno_silver/entorno.json')
+    print('Formatos, ejes, Z y muestras de ocho capas GeoPackage y un GeoJSON comprobados. Perfil: resultados/apoyo/diseno/diseno_silver/entorno.json')
 
 
 if __name__ == '__main__':

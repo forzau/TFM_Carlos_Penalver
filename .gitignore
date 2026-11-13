@@ -11,6 +11,28 @@
 /AGENTS.md
 /resultados/*
 !/resultados/.gitkeep
+!/resultados/README.md
+!/resultados/informes/
+/resultados/informes/*
+!/resultados/informes/procedencia.json
+!/resultados/informes/preparacion/
+/resultados/informes/preparacion/*
+!/resultados/informes/preparacion/resumen_tablas.csv
+!/resultados/informes/preparacion/esquemas.json
+!/resultados/informes/preparacion/resumen.json
+!/resultados/informes/modelado/
+/resultados/informes/modelado/*
+!/resultados/informes/modelado/comparacion.csv
+!/resultados/informes/modelado/perfiles_baseline.csv
+!/resultados/informes/modelado/perfiles_modelos.csv
+!/resultados/informes/modelado/protocolo.json
+!/resultados/informes/modelado/resumen.json
+!/resultados/informes/modelado/verificacion_baseline.json
+!/resultados/informes/modelado/verificacion_comparacion.json
+!/resultados/informes/modelado/imagenes/
+/resultados/informes/modelado/imagenes/*
+!/resultados/informes/modelado/imagenes/kmeans_k[2-6].png
+!/resultados/informes/modelado/imagenes/gmm_k[2-6].png
 
 # Credenciales y configuración privada del equipo.
 .env

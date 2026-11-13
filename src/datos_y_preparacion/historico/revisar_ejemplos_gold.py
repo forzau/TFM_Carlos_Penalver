@@ -181,7 +181,7 @@ def main():
                 assert (expected is None and observed is None) or math.isclose(expected,observed,rel_tol=1e-12)
     for e in files:checked(ROOT,ROOT/e['ruta'],e)
     run=datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')
-    target=ROOT/'resultados/revision_gold'/run;target.mkdir(parents=True,exist_ok=False)
+    target=ROOT/'resultados/apoyo/auditorias/revision_gold'/run;target.mkdir(parents=True,exist_ok=False)
     report={'ejecucion':run,'versiones_gold':versions,'estado':'revision_contrastiva_sin_modificar_gold',
         'seleccion':'Doce municipios por contrastes demográficos, ausencia de oferta, borde e incertidumbre; no muestra aleatoria.',
         'casos':list(CASES),'consultas_sql':QUERIES,'muestreo_distancias_sql':sample_sql,

@@ -65,10 +65,10 @@ Entrega 2 y delega en el flujo modular.
 | Silver | 48 tablas de datos preparados, con claves, tipos, geometrías e incidencias. |
 | Gold | 13 tablas de contexto municipal, oferta, candidatos, diagnósticos y variables normalizadas. |
 
-Los originales y las salidas de datos están excluidos del repositorio. Los
+Los originales y las bases completas están excluidos del repositorio. Los
 enlaces de acceso están en la segunda entrega. Para repetir exactamente la
 preparación se necesitan también las copias y evidencias documentales indicadas
-en el bloque `ENTRADAS` del script; clonar el repositorio no las descarga.
+en `ENTRADAS` de `src/datos_y_preparacion/bronze.py`; clonar el repositorio no las descarga.
 
 ## Reproducción
 
@@ -101,9 +101,13 @@ Para ejecutar las pruebas desde la raíz:
 .\.venv\Scripts\python.exe -m unittest discover -s tests -t .
 ```
 
-Las copias originales, las salidas y las versiones antiguas de código asociadas
-a sus huellas permanecen fuera de Git. Docker queda pendiente; todavía no hay
-contenedor ni despliegue automatizado.
+Los [informes y figuras](resultados/README.md) incluyen esquemas, recuentos y
+métricas agregadas para revisar las ejecuciones. Se regeneran con
+`python -m src.exportar_resultados` desde las salidas locales guardadas.
+
+Las copias originales, las bases completas y las versiones antiguas de código
+asociadas a sus huellas permanecen fuera de Git. Docker queda pendiente;
+todavía no hay contenedor ni despliegue automatizado.
 
 ## Archivos de apoyo
 

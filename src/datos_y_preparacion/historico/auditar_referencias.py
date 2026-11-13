@@ -128,7 +128,7 @@ def main():
               'ign': geometry_reference(directory / 'unidades_cv.geojson', directory / 'recuento.xml', codes),
               'poblacion_codigos_coinciden': True, 'dgt_municipios': municipal['municipios_cv'],
               'renta': inspect_income(ROOT / 'Fuentes/Renta.csv', codes)}
-    output = ROOT / 'resultados/referencias_territoriales'
+    output = ROOT / 'resultados/apoyo/auditorias/referencias_territoriales'
     output.mkdir(parents=True, exist_ok=True)
     (output / 'perfil.json').write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     print(json.dumps(result, ensure_ascii=False))

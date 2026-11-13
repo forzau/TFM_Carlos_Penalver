@@ -1,0 +1,27 @@
+{
+  "estado": "correcto",
+  "modelos_con_prediccion_independiente": 10,
+  "ajustes_registrados": 160,
+  "preparaciones_contrastadas": 12,
+  "silhouettes_recalculadas": 10190,
+  "ari_por_contingencias": 160,
+  "error_max_silhouette": 3.034671403057132e-09,
+  "error_max_ari": 1.1102230246251565e-16,
+  "error_max_parametros": 0.0,
+  "tolerancia_silhouette": 1e-08,
+  "limite": "No se reajustan modelos ni se comprueba generalización o necesidad real.",
+  "manifiesto": {
+    "ruta": "resultados/modelado/comparacion_descriptiva/20261111T161605225327Z/manifiesto.json",
+    "bytes": 11854,
+    "sha256": "09486de7d2d8d24bd9328f5848a5f9ec3ba7ed415cf75bb72699b914b949f12e",
+    "mtime_ns": 1794413781284374600,
+    "modificacion_local_utc": "2026-11-11T16:16:21.284375+00:00"
+  },
+  "verificador": {
+    "ruta": "src/verificar_comparacion_descriptiva.py",
+    "bytes": 9616,
+    "sha256": "d5292cf85e7b21ecd767639fec132e787af4224d5832f1a6f45f9feb836079d1",
+    "mtime_ns": 1794413841358209200,
+    "modificacion_local_utc": "2026-11-11T16:17:21.358209+00:00"
+  }
+}

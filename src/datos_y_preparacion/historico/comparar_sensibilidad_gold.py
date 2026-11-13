@@ -168,7 +168,7 @@ def main():
             raise ValueError('Entrada modificada durante la comparación')
         unique[entry['ruta']]=checked(ROOT,ROOT/entry['ruta'],entry)
     run=datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')
-    target=ROOT/'resultados/sensibilidad_gold'/run;target.mkdir(parents=True,exist_ok=False)
+    target=ROOT/'resultados/apoyo/auditorias/sensibilidad_gold'/run;target.mkdir(parents=True,exist_ok=False)
     report={'ejecucion':run,'estado':'comparacion_sin_ponderar_ni_modificar_gold',
         'versiones_gold':{k:v['version_gold'] for k,v in manifests.items()},
         'periodos':manifests['variables']['periodos'],'entradas_verificadas':list(unique.values()),'codigo':code,

@@ -1,0 +1,207 @@
+{
+  "productor": {
+    "ruta": "src/exportar_resultados.py",
+    "bytes": 6056,
+    "sha256": "7aa8fe5bf1a2f2b1cb70d4a8edb52856d05cb110e350d14b3d04dd09b8a296d6"
+  },
+  "fuentes": [
+    {
+      "ruta": "resultados/entrega02/20261022T150925140929Z/manifiesto.json",
+      "bytes": 326128,
+      "sha256": "047fa9d69162a0dcee5eceb4a2ae5a0202d1780d4e44e671a076ad379e3bae93"
+    },
+    {
+      "ruta": "resultados/modelado/baseline_descriptivo/20261111T160303732930Z/resultados.json",
+      "bytes": 43168,
+      "sha256": "5c477cdccb4f8c3d8cfa2ed9675088183ee6bb46e1d824bc94998a8ddfe31d16"
+    },
+    {
+      "ruta": "resultados/modelado/comparacion_descriptiva/20261111T161605225327Z/protocolo.json",
+      "bytes": 8182,
+      "sha256": "36ddfb3adc0dfb3d8dda7414ad29630bb99813ff3ca8cb425d86d6f1807e1577"
+    },
+    {
+      "ruta": "resultados/modelado/comparacion_descriptiva/20261111T161605225327Z/imagenes_clusters/20261111T170051625718Z/manifiesto_imagenes.json",
+      "bytes": 19669,
+      "sha256": "b22c5b619f3f96669f67249bb01bc096493383e890f0fe90694b0e19f55e1110"
+    },
+    {
+      "ruta": "resultados/modelado/comparacion_descriptiva/20261111T161605225327Z/comparacion.csv",
+      "bytes": 1730,
+      "sha256": "5c37615ba5ba56dbb0d509df642f6f62cd6df22ba828a1c050cbe270159ee69e"
+    },
+    {
+      "ruta": "resultados/modelado/comparacion_descriptiva/20261111T161605225327Z/resumen_perfiles.csv",
+      "bytes": 1290,
+      "sha256": "29f47d1c846b571e99d05e7b4fb8d2771ff690063029fa1922901be8b2c1ecfc"
+    },
+    {
+      "ruta": "resultados/modelado/baseline_descriptivo/20261111T160303732930Z/resumen_perfiles.csv",
+      "bytes": 225,
+      "sha256": "84e076d32cd9017069d53b1232e788afe2c87dfcb734f69dd3fd855489e0773a"
+    },
+    {
+      "ruta": "resultados/modelado/baseline_descriptivo/20261111T160303732930Z/verificacion_independiente.json",
+      "bytes": 1078,
+      "sha256": "959e71265aa2125ba2f5503ce526a4222e75f7bbab1ccc40086e7ebf9d51a227"
+    },
+    {
+      "ruta": "resultados/modelado/comparacion_descriptiva/20261111T161605225327Z/verificacion_independiente.json",
+      "bytes": 1089,
+      "sha256": "cb52a9195f12b12fc00b0eb96d9927dea8026c0ad32f03f7d2864366f4b9cd87"
+    },
+    {
+      "ruta": "resultados/modelado/comparacion_descriptiva/20261111T161605225327Z/imagenes_clusters/20261111T170051625718Z/kmeans_k2.png",
+      "bytes": 237400,
+      "sha256": "2bf405c459f6fcf59f94096347229ed763d7204df998c43fe8ace9939c6243eb"
+    },
+    {
+      "ruta": "resultados/modelado/comparacion_descriptiva/20261111T161605225327Z/imagenes_clusters/20261111T170051625718Z/kmeans_k3.png",
+      "bytes": 244966,
+      "sha256": "cd771dd8387a8929e678cadb0c29fb9af9212600e961915c5032e76d4abc5251"
+    },
+    {
+      "ruta": "resultados/modelado/comparacion_descriptiva/20261111T161605225327Z/imagenes_clusters/20261111T170051625718Z/kmeans_k4.png",
+      "bytes": 255428,
+      "sha256": "6df4b11997036f84d0d61f984d21db8d4b095b3a5a100a7f56dbf547c8e4fa54"
+    },
+    {
+      "ruta": "resultados/modelado/comparacion_descriptiva/20261111T161605225327Z/imagenes_clusters/20261111T170051625718Z/kmeans_k5.png",
+      "bytes": 263183,
+      "sha256": "e84d4f90a3bafa715c4091b23c7a8fffc28a77efa86259d6da7825954dbf7e94"
+    },
+    {
+      "ruta": "resultados/modelado/comparacion_descriptiva/20261111T161605225327Z/imagenes_clusters/20261111T170051625718Z/kmeans_k6.png",
+      "bytes": 274230,
+      "sha256": "2006ef5d0be6f32d21e5757f5ea2d3ac0440431abbd8e6e473076820e6da7925"
+    },
+    {
+      "ruta": "resultados/modelado/comparacion_descriptiva/20261111T161605225327Z/imagenes_clusters/20261111T170051625718Z/gmm_k2.png",
+      "bytes": 232821,
+      "sha256": "2e20588bff87a97b4c98bf0e51c5b09e4e188949302cf32b562782499dcf5a7b"
+    },
+    {
+      "ruta": "resultados/modelado/comparacion_descriptiva/20261111T161605225327Z/imagenes_clusters/20261111T170051625718Z/gmm_k3.png",
+      "bytes": 241764,
+      "sha256": "c375eb2b3432e4956393a94e83cd152eaf5c8fc847275b3c8e570d26fce66e33"
+    },
+    {
+      "ruta": "resultados/modelado/comparacion_descriptiva/20261111T161605225327Z/imagenes_clusters/20261111T170051625718Z/gmm_k4.png",
+      "bytes": 250064,
+      "sha256": "f6c5558f2669ec666671d1f96f559cb0de486cff1c40cc2d04bea4568dd1d669"
+    },
+    {
+      "ruta": "resultados/modelado/comparacion_descriptiva/20261111T161605225327Z/imagenes_clusters/20261111T170051625718Z/gmm_k5.png",
+      "bytes": 257829,
+      "sha256": "5661efa8b8328e90575910a4d7b15e1a48a601c61828a97dcd0ef8b412fd9e62"
+    },
+    {
+      "ruta": "resultados/modelado/comparacion_descriptiva/20261111T161605225327Z/imagenes_clusters/20261111T170051625718Z/gmm_k6.png",
+      "bytes": 263053,
+      "sha256": "678fef7effe5668c6abcf97c8ec79dd0b2d6e3eca2221d6b975e9474dbaa5b9b"
+    }
+  ],
+  "salidas": [
+    {
+      "ruta": "modelado/comparacion.csv",
+      "bytes": 1730,
+      "sha256": "5c37615ba5ba56dbb0d509df642f6f62cd6df22ba828a1c050cbe270159ee69e"
+    },
+    {
+      "ruta": "modelado/imagenes/gmm_k2.png",
+      "bytes": 232821,
+      "sha256": "2e20588bff87a97b4c98bf0e51c5b09e4e188949302cf32b562782499dcf5a7b"
+    },
+    {
+      "ruta": "modelado/imagenes/gmm_k3.png",
+      "bytes": 241764,
+      "sha256": "c375eb2b3432e4956393a94e83cd152eaf5c8fc847275b3c8e570d26fce66e33"
+    },
+    {
+      "ruta": "modelado/imagenes/gmm_k4.png",
+      "bytes": 250064,
+      "sha256": "f6c5558f2669ec666671d1f96f559cb0de486cff1c40cc2d04bea4568dd1d669"
+    },
+    {
+      "ruta": "modelado/imagenes/gmm_k5.png",
+      "bytes": 257829,
+      "sha256": "5661efa8b8328e90575910a4d7b15e1a48a601c61828a97dcd0ef8b412fd9e62"
+    },
+    {
+      "ruta": "modelado/imagenes/gmm_k6.png",
+      "bytes": 263053,
+      "sha256": "678fef7effe5668c6abcf97c8ec79dd0b2d6e3eca2221d6b975e9474dbaa5b9b"
+    },
+    {
+      "ruta": "modelado/imagenes/kmeans_k2.png",
+      "bytes": 237400,
+      "sha256": "2bf405c459f6fcf59f94096347229ed763d7204df998c43fe8ace9939c6243eb"
+    },
+    {
+      "ruta": "modelado/imagenes/kmeans_k3.png",
+      "bytes": 244966,
+      "sha256": "cd771dd8387a8929e678cadb0c29fb9af9212600e961915c5032e76d4abc5251"
+    },
+    {
+      "ruta": "modelado/imagenes/kmeans_k4.png",
+      "bytes": 255428,
+      "sha256": "6df4b11997036f84d0d61f984d21db8d4b095b3a5a100a7f56dbf547c8e4fa54"
+    },
+    {
+      "ruta": "modelado/imagenes/kmeans_k5.png",
+      "bytes": 263183,
+      "sha256": "e84d4f90a3bafa715c4091b23c7a8fffc28a77efa86259d6da7825954dbf7e94"
+    },
+    {
+      "ruta": "modelado/imagenes/kmeans_k6.png",
+      "bytes": 274230,
+      "sha256": "2006ef5d0be6f32d21e5757f5ea2d3ac0440431abbd8e6e473076820e6da7925"
+    },
+    {
+      "ruta": "modelado/perfiles_baseline.csv",
+      "bytes": 225,
+      "sha256": "84e076d32cd9017069d53b1232e788afe2c87dfcb734f69dd3fd855489e0773a"
+    },
+    {
+      "ruta": "modelado/perfiles_modelos.csv",
+      "bytes": 1290,
+      "sha256": "29f47d1c846b571e99d05e7b4fb8d2771ff690063029fa1922901be8b2c1ecfc"
+    },
+    {
+      "ruta": "modelado/protocolo.json",
+      "bytes": 764,
+      "sha256": "cea625072b00c6628d3a91f9299c3c2dce0a2922897c837a4791eb880c51632f"
+    },
+    {
+      "ruta": "modelado/resumen.json",
+      "bytes": 1382,
+      "sha256": "d9a7e0c24f29804d5a4268eb7feac020f655c6f3d583be77a2f73306e2160ed1"
+    },
+    {
+      "ruta": "modelado/verificacion_baseline.json",
+      "bytes": 1078,
+      "sha256": "959e71265aa2125ba2f5503ce526a4222e75f7bbab1ccc40086e7ebf9d51a227"
+    },
+    {
+      "ruta": "modelado/verificacion_comparacion.json",
+      "bytes": 1089,
+      "sha256": "cb52a9195f12b12fc00b0eb96d9927dea8026c0ad32f03f7d2864366f4b9cd87"
+    },
+    {
+      "ruta": "preparacion/esquemas.json",
+      "bytes": 62109,
+      "sha256": "d8202565ecb95139d097fd1f897840ccc65cf81ddb7b4d60665f2fe7f086cc18"
+    },
+    {
+      "ruta": "preparacion/resumen.json",
+      "bytes": 572,
+      "sha256": "cbaf87014da6212b47371a489a03d79264d08df87960e4bbbad8f0e1c5576e96"
+    },
+    {
+      "ruta": "preparacion/resumen_tablas.csv",
+      "bytes": 4893,
+      "sha256": "41a64c7b3a835e0424406527070a28b20f009cba4c8437b3f4bd7fc4773e02b4"
+    }
+  ],
+  "criterio": "Solo esquemas, recuentos, métricas agregadas y figuras; sin bases ni modelos."
+}

@@ -69,7 +69,7 @@ def audit_workbook(path, population_path):
 
 
 def main():
-    directory = ROOT / 'resultados/auditoria_dgt'
+    directory = ROOT / 'resultados/apoyo/auditorias/auditoria_dgt'
     path = ROOT / 'datos/bronze/dgt_municipal/2025/DatosMunicipalesGeneral_2025.xlsx'
     acquisition = None
     if not path.exists():

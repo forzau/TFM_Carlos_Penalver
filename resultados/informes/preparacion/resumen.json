@@ -1,0 +1,19 @@
+{
+  "ejecucion": "20261022T150925140929Z",
+  "estado": "preparada_con_limitaciones",
+  "tablas_por_capa": {
+    "silver": 48,
+    "gold": 13
+  },
+  "entorno": {
+    "duckdb": "1.5.0",
+    "memoria_motor": "1GB",
+    "hilos": 2
+  },
+  "limitaciones": [
+    "Distintivo 0 aproxima demanda municipal; no demanda local observada.",
+    "Asignaciones pendientes y ausencias no equivalen a inexistencia o cierre.",
+    "POI requieren revisión local; distancias planas no son rutas ni suficiencia.",
+    "Capacidad i-DE orientativa, no aditiva ni garantía de conexión."
+  ]
+}

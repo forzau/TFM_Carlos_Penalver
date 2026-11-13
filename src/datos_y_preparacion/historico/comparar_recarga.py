@@ -193,7 +193,7 @@ def main():
     for stamp in stamps:
         checked(ROOT, ROOT / stamp['ruta'], stamp)
     run = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')
-    target = ROOT / 'resultados/comparacion_recarga' / run
+    target = ROOT / 'resultados/apoyo/auditorias/comparacion_recarga' / run
     target.mkdir(parents=True, exist_ok=False)
     report = {'version_reglas': 1, 'ejecucion': run,
               'fecha_proceso_utc': datetime.now(timezone.utc).isoformat(),

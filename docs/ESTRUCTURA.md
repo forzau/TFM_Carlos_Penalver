@@ -9,6 +9,7 @@ config/                              Catálogo y exclusiones documentadas
 docs/entregas/                       Documentos académicos
 src/
   rutas.py                           Raíz común y versiones de productores
+  exportar_resultados.py              Selección de informes y figuras para Git
   preparar_dataset.py                Entrada compatible con la Entrega 2
   datos_y_preparacion/
     __main__.py                      Entrada: python -m src.datos_y_preparacion
@@ -32,6 +33,11 @@ tests/
     historico/                       Pruebas de preparaciones y auditorías previas
   modelado/                          Pruebas de experimentos e imágenes
   test_trazabilidad.py                Comprobación de versiones de productores
+  test_exportar_resultados.py         Selección visible y conservación ante errores
+resultados/
+  README.md                          Índice de resultados vigentes y salidas locales
+  informes/                          Esquemas, métricas y figuras incluidos en Git
+  apoyo/                             Auditorías, diseños, exploraciones y registros locales
 ```
 
 ## Preparación
@@ -110,6 +116,16 @@ por SHA-256 en `resultados/codigo_historico/<sha256>.py`, fuera de Git. Al
 verificar código de un manifiesto, `src/rutas.py` permite localizar esa versión
 y el verificador exige su huella original. Esta búsqueda solo se aplica a
 archivos Python de `src/`; los datos siguen exigiendo su archivo original.
+
+La selección visible de [resultados](../resultados/README.md) incluye los
+esquemas y recuentos de preparación, las métricas agregadas, los informes de
+verificación y las diez figuras actuales. Se regenera mediante
+`python -m src.exportar_resultados`. Solo esas salidas están incluidas en Git;
+las bases, modelos y evidencias completas permanecen locales.
+
+Las auditorías, diseños, exploraciones y copias de mantenimiento se agrupan en
+`resultados/apoyo/`. Se mantienen las rutas de las ejecuciones, evidencias y
+entradas utilizadas por los productores para conservar sus referencias.
 
 Para verificar esas ejecuciones en otro equipo hacen falta también las copias
 de código histórico, además de los datos, modelos y manifiestos. Un clon de Git

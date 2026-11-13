@@ -1,2 +1,4 @@
 # Mantener finales de línea consistentes entre equipos; detectar binarios.
 * text=auto eol=lf
+# Los informes conservan sus bytes para poder comprobar las huellas publicadas.
+resultados/informes/** -text whitespace=cr-at-eol

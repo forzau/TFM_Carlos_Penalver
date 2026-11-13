@@ -1,0 +1,3144 @@
+[
+  {
+    "bloque": "silver/base_territorial",
+    "tabla": "municipios",
+    "clave": [
+      "codigo_municipio"
+    ],
+    "esquema": [
+      {
+        "campo": "codigo_municipio",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_provincia",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "nombre_municipio",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "fecha_referencia",
+        "tipo": "DATE"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/base_territorial",
+    "tabla": "recintos_municipales",
+    "clave": [
+      "codigo_municipio"
+    ],
+    "esquema": [
+      {
+        "campo": "codigo_municipio",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_nacional_ign",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "nombre_municipio_ign",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "geometria",
+        "tipo": "GEOMETRY('EPSG:25830')"
+      },
+      {
+        "campo": "origen_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "registro_origen",
+        "tipo": "VARCHAR"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/demografia_parque",
+    "tabla": "parque_municipal",
+    "clave": [
+      "codigo_municipio",
+      "fecha_referencia"
+    ],
+    "esquema": [
+      {
+        "campo": "codigo_municipio",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "fecha_referencia",
+        "tipo": "DATE"
+      },
+      {
+        "campo": "parque_total",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "vehiculos_distintivo_0",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "electrificado_origen",
+        "tipo": "BIGINT"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/demografia_parque",
+    "tabla": "parque_sin_municipio",
+    "clave": [
+      "codigo_agrupacion_origen",
+      "fecha_referencia"
+    ],
+    "esquema": [
+      {
+        "campo": "codigo_agrupacion_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_provincia",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "fecha_referencia",
+        "tipo": "DATE"
+      },
+      {
+        "campo": "parque_total",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "vehiculos_distintivo_0",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "electrificado_origen",
+        "tipo": "BIGINT"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/demografia_parque",
+    "tabla": "parque_detalle_observado",
+    "clave": [
+      "origen_id",
+      "registro_origen"
+    ],
+    "esquema": [
+      {
+        "campo": "origen_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "registro_origen",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "codigo_provincia",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_municipio",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "periodo",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "tipo_dgt_codigo",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "propulsion_codigo",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "categoria_electrica_codigo",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "distintivo_codigo",
+        "tipo": "VARCHAR"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/demografia_parque",
+    "tabla": "poblacion_municipal",
+    "clave": [
+      "codigo_municipio",
+      "sexo",
+      "anio"
+    ],
+    "esquema": [
+      {
+        "campo": "codigo_municipio",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "sexo",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "anio",
+        "tipo": "SMALLINT"
+      },
+      {
+        "campo": "poblacion",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "estado_valor",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "valor_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "registro_origen",
+        "tipo": "BIGINT"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/demografia_parque",
+    "tabla": "renta_territorial",
+    "clave": [
+      "nivel_territorial",
+      "codigo_territorio",
+      "indicador",
+      "anio"
+    ],
+    "esquema": [
+      {
+        "campo": "nivel_territorial",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_territorio",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_municipio",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_distrito",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_seccion",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "indicador",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "anio",
+        "tipo": "SMALLINT"
+      },
+      {
+        "campo": "valor_eur",
+        "tipo": "DECIMAL(18,2)"
+      },
+      {
+        "campo": "estado_valor",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "valor_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "registro_origen",
+        "tipo": "BIGINT"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/demografia_parque",
+    "tabla": "renta_codigos_historicos",
+    "clave": [
+      "nivel_territorial",
+      "codigo_territorio",
+      "indicador",
+      "anio"
+    ],
+    "esquema": [
+      {
+        "campo": "nivel_territorial",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_territorio",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_municipio",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_distrito",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_seccion",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "indicador",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "anio",
+        "tipo": "SMALLINT"
+      },
+      {
+        "campo": "valor_eur",
+        "tipo": "DECIMAL(18,2)"
+      },
+      {
+        "campo": "estado_valor",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "valor_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "registro_origen",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "motivo_separacion",
+        "tipo": "VARCHAR"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/demografia_parque",
+    "tabla": "incidencias",
+    "clave": null,
+    "esquema": [
+      {
+        "campo": "tabla",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "origen_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "registro_origen",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "codigo_municipio",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "campo",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "valor_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "motivo",
+        "tipo": "VARCHAR"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/recarga",
+    "tabla": "recarga_instalaciones",
+    "clave": [
+      "instalacion_id"
+    ],
+    "esquema": [
+      {
+        "campo": "instalacion_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "nombre_instalacion",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "operador_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "nombre_operador",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "provincia_nombre_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "municipio_nombre_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "direccion",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_postal",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "latitud_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "longitud_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "localizacion_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "tipo_horario_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "latitud",
+        "tipo": "DOUBLE"
+      },
+      {
+        "campo": "longitud",
+        "tipo": "DOUBLE"
+      },
+      {
+        "campo": "estado_coordenadas",
+        "tipo": "VARCHAR"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/recarga",
+    "tabla": "recarga_puntos",
+    "clave": [
+      "instalacion_id",
+      "punto_id"
+    ],
+    "esquema": [
+      {
+        "campo": "instalacion_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "punto_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_punto_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "accesibilidad_origen",
+        "tipo": "VARCHAR"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/recarga",
+    "tabla": "recarga_conectores",
+    "clave": [
+      "instalacion_id",
+      "punto_id",
+      "conector_id"
+    ],
+    "esquema": [
+      {
+        "campo": "instalacion_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "punto_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "conector_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "tipo_conector",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "tipo_carga",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "formato_conector",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "potencia_maxima_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "fecha_ultima_modificacion_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "horario_apertura_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "servicios_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "metodos_pago_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "voltaje_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "intensidad_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "registro_origen",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "potencia_maxima_kw",
+        "tipo": "DECIMAL(18,2)"
+      },
+      {
+        "campo": "estado_potencia",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "fecha_ultima_modificacion",
+        "tipo": "TIMESTAMP"
+      },
+      {
+        "campo": "estado_fecha",
+        "tipo": "VARCHAR"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/recarga",
+    "tabla": "incidencias",
+    "clave": null,
+    "esquema": [
+      {
+        "campo": "tabla",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "registro_origen",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "campo",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "valor_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "motivo",
+        "tipo": "VARCHAR"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/trafico_red",
+    "tabla": "aforos_tramo_anio",
+    "clave": [
+      "tramo_aforo_id",
+      "anio"
+    ],
+    "esquema": [
+      {
+        "campo": "tramo_aforo_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "anio",
+        "tipo": "SMALLINT"
+      },
+      {
+        "campo": "carretera",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "titular_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "tipo_calzada_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "tipo_medida_trafico",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "tipo_medida_descripcion",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "pk_inicio",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "pk_estacion",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "pk_fin",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "imd_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "pesados_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "imd_vehiculos_dia",
+        "tipo": "DECIMAL(18,2)"
+      },
+      {
+        "campo": "porcentaje_pesados",
+        "tipo": "DECIMAL(18,2)"
+      },
+      {
+        "campo": "etiqueta_plano_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "identificador_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "origen_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "capa_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "fid_origen",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "geometria",
+        "tipo": "GEOMETRY('EPSG:25830')"
+      },
+      {
+        "campo": "estado_imd",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "estado_pesados",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "estado_tipo_medida",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "estado_geometria",
+        "tipo": "VARCHAR"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/trafico_red",
+    "tabla": "red_tramos",
+    "clave": [
+      "provincia_origen",
+      "tramo_id"
+    ],
+    "esquema": [
+      {
+        "campo": "provincia_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "tramo_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "tipo_tramo_codigo",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "tipo_tramo_descripcion",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "origen_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "capa_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "fid_referencia",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "geometria",
+        "tipo": "GEOMETRY('EPSG:25830')"
+      },
+      {
+        "campo": "estado_geometria",
+        "tipo": "VARCHAR"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/trafico_red",
+    "tabla": "red_tramo_vial",
+    "clave": [
+      "provincia_origen",
+      "tramo_id",
+      "vial_id"
+    ],
+    "esquema": [
+      {
+        "campo": "provincia_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "tramo_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "vial_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_vial",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "nombre_vial",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "tipo_vial_codigo",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "tipo_vial_descripcion",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "origen_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "capa_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "fid_origen",
+        "tipo": "BIGINT"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/trafico_red",
+    "tabla": "incidencias",
+    "clave": null,
+    "esquema": [
+      {
+        "campo": "tabla",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "provincia_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "capa_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "fid_origen",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "entidad_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "campo",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "valor_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "motivo",
+        "tipo": "VARCHAR"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/poi_osm",
+    "tabla": "poi_elementos",
+    "clave": [
+      "origen_id",
+      "fid_origen"
+    ],
+    "esquema": [
+      {
+        "campo": "origen_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "capa_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "fid_origen",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "osm_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "categoria_codigo_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "categoria_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "nombre_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "representacion",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "grupo_uso",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "estado_categoria",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "geometria_origen_no_admitida_wkb",
+        "tipo": "BLOB"
+      },
+      {
+        "campo": "geometria",
+        "tipo": "GEOMETRY('EPSG:25830')"
+      },
+      {
+        "campo": "estado_geometria",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "estado_ambito",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "distancia_ambito_m",
+        "tipo": "DOUBLE"
+      },
+      {
+        "campo": "interes_para_revision",
+        "tipo": "BOOLEAN"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/poi_osm",
+    "tabla": "poi_correspondencias",
+    "clave": [
+      "origen_punto",
+      "fid_punto",
+      "origen_area",
+      "fid_area"
+    ],
+    "esquema": [
+      {
+        "campo": "origen_punto",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "fid_punto",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "origen_area",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "fid_area",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "osm_id_punto",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "osm_id_area",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "categoria_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "punto_intersecta_area",
+        "tipo": "BOOLEAN"
+      },
+      {
+        "campo": "coincide_id_publicado",
+        "tipo": "BOOLEAN"
+      },
+      {
+        "campo": "coincide_nombre_normalizado",
+        "tipo": "BOOLEAN"
+      },
+      {
+        "campo": "distancia_plana_m",
+        "tipo": "DOUBLE"
+      },
+      {
+        "campo": "estado",
+        "tipo": "VARCHAR"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/poi_osm",
+    "tabla": "incidencias",
+    "clave": null,
+    "esquema": [
+      {
+        "campo": "origen_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "capa_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "fid_origen",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "osm_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "campo",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "motivo",
+        "tipo": "VARCHAR"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/capacidad_demanda",
+    "tabla": "capacidad_demanda",
+    "clave": [
+      "punto_conexion_id"
+    ],
+    "esquema": [
+      {
+        "campo": "gestor_red",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "provincia_nombre_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "municipio_nombre_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "x_utm_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "y_utm_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "subestacion_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "nivel_tension_kv_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "capacidad_firme_disponible_mw_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "compromiso_regulatorio_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "capacidad_ocupada_mw_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "capacidad_admitida_no_evaluada_mw_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "posiciones_ocupadas_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "posiciones_libres_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "nudo_0_asterisco_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "comentarios_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "nombre_punto_conexion",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "punto_conexion_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "origen_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "registro_origen",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "codigo_provincia",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "fecha_referencia",
+        "tipo": "DATE"
+      },
+      {
+        "campo": "estado_fecha",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "estado_coordenadas",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "nivel_tension_kv",
+        "tipo": "DECIMAL(18,2)"
+      },
+      {
+        "campo": "estado_nivel_tension_kv",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "capacidad_firme_disponible_mw",
+        "tipo": "DECIMAL(18,2)"
+      },
+      {
+        "campo": "estado_capacidad_firme_disponible_mw",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "capacidad_ocupada_mw",
+        "tipo": "DECIMAL(18,2)"
+      },
+      {
+        "campo": "estado_capacidad_ocupada_mw",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "capacidad_admitida_no_evaluada_mw",
+        "tipo": "DECIMAL(18,2)"
+      },
+      {
+        "campo": "estado_capacidad_admitida_no_evaluada_mw",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "posiciones_ocupadas",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "estado_posiciones_ocupadas",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "posiciones_libres",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "estado_posiciones_libres",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "compromiso_regulatorio",
+        "tipo": "BOOLEAN"
+      },
+      {
+        "campo": "estado_compromiso_regulatorio",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "nudo_0_asterisco",
+        "tipo": "BOOLEAN"
+      },
+      {
+        "campo": "estado_nudo_0_asterisco",
+        "tipo": "VARCHAR"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/capacidad_demanda",
+    "tabla": "incidencias",
+    "clave": null,
+    "esquema": [
+      {
+        "campo": "origen_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "punto_conexion_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "campo",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "valor_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "motivo",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "registro_origen",
+        "tipo": "BIGINT"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/recarga_espacial",
+    "tabla": "recarga_instalaciones_geo",
+    "clave": [
+      "instalacion_id"
+    ],
+    "esquema": [
+      {
+        "campo": "instalacion_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "nombre_instalacion",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "operador_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "nombre_operador",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "provincia_nombre_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "municipio_nombre_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "direccion",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_postal",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "latitud_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "longitud_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "localizacion_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "tipo_horario_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "latitud",
+        "tipo": "DOUBLE"
+      },
+      {
+        "campo": "longitud",
+        "tipo": "DOUBLE"
+      },
+      {
+        "campo": "estado_coordenadas",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_provincia_declarada",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "geometria",
+        "tipo": "GEOMETRY('EPSG:25830')"
+      },
+      {
+        "campo": "estado_geometria",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "numero_municipios_intersectados",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "codigo_municipio_espacial",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_municipio_declarado",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "nombre_municipio_espacial",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "estado_contraste_territorial",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "distancia_municipio_declarado_m",
+        "tipo": "DOUBLE"
+      },
+      {
+        "campo": "admitida_asignacion_municipal",
+        "tipo": "BOOLEAN"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/recarga_espacial",
+    "tabla": "recarga_municipios_candidatos",
+    "clave": [
+      "instalacion_id",
+      "codigo_municipio"
+    ],
+    "esquema": [
+      {
+        "campo": "instalacion_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_municipio",
+        "tipo": "VARCHAR"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/recarga_espacial",
+    "tabla": "entidad_municipio",
+    "clave": [
+      "tabla_entidad",
+      "clave_entidad",
+      "codigo_municipio"
+    ],
+    "esquema": [
+      {
+        "campo": "tabla_entidad",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "clave_entidad",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_municipio",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "metodo_asignacion",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "estado_asignacion",
+        "tipo": "VARCHAR"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/recarga_espacial",
+    "tabla": "incidencias_espaciales",
+    "clave": null,
+    "esquema": [
+      {
+        "campo": "instalacion_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "campo",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "motivo",
+        "tipo": "VARCHAR"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/capacidad_demanda_espacial",
+    "tabla": "capacidad_demanda_geo",
+    "clave": [
+      "punto_conexion_id"
+    ],
+    "esquema": [
+      {
+        "campo": "gestor_red",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "provincia_nombre_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "municipio_nombre_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "x_utm_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "y_utm_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "subestacion_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "nivel_tension_kv_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "capacidad_firme_disponible_mw_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "compromiso_regulatorio_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "capacidad_ocupada_mw_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "capacidad_admitida_no_evaluada_mw_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "posiciones_ocupadas_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "posiciones_libres_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "nudo_0_asterisco_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "comentarios_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "nombre_punto_conexion",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "punto_conexion_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "origen_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "registro_origen",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "codigo_provincia",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "fecha_referencia",
+        "tipo": "DATE"
+      },
+      {
+        "campo": "estado_fecha_preparacion",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "estado_coordenadas_preparacion",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "nivel_tension_kv",
+        "tipo": "DECIMAL(18,2)"
+      },
+      {
+        "campo": "estado_nivel_tension_kv",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "capacidad_firme_disponible_mw",
+        "tipo": "DECIMAL(18,2)"
+      },
+      {
+        "campo": "estado_capacidad_firme_disponible_mw",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "capacidad_ocupada_mw",
+        "tipo": "DECIMAL(18,2)"
+      },
+      {
+        "campo": "estado_capacidad_ocupada_mw",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "capacidad_admitida_no_evaluada_mw",
+        "tipo": "DECIMAL(18,2)"
+      },
+      {
+        "campo": "estado_capacidad_admitida_no_evaluada_mw",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "posiciones_ocupadas",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "estado_posiciones_ocupadas",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "posiciones_libres",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "estado_posiciones_libres",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "compromiso_regulatorio",
+        "tipo": "BOOLEAN"
+      },
+      {
+        "campo": "estado_compromiso_regulatorio",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "nudo_0_asterisco",
+        "tipo": "BOOLEAN"
+      },
+      {
+        "campo": "estado_nudo_0_asterisco",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "fecha_publicacion",
+        "tipo": "DATE"
+      },
+      {
+        "campo": "periodo_referencia",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "estado_fecha",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "estado_coordenadas",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "crs_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "x_utm",
+        "tipo": "DOUBLE"
+      },
+      {
+        "campo": "y_utm",
+        "tipo": "DOUBLE"
+      },
+      {
+        "campo": "geometria",
+        "tipo": "GEOMETRY('EPSG:25830')"
+      },
+      {
+        "campo": "estado_geometria",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "numero_municipios_intersectados",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "codigo_municipio_espacial",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_municipio_declarado",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "nombre_municipio_espacial",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "estado_contraste_territorial",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "distancia_municipio_declarado_m",
+        "tipo": "DOUBLE"
+      },
+      {
+        "campo": "admitida_asignacion_municipal",
+        "tipo": "BOOLEAN"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/capacidad_demanda_espacial",
+    "tabla": "capacidad_municipios_candidatos",
+    "clave": [
+      "punto_conexion_id",
+      "codigo_municipio"
+    ],
+    "esquema": [
+      {
+        "campo": "punto_conexion_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_municipio",
+        "tipo": "VARCHAR"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/capacidad_demanda_espacial",
+    "tabla": "entidad_municipio",
+    "clave": [
+      "punto_conexion_id"
+    ],
+    "esquema": [
+      {
+        "campo": "punto_conexion_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_municipio",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "metodo_asignacion",
+        "tipo": "VARCHAR"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/capacidad_demanda_espacial",
+    "tabla": "incidencias_espaciales",
+    "clave": [
+      "punto_conexion_id"
+    ],
+    "esquema": [
+      {
+        "campo": "punto_conexion_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "motivo",
+        "tipo": "VARCHAR"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/validacion_conjunta",
+    "tabla": "revision_recarga",
+    "clave": [
+      "instalacion_id"
+    ],
+    "esquema": [
+      {
+        "campo": "instalacion_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "nombre_instalacion",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "direccion",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "municipio_declarado",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "municipio_espacial",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_municipio_declarado",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_municipio_espacial",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "distancia_recinto_declarado_m",
+        "tipo": "DOUBLE"
+      },
+      {
+        "campo": "indicio_textual",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "estado_revision",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_municipio_validado",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "url_evidencia",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "motivo",
+        "tipo": "VARCHAR"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/validacion_conjunta",
+    "tabla": "recarga_municipio_validado",
+    "clave": [
+      "instalacion_id"
+    ],
+    "esquema": [
+      {
+        "campo": "instalacion_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_municipio",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "metodo",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "url_evidencia",
+        "tipo": "VARCHAR"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/validacion_conjunta",
+    "tabla": "relaciones_espaciales",
+    "clave": [
+      "tabla_entidad",
+      "clave_entidad",
+      "codigo_municipio"
+    ],
+    "esquema": [
+      {
+        "campo": "tabla_entidad",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "clave_entidad",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_municipio",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "metodo",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "dimension_interseccion",
+        "tipo": "SMALLINT"
+      },
+      {
+        "campo": "longitud_interseccion_m",
+        "tipo": "DOUBLE"
+      },
+      {
+        "campo": "superficie_interseccion_m2",
+        "tipo": "DOUBLE"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/validacion_conjunta",
+    "tabla": "estado_relaciones_espaciales",
+    "clave": [
+      "tabla_entidad",
+      "clave_entidad"
+    ],
+    "esquema": [
+      {
+        "campo": "tabla_entidad",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "clave_entidad",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "estado_geometria",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "numero_municipios",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "estado_relacion",
+        "tipo": "VARCHAR"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/validacion_conjunta",
+    "tabla": "cobertura_estadistica",
+    "clave": [
+      "tabla_entidad",
+      "periodo",
+      "segmento",
+      "codigo_municipio"
+    ],
+    "esquema": [
+      {
+        "campo": "tabla_entidad",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "periodo",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "segmento",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_municipio",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "registros",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "valores_informados",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "valores_ausentes",
+        "tipo": "BIGINT"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/validacion_conjunta",
+    "tabla": "estado_fuentes",
+    "clave": [
+      "bloque"
+    ],
+    "esquema": [
+      {
+        "campo": "bloque",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "estado",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "integracion_municipal",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "limitacion",
+        "tipo": "VARCHAR"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/recarga_versionada",
+    "tabla": "recarga_instalaciones",
+    "clave": [
+      "instalacion_id"
+    ],
+    "esquema": [
+      {
+        "campo": "instalacion_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "nombre_instalacion",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "operador_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "nombre_operador",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "provincia_nombre_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "municipio_nombre_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "direccion",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_postal",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "latitud_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "longitud_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "localizacion_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "tipo_horario_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "latitud",
+        "tipo": "DOUBLE"
+      },
+      {
+        "campo": "longitud",
+        "tipo": "DOUBLE"
+      },
+      {
+        "campo": "estado_coordenadas",
+        "tipo": "VARCHAR"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/recarga_versionada",
+    "tabla": "recarga_puntos",
+    "clave": [
+      "instalacion_id",
+      "punto_id"
+    ],
+    "esquema": [
+      {
+        "campo": "instalacion_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "punto_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_punto_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "accesibilidad_origen",
+        "tipo": "VARCHAR"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/recarga_versionada",
+    "tabla": "recarga_conectores",
+    "clave": [
+      "instalacion_id",
+      "punto_id",
+      "conector_id"
+    ],
+    "esquema": [
+      {
+        "campo": "instalacion_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "punto_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "conector_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "tipo_conector",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "tipo_carga",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "formato_conector",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "potencia_maxima_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "fecha_ultima_modificacion_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "horario_apertura_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "servicios_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "metodos_pago_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "voltaje_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "intensidad_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "registro_origen",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "potencia_maxima_kw",
+        "tipo": "DECIMAL(18,2)"
+      },
+      {
+        "campo": "estado_potencia",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "fecha_ultima_modificacion",
+        "tipo": "TIMESTAMP"
+      },
+      {
+        "campo": "estado_fecha",
+        "tipo": "VARCHAR"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/recarga_versionada",
+    "tabla": "incidencias",
+    "clave": null,
+    "esquema": [
+      {
+        "campo": "tabla",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "registro_origen",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "campo",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "valor_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "motivo",
+        "tipo": "VARCHAR"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/recarga_versionada",
+    "tabla": "recarga_instalaciones_geo",
+    "clave": [
+      "instalacion_id"
+    ],
+    "esquema": [
+      {
+        "campo": "instalacion_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "nombre_instalacion",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "operador_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "nombre_operador",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "provincia_nombre_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "municipio_nombre_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "direccion",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_postal",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "latitud_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "longitud_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "localizacion_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "tipo_horario_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "latitud",
+        "tipo": "DOUBLE"
+      },
+      {
+        "campo": "longitud",
+        "tipo": "DOUBLE"
+      },
+      {
+        "campo": "estado_coordenadas",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_provincia_declarada",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "geometria",
+        "tipo": "GEOMETRY('EPSG:25830')"
+      },
+      {
+        "campo": "estado_geometria",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "numero_municipios_intersectados",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "codigo_municipio_espacial",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_municipio_declarado",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "nombre_municipio_espacial",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "estado_contraste_territorial",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "distancia_municipio_declarado_m",
+        "tipo": "DOUBLE"
+      },
+      {
+        "campo": "admitida_asignacion_municipal",
+        "tipo": "BOOLEAN"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/recarga_versionada",
+    "tabla": "recarga_municipios_candidatos",
+    "clave": [
+      "instalacion_id",
+      "codigo_municipio"
+    ],
+    "esquema": [
+      {
+        "campo": "instalacion_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_municipio",
+        "tipo": "VARCHAR"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/recarga_versionada",
+    "tabla": "entidad_municipio",
+    "clave": [
+      "tabla_entidad",
+      "clave_entidad",
+      "codigo_municipio"
+    ],
+    "esquema": [
+      {
+        "campo": "tabla_entidad",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "clave_entidad",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_municipio",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "metodo_asignacion",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "estado_asignacion",
+        "tipo": "VARCHAR"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/recarga_versionada",
+    "tabla": "incidencias_espaciales",
+    "clave": null,
+    "esquema": [
+      {
+        "campo": "instalacion_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "campo",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "motivo",
+        "tipo": "VARCHAR"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/recarga_versionada",
+    "tabla": "revision_recarga",
+    "clave": [
+      "instalacion_id"
+    ],
+    "esquema": [
+      {
+        "campo": "instalacion_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "nombre_instalacion",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "direccion",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "municipio_declarado",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "municipio_espacial",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_municipio_declarado",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_municipio_espacial",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "distancia_recinto_declarado_m",
+        "tipo": "DOUBLE"
+      },
+      {
+        "campo": "indicio_textual",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "estado_revision",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_municipio_validado",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "url_evidencia",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "motivo",
+        "tipo": "VARCHAR"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/recarga_versionada",
+    "tabla": "recarga_municipio_validado",
+    "clave": [
+      "instalacion_id"
+    ],
+    "esquema": [
+      {
+        "campo": "instalacion_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_municipio",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "metodo",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "url_evidencia",
+        "tipo": "VARCHAR"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/recarga_versionada",
+    "tabla": "recarga_ausentes",
+    "clave": [
+      "instalacion_id"
+    ],
+    "esquema": [
+      {
+        "campo": "instalacion_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "nombre_instalacion",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "operador_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "nombre_operador",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "provincia_nombre_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "municipio_nombre_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "direccion",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_postal",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "latitud_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "longitud_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "localizacion_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "tipo_horario_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "latitud",
+        "tipo": "DOUBLE"
+      },
+      {
+        "campo": "longitud",
+        "tipo": "DOUBLE"
+      },
+      {
+        "campo": "estado_coordenadas",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_provincia_declarada",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "geometria",
+        "tipo": "GEOMETRY('EPSG:25830')"
+      },
+      {
+        "campo": "estado_geometria",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "numero_municipios_intersectados",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "codigo_municipio_espacial",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_municipio_declarado",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "nombre_municipio_espacial",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "estado_contraste_territorial",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "distancia_municipio_declarado_m",
+        "tipo": "DOUBLE"
+      },
+      {
+        "campo": "admitida_asignacion_municipal",
+        "tipo": "BOOLEAN"
+      },
+      {
+        "campo": "puntos_registrados_historicos",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "conectores_registrados_historicos",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "codigo_municipio_admitido_historico",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "metodo_admision_historica",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "estado_presencia",
+        "tipo": "VARCHAR"
+      }
+    ]
+  },
+  {
+    "bloque": "silver/recarga_versionada",
+    "tabla": "recarga_ausentes_municipios_candidatos",
+    "clave": [
+      "instalacion_id",
+      "codigo_municipio"
+    ],
+    "esquema": [
+      {
+        "campo": "instalacion_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_municipio",
+        "tipo": "VARCHAR"
+      }
+    ]
+  },
+  {
+    "bloque": "gold/contexto_municipal",
+    "tabla": "gold_municipios",
+    "clave": [
+      "version_gold",
+      "codigo_municipio"
+    ],
+    "esquema": [
+      {
+        "campo": "version_gold",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_municipio",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_provincia",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "nombre_municipio",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "geometria",
+        "tipo": "GEOMETRY('EPSG:25830')"
+      },
+      {
+        "campo": "fecha_referencia_parque",
+        "tipo": "DATE"
+      },
+      {
+        "campo": "parque_total",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "vehiculos_distintivo_0",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "proporcion_distintivo_0",
+        "tipo": "DOUBLE"
+      },
+      {
+        "campo": "anio_poblacion",
+        "tipo": "SMALLINT"
+      },
+      {
+        "campo": "poblacion_total",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "estado_poblacion",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "anio_renta",
+        "tipo": "SMALLINT"
+      },
+      {
+        "campo": "renta_neta_media_persona_eur",
+        "tipo": "DECIMAL(18,2)"
+      },
+      {
+        "campo": "estado_renta",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "fecha_adquisicion_recarga",
+        "tipo": "TIMESTAMP WITH TIME ZONE"
+      },
+      {
+        "campo": "instalaciones_con_municipio_admitido",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "puntos_con_municipio_admitido",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "conectores_con_municipio_admitido",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "distintivo_0_por_punto_admitido",
+        "tipo": "DOUBLE"
+      },
+      {
+        "campo": "estado_presion_descriptiva",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "instalaciones_pendientes_relacionadas",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "instalaciones_ausentes_relacionadas",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "hay_incertidumbre_sin_localizar",
+        "tipo": "BOOLEAN"
+      }
+    ]
+  },
+  {
+    "bloque": "gold/contexto_municipal",
+    "tabla": "gold_recarga_instalaciones",
+    "clave": [
+      "version_gold",
+      "instalacion_id"
+    ],
+    "esquema": [
+      {
+        "campo": "version_gold",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "instalacion_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "version_recarga_observada",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "presente_copia_principal",
+        "tipo": "BOOLEAN"
+      },
+      {
+        "campo": "nombre_instalacion",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "operador_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "geometria",
+        "tipo": "GEOMETRY('EPSG:25830')"
+      },
+      {
+        "campo": "estado_geometria",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_municipio_admitido",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "estado_admision",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "metodo_admision",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "puntos_registrados",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "conectores_registrados",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "fecha_adquisicion_observacion",
+        "tipo": "TIMESTAMP WITH TIME ZONE"
+      }
+    ]
+  },
+  {
+    "bloque": "gold/contexto_municipal",
+    "tabla": "gold_incertidumbre_recarga_municipio",
+    "clave": [
+      "version_gold",
+      "instalacion_id",
+      "codigo_municipio",
+      "tipo_incertidumbre"
+    ],
+    "esquema": [
+      {
+        "campo": "version_gold",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "instalacion_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_municipio",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "tipo_incertidumbre",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "es_municipio_admitido_historico",
+        "tipo": "BOOLEAN"
+      },
+      {
+        "campo": "es_municipio_declarado",
+        "tipo": "BOOLEAN"
+      },
+      {
+        "campo": "es_candidato_espacial",
+        "tipo": "BOOLEAN"
+      }
+    ]
+  },
+  {
+    "bloque": "gold/candidatos",
+    "tabla": "gold_candidatos",
+    "clave": [
+      "version_gold",
+      "candidato_id"
+    ],
+    "esquema": [
+      {
+        "campo": "version_gold",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "candidato_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "origen_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "capa_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "fid_origen",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "osm_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "nombre_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "categoria_origen",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "grupo_uso",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "representacion",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "tipo_preseleccion",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "estado_revision",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "geometria",
+        "tipo": "GEOMETRY('EPSG:25830')"
+      },
+      {
+        "campo": "punto_representativo",
+        "tipo": "GEOMETRY('EPSG:25830')"
+      },
+      {
+        "campo": "metodo_representacion",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_municipio_contexto",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "numero_municipios_relacionados",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "estado_relacion_municipal",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "numero_correspondencias",
+        "tipo": "BIGINT"
+      }
+    ]
+  },
+  {
+    "bloque": "gold/candidatos",
+    "tabla": "gold_candidato_municipio",
+    "clave": [
+      "version_gold",
+      "candidato_id",
+      "codigo_municipio"
+    ],
+    "esquema": [
+      {
+        "campo": "version_gold",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "candidato_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_municipio",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "dimension_interseccion",
+        "tipo": "SMALLINT"
+      },
+      {
+        "campo": "superficie_interseccion_m2",
+        "tipo": "DOUBLE"
+      }
+    ]
+  },
+  {
+    "bloque": "gold/candidatos",
+    "tabla": "gold_correspondencias_candidatos",
+    "clave": [
+      "version_gold",
+      "candidato_punto_id",
+      "candidato_area_id"
+    ],
+    "esquema": [
+      {
+        "campo": "version_gold",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "candidato_punto_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "candidato_area_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "punto_intersecta_area",
+        "tipo": "BOOLEAN"
+      },
+      {
+        "campo": "coincide_id_publicado",
+        "tipo": "BOOLEAN"
+      },
+      {
+        "campo": "coincide_nombre_normalizado",
+        "tipo": "BOOLEAN"
+      },
+      {
+        "campo": "distancia_plana_m",
+        "tipo": "DOUBLE"
+      },
+      {
+        "campo": "estado",
+        "tipo": "VARCHAR"
+      }
+    ]
+  },
+  {
+    "bloque": "gold/candidatos",
+    "tabla": "gold_proximidad_candidato_recarga",
+    "clave": [
+      "version_gold",
+      "candidato_id",
+      "escenario"
+    ],
+    "esquema": [
+      {
+        "campo": "version_gold",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "candidato_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "escenario",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "instalacion_id_mas_cercana",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "distancia_plana_m",
+        "tipo": "DOUBLE"
+      },
+      {
+        "campo": "numero_instalaciones_a_distancia_minima",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "estado_distancia",
+        "tipo": "VARCHAR"
+      }
+    ]
+  },
+  {
+    "bloque": "gold/controles_espaciales",
+    "tabla": "gold_control_area_recarga",
+    "clave": [
+      "version_gold",
+      "candidato_id",
+      "escenario"
+    ],
+    "esquema": [
+      {
+        "campo": "version_gold",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "candidato_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "escenario",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "instalaciones_intersectan",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "instalaciones_ids",
+        "tipo": "VARCHAR[]"
+      }
+    ]
+  },
+  {
+    "bloque": "gold/controles_espaciales",
+    "tabla": "gold_solapamientos_candidatos",
+    "clave": [
+      "version_gold",
+      "candidato_a_id",
+      "candidato_b_id"
+    ],
+    "esquema": [
+      {
+        "campo": "version_gold",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "candidato_a_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "candidato_b_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "dimension_interseccion",
+        "tipo": "SMALLINT"
+      },
+      {
+        "campo": "superficie_interseccion_m2",
+        "tipo": "DOUBLE"
+      },
+      {
+        "campo": "a_cubre_b",
+        "tipo": "BOOLEAN"
+      },
+      {
+        "campo": "b_cubre_a",
+        "tipo": "BOOLEAN"
+      },
+      {
+        "campo": "misma_categoria",
+        "tipo": "BOOLEAN"
+      },
+      {
+        "campo": "misma_representacion",
+        "tipo": "BOOLEAN"
+      }
+    ]
+  },
+  {
+    "bloque": "gold/controles_espaciales",
+    "tabla": "gold_control_borde",
+    "clave": [
+      "version_gold",
+      "candidato_id",
+      "escenario"
+    ],
+    "esquema": [
+      {
+        "campo": "version_gold",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "candidato_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "escenario",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "distancia_borde_cv_m",
+        "tipo": "DOUBLE"
+      },
+      {
+        "campo": "posible_influencia_exterior",
+        "tipo": "BOOLEAN"
+      },
+      {
+        "campo": "estado_control",
+        "tipo": "VARCHAR"
+      }
+    ]
+  },
+  {
+    "bloque": "gold/variables",
+    "tabla": "gold_referencias_normalizacion",
+    "clave": [
+      "version_gold",
+      "dimension"
+    ],
+    "esquema": [
+      {
+        "campo": "version_gold",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "dimension",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "nombre_variable",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "unidad",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "escenario_referencia",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "universo_referencia",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "n_total",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "n_validos",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "n_nulos",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "n_invalidos",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "minimo",
+        "tipo": "DOUBLE"
+      },
+      {
+        "campo": "maximo",
+        "tipo": "DOUBLE"
+      },
+      {
+        "campo": "estado_referencia",
+        "tipo": "VARCHAR"
+      }
+    ]
+  },
+  {
+    "bloque": "gold/variables",
+    "tabla": "gold_variables_municipio",
+    "clave": [
+      "version_gold",
+      "codigo_municipio"
+    ],
+    "esquema": [
+      {
+        "campo": "version_gold",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_municipio",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "vehiculos_distintivo_0",
+        "tipo": "BIGINT"
+      },
+      {
+        "campo": "demanda_normalizada_log",
+        "tipo": "DOUBLE"
+      },
+      {
+        "campo": "demanda_normalizada_lineal",
+        "tipo": "DOUBLE"
+      },
+      {
+        "campo": "estado_normalizacion",
+        "tipo": "VARCHAR"
+      }
+    ]
+  },
+  {
+    "bloque": "gold/variables",
+    "tabla": "gold_variables_candidato",
+    "clave": [
+      "version_gold",
+      "candidato_id",
+      "escenario"
+    ],
+    "esquema": [
+      {
+        "campo": "version_gold",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "candidato_id",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "escenario",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "codigo_municipio_contexto",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "estado_contexto_municipal",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "distancia_minima_geometria_m",
+        "tipo": "DOUBLE"
+      },
+      {
+        "campo": "estado_distancia",
+        "tipo": "VARCHAR"
+      },
+      {
+        "campo": "distancia_geometria_borde_cv_m",
+        "tipo": "DOUBLE"
+      },
+      {
+        "campo": "posible_influencia_exterior_geometria",
+        "tipo": "BOOLEAN"
+      },
+      {
+        "campo": "proximidad_normalizada_log",
+        "tipo": "DOUBLE"
+      },
+      {
+        "campo": "proximidad_normalizada_lineal",
+        "tipo": "DOUBLE"
+      },
+      {
+        "campo": "estado_normalizacion",
+        "tipo": "VARCHAR"
+      }
+    ]
+  }
+]

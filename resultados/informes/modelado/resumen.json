@@ -1,0 +1,35 @@
+{
+  "baseline": {
+    "n_municipios": 541,
+    "n_reservados": 0,
+    "cobertura": 1.0,
+    "mediana_vehiculos": 20.0,
+    "silhouette_interna": 0.38155755902378397,
+    "silhouettes_negativas": 85,
+    "ari_estabilidad": {
+      "n": 10,
+      "media": 0.9576144576949511,
+      "min": 0.8920485362391898,
+      "max": 0.982545775684597
+    },
+    "ari_sin_avisos": 0.9043040055261988,
+    "n_con_avisos": 63,
+    "n_sin_puntos": 284,
+    "n_sin_puntos_con_avisos": 12,
+    "n_bloques": 73,
+    "n_ajustes": 12
+  },
+  "seleccion_trabajo": {
+    "configuracion": "kmeans_k6",
+    "fecha_decision": "2026-11-13",
+    "estado": "provisional_hasta_comprobar_utilidad_en_el_MVP"
+  },
+  "limites": [
+    "Ajuste y evaluación geométrica sobre la misma fotografía de541; no prueba independiente de generalización.",
+    "Las perturbaciones incluyen municipios usados al ajustar: ARI de robustez interna, no validación cruzada.",
+    "La selección futura de modelos/k con métricas internas no proporciona una estimación imparcial fuera de muestra.",
+    "El recuento admitido no certifica servicio ni oferta completa; excluir avisos no corrige registros inciertos.",
+    "No comparar directamente con métricas de la ejecución con separación: universo y evaluación distintos.",
+    "Los perfiles no acreditan necesidad, urgencia, suficiencia o viabilidad de instalación."
+  ]
+}

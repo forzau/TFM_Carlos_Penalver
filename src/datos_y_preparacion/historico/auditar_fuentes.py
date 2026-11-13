@@ -191,7 +191,7 @@ def main():
     missing = [name for name in required if not (ROOT / 'Fuentes' / name).is_file()]
     if missing:
         raise FileNotFoundError('Faltan copias originales bajo Fuentes/: ' + ', '.join(missing))
-    output = ROOT / 'resultados/auditoria'
+    output = ROOT / 'resultados/apoyo/auditorias/auditoria'
     output.mkdir(parents=True, exist_ok=True)
     paths = sorted((ROOT / 'Fuentes').rglob('*'))
     before = {p.relative_to(ROOT).as_posix(): (p.stat().st_size, p.stat().st_mtime_ns) for p in paths if p.is_file()}

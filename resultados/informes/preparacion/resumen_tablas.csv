@@ -1,0 +1,62 @@
+capa,bloque,tabla,filas,columnas,clave
+silver,base_territorial,municipios,542,4,codigo_municipio
+silver,base_territorial,recintos_municipales,542,6,codigo_municipio
+silver,demografia_parque,parque_municipal,542,5,"codigo_municipio, fecha_referencia"
+silver,demografia_parque,parque_sin_municipio,3,6,"codigo_agrupacion_origen, fecha_referencia"
+silver,demografia_parque,parque_detalle_observado,4124363,9,"origen_id, registro_origen"
+silver,demografia_parque,poblacion_municipal,8130,7,"codigo_municipio, sexo, anio"
+silver,demografia_parque,renta_territorial,262710,11,"nivel_territorial, codigo_territorio, indicador, anio"
+silver,demografia_parque,renta_codigos_historicos,54,12,"nivel_territorial, codigo_territorio, indicador, anio"
+silver,demografia_parque,incidencias,0,7,
+silver,recarga,recarga_instalaciones,1526,15,instalacion_id
+silver,recarga,recarga_puntos,4402,4,"instalacion_id, punto_id"
+silver,recarga,recarga_conectores,5244,18,"instalacion_id, punto_id, conector_id"
+silver,recarga,incidencias,0,5,
+silver,trafico_red,aforos_tramo_anio,9041,24,"tramo_aforo_id, anio"
+silver,trafico_red,red_tramos,1118309,9,"provincia_origen, tramo_id"
+silver,trafico_red,red_tramo_vial,1197446,10,"provincia_origen, tramo_id, vial_id"
+silver,trafico_red,incidencias,107,8,
+silver,poi_osm,poi_elementos,269287,16,"origen_id, fid_origen"
+silver,poi_osm,poi_correspondencias,77,12,"origen_punto, fid_punto, origen_area, fid_area"
+silver,poi_osm,incidencias,0,6,
+silver,capacidad_demanda,capacidad_demanda,423,39,punto_conexion_id
+silver,capacidad_demanda,incidencias,0,6,
+silver,recarga_espacial,recarga_instalaciones_geo,1526,25,instalacion_id
+silver,recarga_espacial,recarga_municipios_candidatos,1526,2,"instalacion_id, codigo_municipio"
+silver,recarga_espacial,entidad_municipio,1393,5,"tabla_entidad, clave_entidad, codigo_municipio"
+silver,recarga_espacial,incidencias_espaciales,133,3,
+silver,capacidad_demanda_espacial,capacidad_demanda_geo,423,55,punto_conexion_id
+silver,capacidad_demanda_espacial,capacidad_municipios_candidatos,423,2,"punto_conexion_id, codigo_municipio"
+silver,capacidad_demanda_espacial,entidad_municipio,423,3,punto_conexion_id
+silver,capacidad_demanda_espacial,incidencias_espaciales,0,2,punto_conexion_id
+silver,validacion_conjunta,revision_recarga,133,13,instalacion_id
+silver,validacion_conjunta,recarga_municipio_validado,1474,4,instalacion_id
+silver,validacion_conjunta,relaciones_espaciales,1430940,7,"tabla_entidad, clave_entidad, codigo_municipio"
+silver,validacion_conjunta,estado_relaciones_espaciales,1397060,5,"tabla_entidad, clave_entidad"
+silver,validacion_conjunta,cobertura_estadistica,96476,7,"tabla_entidad, periodo, segmento, codigo_municipio"
+silver,validacion_conjunta,estado_fuentes,8,4,bloque
+silver,recarga_versionada,recarga_instalaciones,1517,15,instalacion_id
+silver,recarga_versionada,recarga_puntos,4359,4,"instalacion_id, punto_id"
+silver,recarga_versionada,recarga_conectores,5202,18,"instalacion_id, punto_id, conector_id"
+silver,recarga_versionada,incidencias,0,5,
+silver,recarga_versionada,recarga_instalaciones_geo,1517,25,instalacion_id
+silver,recarga_versionada,recarga_municipios_candidatos,1517,2,"instalacion_id, codigo_municipio"
+silver,recarga_versionada,entidad_municipio,1385,5,"tabla_entidad, clave_entidad, codigo_municipio"
+silver,recarga_versionada,incidencias_espaciales,132,3,
+silver,recarga_versionada,revision_recarga,132,13,instalacion_id
+silver,recarga_versionada,recarga_municipio_validado,1466,4,instalacion_id
+silver,recarga_versionada,recarga_ausentes,9,30,instalacion_id
+silver,recarga_versionada,recarga_ausentes_municipios_candidatos,9,2,"instalacion_id, codigo_municipio"
+gold,contexto_municipal,gold_municipios,542,24,"version_gold, codigo_municipio"
+gold,contexto_municipal,gold_recarga_instalaciones,1526,14,"version_gold, instalacion_id"
+gold,contexto_municipal,gold_incertidumbre_recarga_municipio,112,7,"version_gold, instalacion_id, codigo_municipio, tipo_incertidumbre"
+gold,candidatos,gold_candidatos,16377,19,"version_gold, candidato_id"
+gold,candidatos,gold_candidato_municipio,16484,5,"version_gold, candidato_id, codigo_municipio"
+gold,candidatos,gold_correspondencias_candidatos,75,8,"version_gold, candidato_punto_id, candidato_area_id"
+gold,candidatos,gold_proximidad_candidato_recarga,49131,7,"version_gold, candidato_id, escenario"
+gold,controles_espaciales,gold_control_area_recarga,40332,5,"version_gold, candidato_id, escenario"
+gold,controles_espaciales,gold_solapamientos_candidatos,1269,9,"version_gold, candidato_a_id, candidato_b_id"
+gold,controles_espaciales,gold_control_borde,49131,6,"version_gold, candidato_id, escenario"
+gold,variables,gold_referencias_normalizacion,2,13,"version_gold, dimension"
+gold,variables,gold_variables_municipio,542,6,"version_gold, codigo_municipio"
+gold,variables,gold_variables_candidato,49131,12,"version_gold, candidato_id, escenario"

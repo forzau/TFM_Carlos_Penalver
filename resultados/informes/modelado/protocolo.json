@@ -1,0 +1,39 @@
+{
+  "diseno": "descriptivo_sin_separacion",
+  "n_municipios": 541,
+  "n_reservados": 0,
+  "entradas": [
+    "vehiculos_distintivo_0",
+    "puntos_con_municipio_admitido"
+  ],
+  "preparacion": "log1p de ambas entradas y StandardScaler ddof=0 sobre el universo descrito; divisor1 si constante. Reglas en originales.",
+  "metodos": [
+    "kmeans",
+    "gmm"
+  ],
+  "k": [
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "parametros": {
+    "kmeans": {
+      "init": "k-means++",
+      "n_init": 20,
+      "max_iter": 500,
+      "tol": 0.0001,
+      "algorithm": "lloyd"
+    },
+    "gmm": {
+      "covariance_type": "full",
+      "init_params": "kmeans",
+      "n_init": 10,
+      "max_iter": 500,
+      "tol": 0.001,
+      "reg_covar": 1e-06
+    }
+  },
+  "n_ajustes": 160
+}
