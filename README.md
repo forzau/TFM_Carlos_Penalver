@@ -8,11 +8,18 @@ El proyecto apoyará a administraciones y operadores en la decisión de dónde
 estudiar nuevas instalaciones públicas. Se preparan demanda potencial municipal,
 oferta registrada y candidatos cartográficos, conservando su incertidumbre.
 
-**Estado a 07-11-2026:** preparación de datos completada hasta Gold, baseline
-por medianas cerrado y comparación de tres métodos de clustering ejecutada
-con k de 2 a 10. Se trabaja con 541 municipios, 433 de desarrollo y 108
-reservados para prueba final. GMM con dos grupos y K-means con tres destacan
-como candidatos para interpretar; selección y evaluación final pendientes.
+**Estado a 13-11-2026:** preparación de datos completada hasta Gold. La Entrega 03
+se replantea para segmentar conjuntamente demanda potencial y oferta registrada
+de recarga. La entrega utiliza dos entradas: vehículos con Distintivo 0 y
+puntos de recarga con municipio admitido. Baseline descriptivo ejecutado y
+verificado sobre los 541 municipios incluidos, sin separación de datos, con
+cuatro perfiles y cobertura completa. Comparación ML ejecutada: K-means y GMM,
+de dos a seis grupos, con 160 ajustes y comprobación independiente. Se adopta
+K-means con seis grupos como solución de trabajo provisional, pendiente de
+comprobar la comprensión y utilidad de sus perfiles para el MVP.
+El enfoque, el reparto 433/108 y los resultados anteriores se conservan como
+históricos. La evaluación vigente es interna y de robustez; no acredita
+generalización a municipios o periodos nuevos.
 Todavía no hay un ranking de prioridad ni aplicación web.
 
 ## Entregas
@@ -21,9 +28,14 @@ Todavía no hay un ranking de prioridad ni aplicación web.
 - [Entrega 2: datos y preparación](docs/entregas/02_datos_y_preparacion.md).
   Incluye fuentes y acceso, condiciones de uso, transformaciones, estructura
   final de datos y limitaciones.
-- [Entrega 3: Machine Learning](docs/entregas/03_machine_learning.md).
-  Incluye entradas, tratamiento de rentas, separación espacial, protocolo y
-  resultados del baseline y comparación ML; la selección final sigue pendiente.
+- [Entrega 3: perfiles de demanda y oferta](docs/entregas/03_machine_learning_demanda_y_oferta.md).
+  Redacción completa de los cinco apartados: enfoque descriptivo, baseline,
+  comparación de K-means y GMM y exportación de imágenes con centros.
+  El apartado 5 documenta la elección provisional de seis grupos, sus etiquetas
+  de trabajo, la salida para el frontal y la comprobación de utilidad pendiente.
+- [Entrega 3: versión anterior conservada](docs/entregas/03_machine_learning.md).
+  Recoge la segmentación sin oferta en las entradas, sus experimentos y el
+  piloto de contraste posterior con recarga.
 
 ## Código y datos
 

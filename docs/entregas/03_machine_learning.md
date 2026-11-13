@@ -2,7 +2,7 @@
 
 **Proyecto:** localización de nuevos puntos de recarga para vehículos eléctricos en la Comunitat Valenciana.
 
-**Estado a 07-11-2026:** baseline y comparación de K-means, GaussianMixture y Bisecting K-means completados en desarrollo, con k de 2 a 10 y contraste específico con ocho grupos. GMM con dos grupos alcanza silhouette media 0,415 y K-means con tres, 0,327; ninguno supera la estabilidad media del baseline. Interpretación y selección final pendientes; los 108 municipios de prueba final siguen reservados.
+**Estado a 09-11-2026:** baseline y comparación de K-means, GaussianMixture y Bisecting K-means completados en desarrollo, con k de 2 a 10 y contraste específico con ocho grupos. GMM con dos grupos alcanza silhouette media 0,415 y K-means con tres, 0,327; ninguno supera la estabilidad media del baseline. K-means con tres grupos es la opción de trabajo y se ha realizado un piloto descriptivo de contraste con la oferta registrada. Selección definitiva y evaluación final pendientes; los 108 municipios de prueba final siguen reservados.
 
 ## 1. Qué problema resuelve el modelo
 
@@ -369,6 +369,35 @@ Son medianas de entrenamiento, con identificadores arbitrarios sin orden de prio
 
 GMM distingue principalmente un perfil con mayor proporción de Distintivo 0 y renta mediana, pero volúmenes muy diversos: el grupo de 61 abarca de 1 a 10.246 vehículos. K-means separa además un grupo de bajo volumen, conservando también heterogeneidad. Estas descripciones no acreditan déficit de recarga ni que la renta cause adopción; deben servir para valorar qué comparación municipal resulta útil.
 
+#### Piloto de utilidad: perfiles y oferta registrada — 09-11-2026
+
+Se contrasta K-means con tres grupos con la oferta municipal Gold, únicamente sobre los **433 municipios de desarrollo**, sin ajustar modelos ni evaluar los 108 reservados. El propósito es comprobar si los perfiles permiten proponer comparaciones municipales que una persona responsable de planificación pueda revisar. Es una exploración descriptiva, sin evaluación de usuarios o resultados de instalaciones.
+
+Para evitar seleccionar ejemplos por su oferta, se utilizan los nueve municipios representativos ya guardados y se buscan sus tres vecinos más próximos dentro del mismo grupo mediante distancia euclídea en las tres entradas preparadas del modelo. Para ilustrar cada grupo se elige la pareja más cercana de representante y primer vecino. Los puntos de recarga no intervienen en ese orden. Los 27 contrastes se conservan, incluidos casos con ofertas iguales o incertidumbre.
+
+| Grupo | Municipio | Vehículos Distintivo 0 | Proporción del parque | Renta EUR/persona/año | Puntos con municipio admitido |
+| --- | --- | ---: | ---: | ---: | ---: |
+| 0 | l'Olleria | 104 | 1,38% | 12.575 | 5 |
+| 0 | Turís | 89 | 1,38% | 12.507 | 10 |
+| 1 | Beniparrell | 136 | 3,44% | 14.835 | 1 |
+| 1 | Guadassuar | 182 | 3,65% | 14.140 | 0 |
+| 2 | Llocnou de Sant Jeroni | 5 | 0,81% | 13.960 | 0 |
+| 2 | Caudiel | 5 | 0,71% | 13.966 | 1 |
+
+Las seis rentas son publicadas y los seis municipios no tienen avisos locales de asignación pendiente o ausencia entre exportaciones en Gold. Esto no acredita exhaustividad del inventario. Los periodos son parque de 31-12-2025, renta de 2023 y copia de recarga adquirida el 18-10-2026.
+
+l'Olleria y Turís presentan entradas muy próximas, con presiones descriptivas de 20,8 y 8,9 vehículos Distintivo 0 por punto admitido. La diferencia propone revisar las condiciones locales; no determina cuántos cargadores faltan. Llocnou y Caudiel muestran que el mismo número reducido de vehículos registrados puede coexistir con ofertas diferentes, sin justificar prioridad automática por el cero. Olocau y Gilet, otra pareja de representantes y primer vecino, tienen cuatro puntos cada uno: el procedimiento también devuelve comparaciones sin contraste de recuento.
+
+| Grupo | Municipios | Sin puntos admitidos | Porcentaje | De esos ceros, con avisos locales |
+| --- | ---: | ---: | ---: | ---: |
+| 0 | 192 | 49 | 25,5% | 3 |
+| 1 | 43 | 17 | 39,5% | 2 |
+| 2 | 198 | 168 | 84,8% | 3 |
+
+Cero significa ningún punto con asignación municipal admitida en la copia, no ausencia física de recarga. Se conservan todos los municipios y los avisos; los cocientes con denominador cero permanecen nulos. Los recuentos municipales se han reconciliado con las instalaciones Gold y los avisos con sus relaciones de detalle, sin multiplicar puntos por conectores.
+
+El piloto respalda el uso de **perfil + valores municipales + oferta** para organizar la exploración y proponer casos de revisión. La pertenencia al grupo por sí sola es demasiado amplia para fijar una oferta esperada: el grupo 0 abarca entre 8 y 6.083 vehículos Distintivo 0 y el grupo 1 entre 2 y 10.246. Falta comprobar la ventaja práctica frente a una comparación sencilla y con usuarios. No se han evaluado potencia, funcionamiento, ocupación, recarga privada o accesibilidad a oferta de otros municipios; no se obtiene un ranking ni una prueba de déficit.
+
 #### Comprobaciones y límites
 
 Las quince pruebas sintéticas de preparación, baseline y candidatos pasan. Se han verificado las huellas, los códigos y las coberturas; se han recalculado independientemente las 108 silhouettes por distancias directas y los 1.620 ARI de las variantes por contingencias, además de comprobar escalas y donantes de las 49 preparaciones. Los errores numéricos máximos son inferiores a 5×10⁻¹⁴ y 2×10⁻¹⁶, respectivamente. Las asignaciones principales coinciden con los modelos guardados; en K-means y GMM se han contrastado además con sus centros y densidades, respectivamente. No se han registrado avisos, ajustes GMM sin convergencia o ajustes que alcancen el límite de 500 iteraciones donde este se informa; Bisecting no expone un contador global equivalente.
@@ -381,4 +410,4 @@ Se da por **cerrado el diseño, la ejecución y la evaluación inicial del basel
 
 La interpretación es que las reglas producen categorías explicables y generalmente estables, mientras su capacidad para reunir municipios próximos en las tres dimensiones es limitada. Ambas observaciones son compatibles: cortes parecidos pueden reproducir de forma estable perfiles muy amplios. La baja silhouette indica solapamiento en la representación elegida; no demuestra por sí sola que los datos sean inadecuados o que no exista una estructura aprovechable. Las rentas estimadas muestran una influencia limitada sobre la mayoría de las categorías publicadas en la prueba realizada, sin validar los importes.
 
-La comparación ML utiliza las mismas entradas, preparación, particiones y criterios. Con ocho grupos configurados mejora la separación media y empeora la estabilidad respecto al baseline. La exploración de k identifica GMM con dos grupos y K-means con tres como candidatos para revisar sus perfiles y el detalle que necesitan los usuarios del producto. No hay una superioridad conjunta demostrada: ninguna configuración probada supera la estabilidad media del baseline, y el mejor resultado geométrico concentra el 85,9% en un grupo. Se mantiene pendiente la selección final razonada antes de evaluar los 108 reservados. No se deriva un ranking ni una necesidad de nuevas instalaciones de estos perfiles.
+La comparación ML utiliza las mismas entradas, preparación, particiones y criterios. Con ocho grupos configurados mejora la separación media y empeora la estabilidad respecto al baseline. K-means con tres grupos se adopta como opción de trabajo por el detalle de sus perfiles, conservando GMM, Bisecting y baseline. GMM con dos grupos mantiene mejores medias de separación y estabilidad entre los candidatos ML; ninguna configuración probada supera la estabilidad media del baseline. El piloto de oferta aporta ejemplos de comparación para revisar y confirma la heterogeneidad interna, sin demostrar todavía mejora de las decisiones frente a una alternativa sencilla. Se mantiene pendiente la selección definitiva razonada antes de evaluar los 108 reservados. No se deriva un ranking ni una necesidad de nuevas instalaciones de estos perfiles.
