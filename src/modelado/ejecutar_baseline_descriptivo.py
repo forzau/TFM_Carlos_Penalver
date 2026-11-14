@@ -197,6 +197,7 @@ def main():
     print(json.dumps({'carpeta': salida.relative_to(ROOT).as_posix(), 'resumen': resumen,
                       'perfiles': resultado['perfiles'], 'sensibilidad_corte': corte_limpio,
                       'cambios_sensibilidad': len(sensibilidad['cambios_literal'])}, ensure_ascii=False, indent=2))
+    return salida
 
 
 if __name__ == '__main__':

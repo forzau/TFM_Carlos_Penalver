@@ -26,7 +26,10 @@ src/
       integracion.py                 Relaciones y versiones de recarga
     gold.py                          Contexto, candidatos, controles y variables
     historico/                       Implementaciones y auditorías anteriores
-  modelado/                          Experimentos, verificadores e imágenes
+  modelado/
+    __main__.py                      Entrada: python -m src.modelado
+    flujo.py                         Baseline → verificación → ML → verificación → imágenes
+                                     Productores y verificadores por responsabilidad
 tests/
   datos_y_preparacion/
     test_flujo.py                    Controles de los módulos del flujo completo
@@ -37,6 +40,7 @@ tests/
 resultados/
   README.md                          Índice de resultados vigentes y salidas locales
   informes/                          Esquemas, métricas y figuras incluidos en Git
+    modelado/RESULTADOS.md            Síntesis interpretativa de la Entrega 3
   apoyo/                             Auditorías, diseños, exploraciones y registros locales
 ```
 
@@ -68,15 +72,39 @@ ni instalar el proyecto como paquete.
 
 ## Modelado
 
+El director de la Entrega 3 coordina los módulos sin repetir la adquisición ni
+la preparación de la Entrega 2. Desde la raíz:
+
+```console
+python -m src.modelado --help
+python -m src.modelado --verificar
+python -m src.modelado
+```
+
+`--verificar` comprueba las ejecuciones de referencia del baseline y los diez
+modelos guardados, sin entrenar ni generar figuras; escribe sus informes de
+verificación. Sin opciones, el director crea un baseline nuevo, lo verifica,
+pasa esa carpeta a la comparación, verifica sus diez modelos y exporta las
+imágenes. Si falla una etapa, no ejecuta las posteriores. Cada productor crea
+su carpeta de ejecución y su manifiesto; no se sobrescriben experimentos previos.
+El director necesita Gold, los bloques ya definidos y sus evidencias locales.
+
+La [síntesis de resultados](../resultados/informes/modelado/RESULTADOS.md) recoge
+la fotografía de referencia y su interpretación. Una reproducción nueva no
+cambia automáticamente esa selección ni los informes públicos. La continuidad
+con Gold y la salida prevista del producto se documentan en la
+[Entrega 3](entregas/03_machine_learning.md).
+
 Los experimentos tienen protocolos diferentes. Conservar sus nombres evita
 confundir sus resultados o ejecutar un diseño anterior por error.
 
 | Estado | Módulos de `src/modelado/` |
 | --- | --- |
+| Director vigente de la Entrega 3 | `flujo`, entrada `__main__` |
 | Baseline vigente, descriptivo sin separación | `ejecutar_baseline_descriptivo`, `verificar_baseline_descriptivo` |
 | Comparación vigente de K-means y GMM | `ejecutar_comparacion_descriptiva`, `verificar_comparacion_descriptiva` |
 | Imágenes desde resultados guardados | `exportar_clusters_descriptivos` |
-| Nueva comparación seguida de imágenes | `ejecutar_comparacion_con_imagenes` |
+| Entrada auxiliar para comparación e imágenes con baseline de referencia | `ejecutar_comparacion_con_imagenes` |
 | Antecedentes con separación y funciones reutilizadas | `preparar_particiones_segmentacion`, `preparar_experimento_segmentacion`, `ejecutar_baseline_segmentacion`, `ejecutar_comparacion_segmentacion`, `verificar_comparacion_segmentacion`, `comprobar_utilidad_segmentacion`, `ejecutar_baseline_demanda_oferta`, `verificar_baseline_demanda_oferta` |
 
 Por ejemplo, para exportar imágenes de una comparación existente:
@@ -92,9 +120,10 @@ python -m src.modelado.verificar_comparacion_descriptiva resultados/modelado/com
 ```
 
 El verificador escribe su informe en esa carpeta. Los productores vigentes
-siguen usando las versiones concretas de Gold, bloques y baseline declaradas
-en sus módulos. La reorganización no cambia esas entradas, el protocolo, los
-modelos elegidos ni las métricas. Varias funciones reutilizadas proceden de los
+usan las versiones concretas de Gold y bloques declaradas en sus módulos.
+La comparación aislada utiliza por defecto el baseline de referencia; el
+director le pasa el recién generado. Se conservan el protocolo, los modelos
+elegidos y las métricas publicadas. Varias funciones reutilizadas proceden de los
 módulos anteriores; conservarlas evita duplicar implementaciones.
 
 ## Pruebas y trazabilidad

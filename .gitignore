@@ -23,6 +23,7 @@
 !/resultados/informes/modelado/
 /resultados/informes/modelado/*
 !/resultados/informes/modelado/comparacion.csv
+!/resultados/informes/modelado/RESULTADOS.md
 !/resultados/informes/modelado/perfiles_baseline.csv
 !/resultados/informes/modelado/perfiles_modelos.csv
 !/resultados/informes/modelado/protocolo.json

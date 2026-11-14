@@ -19,32 +19,25 @@ locales de datos.
 
 ## Segmentación descriptiva vigente
 
-Se describen 541 municipios mediante vehículos con Distintivo 0 y puntos de
-recarga con municipio admitido, con `log1p` y estandarización. No hay reserva de
-prueba ni validación cruzada en este diseño.
+El [informe de resultados de la Entrega 3](informes/modelado/RESULTADOS.md) reúne
+las métricas de las once soluciones, la comparación con el baseline, la elección
+provisional de K-means k6 y el análisis de los casos fronterizos y limitaciones.
+Es el punto de lectura principal, junto con la
+[entrega académica](../docs/entregas/03_machine_learning.md).
 
-| Ejecución | Referencia | Resultado |
-| --- | --- | --- |
-| Baseline `20261111T160303732930Z` | Mediana de Distintivo 0 y oferta cero/positiva | Cuatro perfiles; silhouette interna 0,3816 |
-| Comparación `20261111T161605225327Z` | K-means y GMM, de dos a seis grupos | Diez configuraciones y 160 ajustes registrados |
-| Selección de trabajo, 13-11-2026 | K-means con seis grupos | Silhouette interna 0,4786; aceptación provisional hasta comprobar utilidad en el MVP |
+Las evidencias descargables se conservan por su función:
 
-- [Comparación de métricas](informes/modelado/comparacion.csv).
-- [Resumen de perfiles del baseline](informes/modelado/perfiles_baseline.csv).
-- [Resumen de perfiles de las diez configuraciones](informes/modelado/perfiles_modelos.csv).
-- [Diseño y parámetros del experimento](informes/modelado/protocolo.json).
-- [Resumen del baseline, selección posterior y límites](informes/modelado/resumen.json).
-- Informes numéricos independientes conservados de las ejecuciones:
-  [baseline](informes/modelado/verificacion_baseline.json) y
-  [comparación](informes/modelado/verificacion_comparacion.json).
+| Archivos | Función |
+| --- | --- |
+| [Comparación](informes/modelado/comparacion.csv) | Valores numéricos completos de las diez configuraciones ML. |
+| Perfiles del [baseline](informes/modelado/perfiles_baseline.csv) y [modelos](informes/modelado/perfiles_modelos.csv) | Tamaños, medianas y avisos por grupo. |
+| [Protocolo](informes/modelado/protocolo.json) | Diseño y parámetros del experimento. |
+| [Resumen de datos](informes/modelado/resumen.json) | Métricas del baseline, decisión posterior y límites en formato reutilizable. |
+| Verificaciones del [baseline](informes/modelado/verificacion_baseline.json) y [ML](informes/modelado/verificacion_comparacion.json) | Comprobaciones numéricas independientes. |
 
-La decisión de trabajar con seis grupos es posterior a los experimentos. Se
-documenta en el resumen sin modificar los manifiestos originales, que reflejan
-el momento de su ejecución.
-
-Las métricas son internas y de robustez; no estiman rendimiento en municipios
-o periodos nuevos. Los perfiles no indican prioridad, necesidad real, suficiencia
-de recarga ni viabilidad de conexión eléctrica.
+La síntesis interpreta estas evidencias; no sustituye sus valores completos ni
+reescribe los manifiestos originales. Las métricas describen 541 municipios y
+miden geometría interna y robustez, sin acreditar generalización o necesidad real.
 
 ### Figuras con centros
 
@@ -59,8 +52,6 @@ muestran recuentos originales y la representación utilizada por el modelo.
 | 4 | [Figura](informes/modelado/imagenes/kmeans_k4.png) | [Figura](informes/modelado/imagenes/gmm_k4.png) |
 | 5 | [Figura](informes/modelado/imagenes/kmeans_k5.png) | [Figura](informes/modelado/imagenes/gmm_k5.png) |
 | 6 | [Figura](informes/modelado/imagenes/kmeans_k6.png) | [Figura](informes/modelado/imagenes/gmm_k6.png) |
-
-![K-means con seis grupos](informes/modelado/imagenes/kmeans_k6.png)
 
 Los números y colores son propios de cada configuración. Los centros de GMM
 son medias de componentes; la transformación inversa de un centro no equivale
@@ -109,3 +100,6 @@ huellas SHA-256 de los insumos y los informes, además de la versión del export
 Los CSV de métricas y las figuras son copias exactas; los esquemas, el protocolo
 resumido y los resúmenes JSON se extraen de los manifiestos y resultados guardados.
 La selección provisional se registra como decisión posterior explícita.
+`informes/modelado/RESULTADOS.md` es una síntesis revisada manualmente, enlazada
+a esas evidencias; no la regenera el exportador ni forma parte de sus salidas
+enumeradas en `procedencia.json`.

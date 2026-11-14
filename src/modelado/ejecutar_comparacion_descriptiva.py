@@ -74,9 +74,10 @@ def ajustar(metodo, k, semilla, muestra, universo):
     return modelo, etiquetas, info
 
 
-def main():
+def main(baseline=BASELINE):
+    base = (ROOT / baseline).resolve()
+    baseline = base.relative_to(ROOT.resolve()).as_posix()
     universo, fuentes = cargar_universo()
-    base = ROOT / BASELINE
     mf = json.loads((base / 'manifiesto.json').read_text(encoding='utf-8'))
     for e in mf['fuentes'] + mf['salidas'] + mf['apoyos'] + [mf['productor']]:
         checked(ROOT, ROOT / e['ruta'], e)
@@ -110,7 +111,7 @@ def main():
     salida.mkdir(parents=True, exist_ok=False)
     (salida / 'modelos').mkdir()
     protocolo = {'diseno': 'descriptivo_sin_separacion', 'n_municipios': 541, 'n_reservados': 0,
-                 'entradas': VARIABLES, 'columnas_distancias': Z, 'baseline': BASELINE,
+                 'entradas': VARIABLES, 'columnas_distancias': Z, 'baseline': baseline,
                  'preparacion': bp['preparacion'], 'preparaciones': preparaciones,
                  'metodos': METODOS, 'k': K, 'parametros': PARAMETROS,
                  'semilla_principal': SEMILLA, 'semillas_extra': SEMILLAS_EXTRA,
@@ -203,6 +204,7 @@ def main():
                  'versiones': {'python': platform.python_version(), 'numpy': np.__version__,
                               'sklearn': sklearn.__version__, 'joblib': joblib.__version__}})
     print(json.dumps({'carpeta': salida.relative_to(ROOT).as_posix(), 'n_ajustes': 160}), flush=True)
+    return salida
 
 
 if __name__ == '__main__':

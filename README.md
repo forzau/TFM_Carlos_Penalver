@@ -8,8 +8,8 @@ El proyecto apoyará a administraciones y operadores en la decisión de dónde
 estudiar nuevas instalaciones públicas. Se preparan demanda potencial municipal,
 oferta registrada y candidatos cartográficos, conservando su incertidumbre.
 
-**Estado a 13-11-2026:** preparación de datos completada hasta Gold. La Entrega 03
-se replantea para segmentar conjuntamente demanda potencial y oferta registrada
+**Estado a 14-11-2026:** preparación de datos completada hasta Gold. La Entrega 03
+segmenta conjuntamente demanda potencial y oferta registrada
 de recarga. La entrega utiliza dos entradas: vehículos con Distintivo 0 y
 puntos de recarga con municipio admitido. Baseline descriptivo ejecutado y
 verificado sobre los 541 municipios incluidos, sin separación de datos, con
@@ -28,14 +28,14 @@ Todavía no hay un ranking de prioridad ni aplicación web.
 - [Entrega 2: datos y preparación](docs/entregas/02_datos_y_preparacion.md).
   Incluye fuentes y acceso, condiciones de uso, transformaciones, estructura
   final de datos y limitaciones.
-- [Entrega 3: perfiles de demanda y oferta](docs/entregas/03_machine_learning_demanda_y_oferta.md).
+- [Entrega 3: perfiles de demanda y oferta](docs/entregas/03_machine_learning.md).
   Redacción completa de los cinco apartados: enfoque descriptivo, baseline,
   comparación de K-means y GMM y exportación de imágenes con centros.
   El apartado 5 documenta la elección provisional de seis grupos, sus etiquetas
   de trabajo, la salida para el frontal y la comprobación de utilidad pendiente.
-- [Entrega 3: versión anterior conservada](docs/entregas/03_machine_learning.md).
-  Recoge la segmentación sin oferta en las entradas, sus experimentos y el
-  piloto de contraste posterior con recarga.
+- [Resultados de la Entrega 3](resultados/informes/modelado/RESULTADOS.md).
+  Síntesis de métricas, comparación con el baseline y análisis de los casos
+  fronterizos y limitaciones, con las evidencias descargables.
 
 ## Código y datos
 
@@ -104,6 +104,19 @@ Para ejecutar las pruebas desde la raíz:
 Los [informes y figuras](resultados/README.md) incluyen esquemas, recuentos y
 métricas agregadas para revisar las ejecuciones. Se regeneran con
 `python -m src.exportar_resultados` desde las salidas locales guardadas.
+
+La Entrega 3 tiene un director de experimentos en `src/modelado/flujo.py`:
+
+```console
+python -m src.modelado --verificar
+python -m src.modelado
+```
+
+El primer comando verifica baseline y modelos de referencia sin entrenar. El
+segundo reproduce baseline, verificación, comparación ML, verificación e imágenes
+en carpetas nuevas, utilizando el Gold existente y los bloques ya definidos.
+Necesita las copias locales de datos y evidencias; clonar Git no las proporciona.
+No sustituye las ejecuciones publicadas ni regenera la síntesis interpretativa.
 
 Las copias originales, las bases completas y las versiones antiguas de código
 asociadas a sus huellas permanecen fuera de Git. Docker queda pendiente;
