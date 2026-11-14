@@ -13,23 +13,29 @@ src/
   preparar_dataset.py                Entrada compatible con la Entrega 2
   datos_y_preparacion/
     __main__.py                      Entrada: python -m src.datos_y_preparacion
-    flujo.py                         Orden de etapas y manifiesto final
-    comunes.py                       SQL, huellas, conexión y exportación
-    bronze.py                        Catálogo, originales y evidencias
-    silver/
-      territorio.py                  Referencia INE y recintos IGN
-      demografia.py                  Población, renta y parque DGT
-      recarga.py                     Instalaciones, puntos y conectores
-      trafico.py                     Aforos y red viaria
-      osm.py                         Puntos, áreas y correspondencias
-      capacidad.py                   Capacidad i-DE y sus metadatos
-      integracion.py                 Relaciones y versiones de recarga
-    gold.py                          Contexto, candidatos, controles y variables
+    flujo.py                         Orquestador: Bronze → Silver → Gold
+    pasos/
+      01_bronze.py                   Catálogo, originales y evidencias
+      02_territorio.py               Referencia INE y recintos IGN
+      03_demografia.py               Población, renta y parque DGT
+      04_recarga.py                  Instalaciones, puntos, conectores y geometrías
+      05_trafico.py                  Aforos y red viaria
+      06_osm.py                      Puntos, áreas y correspondencias
+      07_capacidad.py                Capacidad i-DE y sus metadatos
+      08_integracion.py              Relaciones y versiones de recarga
+      09_gold.py                     Contexto, candidatos, controles y variables
+      comunes.py                     SQL, huellas, conexión y exportación
     historico/                       Implementaciones y auditorías anteriores
   modelado/
     __main__.py                      Entrada: python -m src.modelado
     flujo.py                         Baseline → verificación → ML → verificación → imágenes
-                                     Productores y verificadores por responsabilidad
+    pasos/
+      01_baseline.py                 Referencia descriptiva
+      02_verificar_baseline.py       Verificación independiente del baseline
+      03_comparar_modelos.py         K-means y GMM, de dos a seis grupos
+      04_verificar_modelos.py        Verificación independiente de los modelos
+      05_exportar_imagenes.py        Diez figuras desde resultados guardados
+    historico/                       Diseños anteriores y funciones reutilizadas
 tests/
   datos_y_preparacion/
     test_flujo.py                    Controles de los módulos del flujo completo
@@ -45,6 +51,12 @@ resultados/
 ```
 
 ## Preparación
+
+`src/datos_y_preparacion/flujo.py` es el orquestador. Coordina los nueve módulos
+numerados en `pasos/`, sus controles y el manifiesto final. Los pasos Silver
+se agrupan por fuente; recarga y capacidad se reutilizan en sus etapas tabulares
+y espaciales. El orden efectivo y esas dependencias quedan explícitos en el
+orquestador. `comunes.py` reúne auxiliares compartidos y no representa una etapa.
 
 Desde la raíz y con las dependencias de `requirements.txt` instaladas:
 
@@ -64,6 +76,9 @@ periodos, geometrías e incidencias, y se divide por fuente porque reúne la may
 parte del código. Gold reúne las tablas finales. Cada módulo contiene también
 los controles propios de sus transformaciones. `comunes.py` concentra solo las
 operaciones compartidas; `flujo.py` mantiene visible el recorrido completo.
+Los `__init__.py` de `pasos/` permiten importar los archivos numerados mediante
+nombres descriptivos, por ejemplo `from src.datos_y_preparacion.pasos import bronze`.
+Son los mismos módulos, sin copias de implementación ni ejecución automática.
 
 Se conserva `python src/preparar_dataset.py` como entrada compatible con la
 Entrega 2. La implementación ya no está en ese archivo. Para los demás módulos
@@ -95,28 +110,31 @@ cambia automáticamente esa selección ni los informes públicos. La continuidad
 con Gold y la salida prevista del producto se documentan en la
 [Entrega 3](entregas/03_machine_learning.md).
 
-Los experimentos tienen protocolos diferentes. Conservar sus nombres evita
-confundir sus resultados o ejecutar un diseño anterior por error.
+Los cinco pasos vigentes están separados de los experimentos históricos para
+evitar ejecutar un diseño anterior por error.
 
-| Estado | Módulos de `src/modelado/` |
+| Etapa | Archivo de `src/modelado/pasos/` |
 | --- | --- |
-| Director vigente de la Entrega 3 | `flujo`, entrada `__main__` |
-| Baseline vigente, descriptivo sin separación | `ejecutar_baseline_descriptivo`, `verificar_baseline_descriptivo` |
-| Comparación vigente de K-means y GMM | `ejecutar_comparacion_descriptiva`, `verificar_comparacion_descriptiva` |
-| Imágenes desde resultados guardados | `exportar_clusters_descriptivos` |
-| Entrada auxiliar para comparación e imágenes con baseline de referencia | `ejecutar_comparacion_con_imagenes` |
-| Antecedentes con separación y funciones reutilizadas | `preparar_particiones_segmentacion`, `preparar_experimento_segmentacion`, `ejecutar_baseline_segmentacion`, `ejecutar_comparacion_segmentacion`, `verificar_comparacion_segmentacion`, `comprobar_utilidad_segmentacion`, `ejecutar_baseline_demanda_oferta`, `verificar_baseline_demanda_oferta` |
+| Baseline descriptivo sin separación | `01_baseline.py` |
+| Verificación del baseline | `02_verificar_baseline.py` |
+| Comparación de K-means y GMM | `03_comparar_modelos.py` |
+| Verificación de los diez modelos | `04_verificar_modelos.py` |
+| Imágenes desde resultados guardados | `05_exportar_imagenes.py` |
+
+`historico/` conserva las particiones y experimentos anteriores, sus verificadores,
+el piloto de contraste con oferta y la antigua entrada de comparación con imágenes.
+Algunas funciones siguen reutilizándose; no son fases adicionales del flujo vigente.
 
 Por ejemplo, para exportar imágenes de una comparación existente:
 
 ```console
-python -m src.modelado.exportar_clusters_descriptivos resultados/modelado/comparacion_descriptiva/<ejecucion>
+python -m src.modelado.pasos.05_exportar_imagenes resultados/modelado/comparacion_descriptiva/<ejecucion>
 ```
 
 Para verificar sus resultados sin repetir ajustes:
 
 ```console
-python -m src.modelado.verificar_comparacion_descriptiva resultados/modelado/comparacion_descriptiva/<ejecucion>
+python -m src.modelado.pasos.04_verificar_modelos resultados/modelado/comparacion_descriptiva/<ejecucion>
 ```
 
 El verificador escribe su informe en esa carpeta. Los productores vigentes

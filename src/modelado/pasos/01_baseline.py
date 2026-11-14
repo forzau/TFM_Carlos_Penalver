@@ -11,7 +11,7 @@ import sklearn
 
 from src.datos_y_preparacion.historico.auditar_fuentes import query
 from src.datos_y_preparacion.historico.catalogar_bronze import ROOT
-from src.modelado.ejecutar_baseline_demanda_oferta import (
+from src.modelado.historico.ejecutar_baseline_demanda_oferta import (
     GOLD, PARTICIONES, VARIABLES, Z, validar, ajustar, asignar, preparar,
     perfiles, evaluar, planes_estabilidad, sin_avisos, guardar_json,
     escribir_csv, resumen_numerico, estabilidad_por_codigo,
@@ -190,7 +190,7 @@ def main():
         checked(ROOT, ROOT / e['ruta'], e)
     guardar_json(salida / 'manifiesto.json', {'ejecucion': ejecucion, 'fuentes': fuentes,
                  'productor': checked(ROOT, Path(__file__)),
-                 'apoyos': [checked(ROOT, ROOT / 'src' / n) for n in ('rutas.py', 'modelado/ejecutar_baseline_demanda_oferta.py', 'modelado/ejecutar_baseline_segmentacion.py', 'modelado/preparar_experimento_segmentacion.py', 'datos_y_preparacion/historico/georreferenciar_recarga.py')],
+                 'apoyos': [checked(ROOT, ROOT / 'src' / n) for n in ('rutas.py', 'modelado/historico/ejecutar_baseline_demanda_oferta.py', 'modelado/historico/ejecutar_baseline_segmentacion.py', 'modelado/historico/preparar_experimento_segmentacion.py', 'datos_y_preparacion/historico/georreferenciar_recarga.py')],
                  'salidas': [checked(ROOT, p) for p in sorted(salida.iterdir())],
                  'versiones': {'python': platform.python_version(), 'numpy': np.__version__, 'sklearn': sklearn.__version__, 'duckdb': duckdb.__version__},
                  'controles': 'Universo Gold menos exclusión exacta;541 únicos sin roles de partición; puntos/avisos reconciliados;12ajustes y5410asignaciones de robustez.'})

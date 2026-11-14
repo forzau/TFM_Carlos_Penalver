@@ -3,7 +3,7 @@
 import unittest
 from pathlib import Path
 
-from src.modelado.ejecutar_baseline_segmentacion import ajustar_medianas, asignar
+from src.modelado.historico.ejecutar_baseline_segmentacion import ajustar_medianas, asignar
 
 
 def fila(codigo, volumen, proporcion, renta):

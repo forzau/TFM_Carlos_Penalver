@@ -131,7 +131,7 @@ Se conservan protocolos, entradas, asignaciones, resúmenes, modelos y manifiest
 - Comparación ML: `resultados/modelado/comparacion_descriptiva/20261111T161605225327Z/`.
 - Diez PNG con centros: `imagenes_clusters/20261111T170051625718Z/`, dentro de la comparación.
 
-El director `python -m src.modelado` coordina baseline, verificación, comparación ML, verificación e imágenes. La opción `--verificar` comprueba las ejecuciones de referencia sin repetir ajustes. Los productores y verificadores están organizados en `src/modelado/`; `exportar_clusters_descriptivos.py` genera las imágenes desde asignaciones y modelos guardados. Las ejecuciones anteriores se mantienen como antecedentes, sin mezclar sus métricas con las de este diseño.
+El director `python -m src.modelado` coordina baseline, verificación, comparación ML, verificación e imágenes. La opción `--verificar` comprueba las ejecuciones de referencia sin repetir ajustes. El orquestador está en `src/modelado/flujo.py` y los cinco pasos numerados en `src/modelado/pasos/`; `05_exportar_imagenes.py` genera las imágenes desde asignaciones y modelos guardados. Las ejecuciones anteriores se conservan en `src/modelado/historico/`, sin mezclar sus métricas con las de este diseño.
 
 La síntesis de [resultados de la Entrega 03](../../resultados/informes/modelado/RESULTADOS.md) reúne métricas, comparación con el baseline y análisis de los casos fronterizos y limitaciones más relevantes, con enlaces a las evidencias.
 

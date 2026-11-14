@@ -6,7 +6,7 @@ from openpyxl import load_workbook
 from xml.etree import ElementTree
 import json
 
-from src.datos_y_preparacion.comunes import consultar
+from src.datos_y_preparacion.pasos.comunes import consultar
 
 
 REFERENCIA_PROVINCES = ('03', '12', '46')

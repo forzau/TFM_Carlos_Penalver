@@ -17,11 +17,11 @@ from sklearn.cluster import BisectingKMeans, KMeans
 from sklearn.mixture import GaussianMixture
 from threadpoolctl import threadpool_limits
 
-from src.modelado.preparar_experimento_segmentacion import (
+from src.modelado.historico.preparar_experimento_segmentacion import (
     RAIZ, VARIABLES, Z, cargar_desarrollo, estabilidad_por_codigo,
     geometria, huella, preparar,
 )
-from src.modelado.ejecutar_baseline_segmentacion import escribir_csv, perfiles, resumen_numerico
+from src.modelado.historico.ejecutar_baseline_segmentacion import escribir_csv, perfiles, resumen_numerico
 
 
 PREPARACION = "resultados/modelado/preparacion/20261106T112331494635Z"
@@ -246,8 +246,8 @@ def main():
                  "numpy": np.__version__, "scikit_learn": sklearn.__version__, "scipy": scipy.__version__, "joblib": joblib.__version__}
     fuentes = [RAIZ / PREPARACION / "manifiesto.json", RAIZ / PREPARACION / "protocolo.json",
                RAIZ / PREPARACION / "entradas_desarrollo.parquet", RAIZ / BASELINE / "manifiesto.json",
-               RAIZ / BASELINE / "resultados.json", Path(__file__).with_name("modelado/preparar_experimento_segmentacion.py"),
-               Path(__file__).with_name("modelado/ejecutar_baseline_segmentacion.py")]
+               RAIZ / BASELINE / "resultados.json", Path(__file__).with_name("preparar_experimento_segmentacion.py"),
+               Path(__file__).with_name("ejecutar_baseline_segmentacion.py")]
     guardar_json(carpeta / "manifiesto.json", {"ejecucion": ejecucion, "versiones": versiones,
         "fuentes": [{"ruta": p.relative_to(RAIZ).as_posix(), "sha256": huella(p)} for p in fuentes],
         "productor": {"ruta": Path(__file__).relative_to(RAIZ).as_posix(), "sha256": huella(Path(__file__))},

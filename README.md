@@ -42,16 +42,20 @@ Todavía no hay un ranking de prioridad ni aplicación web.
 La preparación está en [src/datos_y_preparacion/](src/datos_y_preparacion/).
 [flujo.py](src/datos_y_preparacion/flujo.py) muestra la secuencia Bronze →
 Silver → Gold; los módulos separan las transformaciones y sus controles.
-Silver se divide por fuente para evitar otro archivo excesivamente grande.
+Ambas carpetas mantienen el orquestador `flujo.py` arriba, los pasos vigentes
+numerados en `pasos/` y los antecedentes en `historico/`.
 
 | Ruta | Responsabilidad |
 | --- | --- |
-| `src/datos_y_preparacion/bronze.py` | Originales, catálogo y comprobación de entradas. |
-| `src/datos_y_preparacion/silver/` | Territorio, demografía, recarga, tráfico, OSM, capacidad e integración. |
-| `src/datos_y_preparacion/gold.py` | Contexto municipal, candidatos, controles y variables. |
-| `src/datos_y_preparacion/comunes.py` | SQL, integridad, conexión y exportación compartidos. |
+| `src/datos_y_preparacion/flujo.py` | Orquestador de la preparación Bronze → Silver → Gold. |
+| `src/datos_y_preparacion/pasos/01_bronze.py` | Originales, catálogo y comprobación de entradas. |
+| `src/datos_y_preparacion/pasos/02_territorio.py` a `08_integracion.py` | Silver por fuente y validación conjunta. |
+| `src/datos_y_preparacion/pasos/09_gold.py` | Contexto municipal, candidatos, controles y variables. |
+| `src/datos_y_preparacion/pasos/comunes.py` | SQL, integridad, conexión y exportación compartidos. |
 | `src/datos_y_preparacion/historico/` | Preparaciones y auditorías anteriores; algunas funciones siguen reutilizándose. |
-| `src/modelado/` | Preparación de experimentos, baseline, comparación, verificadores e imágenes. |
+| `src/modelado/flujo.py` | Orquestador de baseline, verificación, ML, verificación e imágenes. |
+| `src/modelado/pasos/` | Cinco pasos numerados: `01_baseline.py` a `05_exportar_imagenes.py`. |
+| `src/modelado/historico/` | Diseños anteriores y funciones reutilizadas. |
 | `tests/` | Pruebas organizadas por preparación y modelado, incluidas en Git. |
 
 El [mapa de estructura](docs/ESTRUCTURA.md) explica los puntos de entrada y
@@ -68,7 +72,7 @@ Entrega 2 y delega en el flujo modular.
 Los originales y las bases completas están excluidos del repositorio. Los
 enlaces de acceso están en la segunda entrega. Para repetir exactamente la
 preparación se necesitan también las copias y evidencias documentales indicadas
-en `ENTRADAS` de `src/datos_y_preparacion/bronze.py`; clonar el repositorio no las descarga.
+en `ENTRADAS` de `src/datos_y_preparacion/pasos/01_bronze.py`; clonar el repositorio no las descarga.
 
 ## Reproducción
 

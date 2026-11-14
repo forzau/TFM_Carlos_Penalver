@@ -2,13 +2,13 @@
 
 import math
 
-from src.datos_y_preparacion.comunes import (
+from src.datos_y_preparacion.pasos.comunes import (
     comprobar_clave,
     consultar,
     exigir_cero,
     identificador_sql,
 )
-from src.datos_y_preparacion.silver.osm import OSM_CATEGORIES
+from src.datos_y_preparacion.pasos import osm as _osm
 
 
 GOLD_MUNICIPAL_KEYS = {
@@ -254,7 +254,7 @@ def gold_candidatos_prepare(c, version):
         to_json(list_value(origen_id,cast(fid_origen AS VARCHAR)))::VARCHAR candidato_id
         FROM poi_elementos WHERE interes_para_revision AND grupo_uso IN ('aparcamiento','comercio','alojamiento')''')
     c.execute('CREATE TEMP TABLE reglas(categoria VARCHAR,codigo VARCHAR,grupo VARCHAR)')
-    c.executemany('INSERT INTO reglas VALUES (?,?,?)', [(k, *v) for k, v in OSM_CATEGORIES.items()])
+    c.executemany('INSERT INTO reglas VALUES (?,?,?)', [(k, *v) for k, v in _osm.OSM_CATEGORIES.items()])
     exigir_cero(c, '''SELECT count(*) FROM seleccion s LEFT JOIN reglas r ON s.categoria_origen=r.categoria
         WHERE r.categoria IS NULL OR s.categoria_codigo_origen IS DISTINCT FROM r.codigo
         OR s.grupo_uso IS DISTINCT FROM r.grupo OR estado_geometria<>'admitida'

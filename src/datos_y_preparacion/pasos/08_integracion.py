@@ -6,7 +6,7 @@ import json
 import re
 import unicodedata
 
-from src.datos_y_preparacion.comunes import (
+from src.datos_y_preparacion.pasos.comunes import (
     comprobar_archivo,
     comprobar_clave,
     consultar,
@@ -15,8 +15,8 @@ from src.datos_y_preparacion.comunes import (
     integracion_scalar,
     texto_sql,
 )
-from src.datos_y_preparacion.silver.capacidad import CAPACIDAD_GEO_HISTORICAL
-from src.datos_y_preparacion.silver.recarga import RECARGA_GEO_KEYS, RECARGA_KEYS
+from src.datos_y_preparacion.pasos import capacidad as _capacidad
+from src.datos_y_preparacion.pasos import recarga as _recarga
 
 
 INTEGRACION_SPATIAL = (
@@ -93,7 +93,7 @@ def integracion_capacity_integrity(c):
     relation = integracion_table('capacidad_demanda_espacial', 'entidad_municipio')
     fields = [r[0] for r in c.execute(f'DESCRIBE {source}').fetchall()]
     original = ','.join(identificador_sql(k) for k in fields)
-    restored = ','.join(identificador_sql(CAPACIDAD_GEO_HISTORICAL.get(k,k))+' AS '+identificador_sql(k) for k in fields)
+    restored = ','.join(identificador_sql(_capacidad.CAPACIDAD_GEO_HISTORICAL.get(k,k))+' AS '+identificador_sql(k) for k in fields)
     exigir_cero(c, f'''SELECT count(*) FROM ((SELECT {original} FROM {source}
         EXCEPT ALL SELECT {restored} FROM {geo}) UNION ALL (SELECT {restored} FROM {geo}
         EXCEPT ALL SELECT {original} FROM {source}))''', 'Atributos i-DE originales cambiados')
@@ -286,7 +286,7 @@ def integracion_review_charging(c, decisions):
     for name in ('revision_recarga','recarga_municipio_validado'):
         comprobar_clave(c,name,INTEGRACION_OUTPUT_KEYS[name])
     controls={}
-    for name in RECARGA_KEYS:
+    for name in _recarga.RECARGA_KEYS:
         source=integracion_table('recarga',name)
         total,admitted=c.execute(f'''SELECT count(*),count(v.instalacion_id) FROM {source} s
             LEFT JOIN recarga_municipio_validado v USING(instalacion_id)''').fetchone()
@@ -349,7 +349,7 @@ def integracion_coverage(c):
         sum(valores_ausentes) valores_ausentes FROM cobertura_estadistica GROUP BY 1,2,3 ORDER BY 1,2,3''')
 
 
-RECARGA_VERSIONADA_KEYS = {**RECARGA_KEYS, 'incidencias': None, **RECARGA_GEO_KEYS, 'incidencias_espaciales': None,
+RECARGA_VERSIONADA_KEYS = {**_recarga.RECARGA_KEYS, 'incidencias': None, **_recarga.RECARGA_GEO_KEYS, 'incidencias_espaciales': None,
         'revision_recarga': INTEGRACION_OUTPUT_KEYS['revision_recarga'],
         'recarga_municipio_validado': INTEGRACION_OUTPUT_KEYS['recarga_municipio_validado'],
         'recarga_ausentes': ['instalacion_id'],
@@ -421,7 +421,7 @@ def recarga_versionada_preserve_absences(c):
 
 
 def crear_vistas_revision(c):
-    for nombre in RECARGA_KEYS:
+    for nombre in _recarga.RECARGA_KEYS:
         c.execute(f'CREATE TEMP VIEW {identificador_sql("recarga__" + nombre)} AS SELECT * FROM {identificador_sql(nombre)}')
     c.execute('CREATE TEMP VIEW recarga_espacial__recarga_instalaciones_geo AS SELECT * FROM recarga_instalaciones_geo')
     c.execute('CREATE TEMP VIEW base_territorial__recintos_municipales AS SELECT * FROM recintos')

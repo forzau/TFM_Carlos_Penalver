@@ -6,7 +6,7 @@ from pathlib import Path
 import numpy as np
 from threadpoolctl import threadpool_limits
 
-from src.modelado.ejecutar_comparacion_segmentacion import METODOS, Z, ajustar, crear_modelo, predecir
+from src.modelado.historico.ejecutar_comparacion_segmentacion import METODOS, Z, ajustar, crear_modelo, predecir
 
 
 def filas(x, prefijo):

@@ -10,7 +10,7 @@ import duckdb
 
 from src.datos_y_preparacion.historico.auditar_fuentes import query
 from src.datos_y_preparacion.historico.catalogar_bronze import ROOT
-from src.modelado.ejecutar_baseline_segmentacion import escribir_csv
+from src.modelado.historico.ejecutar_baseline_segmentacion import escribir_csv
 from src.datos_y_preparacion.historico.georreferenciar_recarga import checked
 
 
@@ -186,7 +186,7 @@ def main():
                                     'Presiones recalculadas desde operandos; ceros y nulos conservados.',
                                     'Huellas de entradas comprobadas antes y después.'],
                  'consultas_sql': CONSULTAS, 'entradas_verificadas': entradas,
-                 'productor': checked(ROOT, ROOT / 'src/modelado/comprobar_utilidad_segmentacion.py')}
+                 'productor': checked(ROOT, ROOT / 'src/modelado/historico/comprobar_utilidad_segmentacion.py')}
     (salida / 'resultados.json').write_text(json.dumps(resultado, ensure_ascii=False, indent=2, default=str,
                                                      allow_nan=False) + '\n', encoding='utf-8')
     print(json.dumps({'carpeta': salida.relative_to(ROOT).as_posix(), 'resumen': resumen,

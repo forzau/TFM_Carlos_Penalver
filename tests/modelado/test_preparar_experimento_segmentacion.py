@@ -6,7 +6,7 @@ from pathlib import Path
 
 import numpy as np
 
-from src.modelado.preparar_experimento_segmentacion import preparar, geometria, estabilidad_por_codigo
+from src.modelado.historico.preparar_experimento_segmentacion import preparar, geometria, estabilidad_por_codigo
 
 
 def fila(codigo, volumen, proporcion, renta, bloque):

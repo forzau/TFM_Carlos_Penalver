@@ -9,15 +9,15 @@ import json
 import re
 import unicodedata
 
-from src.datos_y_preparacion.comunes import (
+from src.datos_y_preparacion.pasos.comunes import (
     comprobar_clave,
     consultar,
     huella,
     identificador_sql,
     texto_sql,
 )
-from src.datos_y_preparacion.silver.demografia import demografia_csv_rows
-from src.datos_y_preparacion.silver.recarga import recarga_geo_name_key
+from src.datos_y_preparacion.pasos import demografia as _demografia
+from src.datos_y_preparacion.pasos import recarga as _recarga
 
 
 CAPACIDAD_SOURCE = 'Fuentes/Demanda_energetica.csv'
@@ -98,7 +98,7 @@ def capacidad_prepare(connection, path, temporary, origin):
         writer, incident_writer = csv.writer(out), csv.writer(incidents)
         writer.writerow(CAPACIDAD_SCHEMA)
         incident_writer.writerow(CAPACIDAD_INC_SCHEMA)
-        for ordinal, row in demografia_csv_rows(path, list(CAPACIDAD_RAW.values())):
+        for ordinal, row in _demografia.demografia_csv_rows(path, list(CAPACIDAD_RAW.values())):
             if any(CAPACIDAD_NULL in v for v in row.values()):
                 raise ValueError('El texto de entrada contiene el marcador reservado de NULL')
             key = row[CAPACIDAD_RAW['punto_conexion_id']]
@@ -306,13 +306,13 @@ def capacidad_geo_prepare(c, metadata):
     # Variantes oficiales INE/IGN dentro de la provincia. Sin similitud aproximada.
     labels = c.execute('''SELECT codigo_municipio,nombre_municipio FROM municipios
         UNION SELECT codigo_municipio,nombre_municipio_ign FROM recintos''').fetchall()
-    aliases = sorted({(code[:2], recarga_geo_name_key(variant), code) for code, label in labels
+    aliases = sorted({(code[:2], _recarga.recarga_geo_name_key(variant), code) for code, label in labels
                       for variant in [label, *label.split('/')] if variant.strip()})
     c.execute('CREATE TEMP TABLE etiquetas(provincia VARCHAR,nombre VARCHAR,codigo_municipio VARCHAR)')
     c.executemany('INSERT INTO etiquetas VALUES (?,?,?)', aliases)
     names = c.execute('SELECT DISTINCT municipio_nombre_origen FROM capacidad_demanda').fetchall()
     c.execute('CREATE TEMP TABLE nombres(texto VARCHAR,clave VARCHAR)')
-    c.executemany('INSERT INTO nombres VALUES (?,?)', [(t, recarga_geo_name_key(t or '')) for (t,) in names])
+    c.executemany('INSERT INTO nombres VALUES (?,?)', [(t, _recarga.recarga_geo_name_key(t or '')) for (t,) in names])
     c.execute('''CREATE TEMP TABLE etiquetas_unicas AS SELECT provincia,nombre,min(codigo_municipio) codigo
         FROM etiquetas WHERE nombre<>'' GROUP BY 1,2 HAVING count(DISTINCT codigo_municipio)=1''')
     c.execute(f'''CREATE TABLE capacidad_demanda_geo AS SELECT * RENAME(

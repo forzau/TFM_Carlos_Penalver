@@ -15,9 +15,9 @@ from sklearn.preprocessing import StandardScaler
 
 from src.datos_y_preparacion.historico.auditar_fuentes import query
 from src.datos_y_preparacion.historico.catalogar_bronze import ROOT
-from src.modelado.ejecutar_baseline_segmentacion import escribir_csv, resumen_numerico
+from src.modelado.historico.ejecutar_baseline_segmentacion import escribir_csv, resumen_numerico
 from src.datos_y_preparacion.historico.georreferenciar_recarga import checked
-from src.modelado.preparar_experimento_segmentacion import geometria, estabilidad_por_codigo
+from src.modelado.historico.preparar_experimento_segmentacion import geometria, estabilidad_por_codigo
 
 
 PARTICIONES = 'resultados/modelado/particiones/20261106T110046844319Z'
@@ -269,7 +269,7 @@ def main():
         checked(ROOT, ROOT / e['ruta'], e)
     guardar_json(salida / 'manifiesto.json', {'ejecucion': ejecucion, 'fuentes': fuentes,
                  'productor': checked(ROOT, Path(__file__)),
-                 'apoyos': [checked(ROOT, ROOT / 'src' / n) for n in ('rutas.py', 'modelado/preparar_experimento_segmentacion.py', 'modelado/ejecutar_baseline_segmentacion.py', 'datos_y_preparacion/historico/georreferenciar_recarga.py')],
+                 'apoyos': [checked(ROOT, ROOT / 'src' / n) for n in ('rutas.py', 'modelado/historico/preparar_experimento_segmentacion.py', 'modelado/historico/ejecutar_baseline_segmentacion.py', 'datos_y_preparacion/historico/georreferenciar_recarga.py')],
                  'salidas': [checked(ROOT, p) for p in sorted(salida.iterdir())],
                  'versiones': {'numpy': np.__version__, 'sklearn': sklearn.__version__, 'duckdb': duckdb.__version__},
                  'controles': '433 OOF únicos,4330 perturbaciones,2165 preparados; oferta/avisos reconciliados; sin renta ni test.'})

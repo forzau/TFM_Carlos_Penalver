@@ -5,8 +5,8 @@ from pathlib import Path
 
 import numpy as np
 
-from src.modelado.ejecutar_baseline_demanda_oferta import ajustar, asignar, preparar, planes_estabilidad, perfiles, sin_avisos
-from src.modelado.verificar_baseline_demanda_oferta import ari_contingencia, silhouette_directa
+from src.modelado.historico.ejecutar_baseline_demanda_oferta import ajustar, asignar, preparar, planes_estabilidad, perfiles, sin_avisos
+from src.modelado.historico.verificar_baseline_demanda_oferta import ari_contingencia, silhouette_directa
 
 
 def fila(codigo, coches=0, puntos=0, bloque=None):

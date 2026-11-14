@@ -12,7 +12,7 @@ from scipy.special import logsumexp
 
 from src.datos_y_preparacion.historico.catalogar_bronze import ROOT
 from src.datos_y_preparacion.historico.georreferenciar_recarga import checked
-from src.modelado.verificar_baseline_demanda_oferta import ari_contingencia, silhouette_directa
+from src.modelado.historico.verificar_baseline_demanda_oferta import ari_contingencia, silhouette_directa
 
 
 def main():

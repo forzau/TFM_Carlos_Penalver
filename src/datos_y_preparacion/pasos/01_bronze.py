@@ -6,9 +6,9 @@ import duckdb
 import json
 import tempfile
 
-from src.datos_y_preparacion.comunes import RAIZ, comprobar_archivo, conectar, huella
-from src.datos_y_preparacion.silver.capacidad import metadatos_ide_verify
-from src.datos_y_preparacion.silver.recarga import recarga_geo_evidence
+from src.datos_y_preparacion.pasos.comunes import RAIZ, comprobar_archivo, conectar, huella
+from src.datos_y_preparacion.pasos import capacidad as _capacidad
+from src.datos_y_preparacion.pasos import recarga as _recarga
 
 
 ENTRADAS = {
@@ -88,17 +88,17 @@ def comprobar_entradas():
             pass
     # Registrar todos los módulos del flujo, incluidos los puntos de entrada.
     codigo = [RAIZ / 'src/__init__.py', RAIZ / 'src/rutas.py', RAIZ / 'src/preparar_dataset.py']
-    codigo.extend(p for p in sorted(Path(__file__).parent.rglob('*.py')) if 'historico' not in p.parts)
+    codigo.extend(p for p in sorted(Path(__file__).parent.parent.rglob('*.py')) if 'historico' not in p.parts)
     archivos = [comprobar_archivo(RAIZ, p) for p in codigo]
     for ruta in ENTRADAS.values():
         archivos.append(comprobar_archivo(RAIZ, RAIZ / ruta))
     catalogo = json.loads((RAIZ / ENTRADAS['catalogo']).read_text(encoding='utf-8'))
     bronze = bronze_build_manifest(RAIZ, catalogo)
     archivos.extend(bronze['archivos'])
-    recarga_geo_evidence(RAIZ, RAIZ / ENTRADAS['metadatos_recarga'])
+    _recarga.recarga_geo_evidence(RAIZ, RAIZ / ENTRADAS['metadatos_recarga'])
     archivos.append(comprobar_archivo(RAIZ, RAIZ / (ENTRADAS['metadatos_recarga'] + '.adquisicion.json')))
     evidencia = json.loads((RAIZ / ENTRADAS['metadatos_capacidad']).read_text(encoding='utf-8'))
-    metadatos = metadatos_ide_verify(RAIZ, evidencia)
+    metadatos = _capacidad.metadatos_ide_verify(RAIZ, evidencia)
     archivos.extend(comprobar_archivo(RAIZ, RAIZ / e['ruta'], e) for e in evidencia['archivos'].values())
     recibo_path = RAIZ / (ENTRADAS['recarga_principal'] + '.adquisicion.json')
     archivos.append(comprobar_archivo(RAIZ, recibo_path))

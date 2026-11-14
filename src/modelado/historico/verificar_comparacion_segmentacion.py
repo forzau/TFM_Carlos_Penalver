@@ -13,7 +13,7 @@ import joblib
 import numpy as np
 from threadpoolctl import threadpool_limits
 
-from src.modelado.preparar_experimento_segmentacion import RAIZ, Z, VARIABLES, DONANTES, cargar_desarrollo, huella
+from src.modelado.historico.preparar_experimento_segmentacion import RAIZ, Z, VARIABLES, DONANTES, cargar_desarrollo, huella
 from src.rutas import codigo_versionado
 
 

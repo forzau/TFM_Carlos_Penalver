@@ -14,9 +14,9 @@ class FlujoModeladoTest(unittest.TestCase):
         baseline = flujo.RAIZ / 'resultados/modelado/baseline_descriptivo/nuevo'
         comparacion = flujo.RAIZ / 'resultados/modelado/comparacion_descriptiva/nueva'
         imagenes = comparacion / 'imagenes_clusters/nuevas'
-        with patch('src.modelado.ejecutar_baseline_descriptivo.main', return_value=baseline) as base, \
-             patch('src.modelado.ejecutar_comparacion_descriptiva.main', return_value=comparacion) as comparar, \
-             patch('src.modelado.exportar_clusters_descriptivos.exportar', return_value=imagenes) as exportar, \
+        with patch('src.modelado.pasos.baseline.main', return_value=baseline) as base, \
+             patch('src.modelado.pasos.comparar_modelos.main', return_value=comparacion) as comparar, \
+             patch('src.modelado.pasos.exportar_imagenes.exportar', return_value=imagenes) as exportar, \
              patch.object(flujo, 'verificar') as verificar:
             orden = Mock()
             for nombre, funcion in [('baseline', base), ('verificar', verificar),
@@ -31,9 +31,9 @@ class FlujoModeladoTest(unittest.TestCase):
         self.assertEqual(resultado['imagenes'], imagenes.relative_to(flujo.RAIZ).as_posix())
 
     def test_verificacion_fallida_impide_comparar_y_exportar(self):
-        with patch('src.modelado.ejecutar_baseline_descriptivo.main', return_value=flujo.RAIZ / 'nuevo'), \
-             patch('src.modelado.ejecutar_comparacion_descriptiva.main') as comparar, \
-             patch('src.modelado.exportar_clusters_descriptivos.exportar') as exportar, \
+        with patch('src.modelado.pasos.baseline.main', return_value=flujo.RAIZ / 'nuevo'), \
+             patch('src.modelado.pasos.comparar_modelos.main') as comparar, \
+             patch('src.modelado.pasos.exportar_imagenes.exportar') as exportar, \
              patch.object(flujo, 'verificar', side_effect=subprocess.CalledProcessError(1, 'verificador')):
             with self.assertRaises(subprocess.CalledProcessError):
                 flujo.reproducir()
@@ -52,12 +52,12 @@ class FlujoModeladoTest(unittest.TestCase):
 
     def test_verificador_usa_interprete_actual_y_raiz_del_proyecto(self):
         carpeta = flujo.RAIZ / 'resultados/ejemplo'
-        for tipo, modulo in [('baseline', 'verificar_baseline_descriptivo'),
-                             ('comparacion', 'verificar_comparacion_descriptiva')]:
+        for tipo, modulo in [('baseline', '02_verificar_baseline'),
+                             ('comparacion', '04_verificar_modelos')]:
             with self.subTest(tipo=tipo), patch.object(flujo.subprocess, 'run') as ejecutar:
                 flujo.verificar(tipo, carpeta)
                 ejecutar.assert_called_once_with(
-                    [flujo.sys.executable, '-m', f'src.modelado.{modulo}', str(carpeta)],
+                    [flujo.sys.executable, '-m', f'src.modelado.pasos.{modulo}', str(carpeta)],
                     cwd=flujo.RAIZ, check=True,
                 )
 

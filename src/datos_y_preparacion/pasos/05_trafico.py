@@ -4,7 +4,7 @@ from contextlib import closing
 import csv
 import sqlite3
 
-from src.datos_y_preparacion.comunes import (
+from src.datos_y_preparacion.pasos.comunes import (
     comprobar_clave,
     consultar,
     gpkg_gpkg_wkb,

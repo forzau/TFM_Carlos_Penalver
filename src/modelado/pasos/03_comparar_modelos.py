@@ -15,8 +15,8 @@ from sklearn.mixture import GaussianMixture
 from threadpoolctl import threadpool_limits
 
 from src.datos_y_preparacion.historico.catalogar_bronze import ROOT
-from src.modelado.ejecutar_baseline_descriptivo import cargar_universo, representar, SEMILLA
-from src.modelado.ejecutar_baseline_demanda_oferta import (
+from src.modelado.pasos import baseline as _baseline
+from src.modelado.historico.ejecutar_baseline_demanda_oferta import (
     VARIABLES, Z, evaluar, perfiles, sin_avisos, guardar_json, escribir_csv,
     resumen_numerico, estabilidad_por_codigo,
 )
@@ -26,7 +26,7 @@ from src.datos_y_preparacion.historico.georreferenciar_recarga import checked
 BASELINE = 'resultados/modelado/baseline_descriptivo/20261111T160303732930Z'
 METODOS = ('kmeans', 'gmm')
 K = tuple(range(2, 7))
-SEMILLAS_EXTRA = tuple(SEMILLA + i for i in (100, 200, 300, 400))
+SEMILLAS_EXTRA = tuple(_baseline.SEMILLA + i for i in (100, 200, 300, 400))
 PARAMETROS = {
     'kmeans': dict(init='k-means++', n_init=20, max_iter=500, tol=1e-4, algorithm='lloyd'),
     'gmm': dict(covariance_type='full', init_params='kmeans', n_init=10,
@@ -77,7 +77,7 @@ def ajustar(metodo, k, semilla, muestra, universo):
 def main(baseline=BASELINE):
     base = (ROOT / baseline).resolve()
     baseline = base.relative_to(ROOT.resolve()).as_posix()
-    universo, fuentes = cargar_universo()
+    universo, fuentes = _baseline.cargar_universo()
     mf = json.loads((base / 'manifiesto.json').read_text(encoding='utf-8'))
     for e in mf['fuentes'] + mf['salidas'] + mf['apoyos'] + [mf['productor']]:
         checked(ROOT, ROOT / e['ruta'], e)
@@ -85,7 +85,7 @@ def main(baseline=BASELINE):
     bd = json.loads((base / 'resultados.json').read_text(encoding='utf-8'))
     bp = json.loads((base / 'protocolo.json').read_text(encoding='utf-8'))
     planes = bp['planes_estabilidad']
-    completos, params = representar(universo, universo)
+    completos, params = _baseline.representar(universo, universo)
     assert params == bd['preparacion_principal'] and len(planes) == 10
     with (base / 'asignaciones_municipales.csv').open(encoding='utf-8', newline='') as f:
         anteriores = list(csv.DictReader(f))
@@ -97,13 +97,13 @@ def main(baseline=BASELINE):
     perturbaciones = []
     for plan, guardado in zip(planes, bd['estabilidad']):
         sub = [f for f in universo if f['bloque_espacial'] not in plan['bloques_omitidos']]
-        fs, pp = representar(sub, universo)
+        fs, pp = _baseline.representar(sub, universo)
         assert pp == guardado['preparacion']
         codigos = {f['codigo_municipio'] for f in sub}
         perturbaciones.append((plan, [f for f in fs if f['codigo_municipio'] in codigos], fs))
         preparaciones[f"bloques_{plan['repeticion']}"] = pp
     limpios = [f for f in universo if sin_avisos(f)]
-    lc, lp = representar(limpios, limpios)
+    lc, lp = _baseline.representar(limpios, limpios)
     assert lp == bd['sensibilidad']['preparacion'] and len(limpios) == 478
     preparaciones['sin_avisos'] = lp
     ejecucion = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')
@@ -114,7 +114,7 @@ def main(baseline=BASELINE):
                  'entradas': VARIABLES, 'columnas_distancias': Z, 'baseline': baseline,
                  'preparacion': bp['preparacion'], 'preparaciones': preparaciones,
                  'metodos': METODOS, 'k': K, 'parametros': PARAMETROS,
-                 'semilla_principal': SEMILLA, 'semillas_extra': SEMILLAS_EXTRA,
+                 'semilla_principal': _baseline.SEMILLA, 'semillas_extra': SEMILLAS_EXTRA,
                  'planes_estabilidad': planes, 'n_ajustes': 160,
                  'evaluacion': 'Silhouette euclídea interna; 10 ARI de omisión de bloques sobre los541 reasignados; '
                                '4 ARI por semillas extra sobre los541; ARI sin avisos sobre los478 comunes. '
@@ -129,7 +129,7 @@ def main(baseline=BASELINE):
         for metodo in METODOS:
             for k in K:
                 nombre = f'{metodo}_k{k}'
-                modelo, etiquetas, info = ajustar(metodo, k, SEMILLA, completos, completos)
+                modelo, etiquetas, info = ajustar(metodo, k, _baseline.SEMILLA, completos, completos)
                 joblib.dump({'modelo': modelo, 'preparacion': params, 'variables': VARIABLES, 'z': Z},
                             salida / 'modelos' / f'{nombre}.joblib')
                 g = evaluar(completos, etiquetas)
@@ -137,9 +137,9 @@ def main(baseline=BASELINE):
                 ps = perfiles(completos, etiquetas)
                 ensayos = []
                 for tipo, repeticion, semilla, muestra, descritos in (
-                    [('bloques', p['repeticion'], SEMILLA, a, b) for p, a, b in perturbaciones] +
+                    [('bloques', p['repeticion'], _baseline.SEMILLA, a, b) for p, a, b in perturbaciones] +
                     [('semilla', i, s, completos, completos) for i, s in enumerate(SEMILLAS_EXTRA, 1)] +
-                    [('sin_avisos', 1, SEMILLA, lc, lc)]
+                    [('sin_avisos', 1, _baseline.SEMILLA, lc, lc)]
                 ):
                     _, otras, ii = ajustar(metodo, k, semilla, muestra, descritos)
                     comun = {c: etiquetas[c] for c in otras}
@@ -197,8 +197,8 @@ def main(baseline=BASELINE):
     guardar_json(salida / 'manifiesto.json', {'ejecucion': ejecucion, 'fuentes': fuentes,
                  'productor': checked(ROOT, Path(__file__)),
                  'apoyos': [checked(ROOT, ROOT / 'src' / n) for n in ('rutas.py',
-                     'modelado/ejecutar_baseline_descriptivo.py', 'modelado/ejecutar_baseline_demanda_oferta.py',
-                     'modelado/ejecutar_baseline_segmentacion.py', 'modelado/preparar_experimento_segmentacion.py',
+                     'modelado/pasos/01_baseline.py', 'modelado/historico/ejecutar_baseline_demanda_oferta.py',
+                     'modelado/historico/ejecutar_baseline_segmentacion.py', 'modelado/historico/preparar_experimento_segmentacion.py',
                      'datos_y_preparacion/historico/georreferenciar_recarga.py', 'datos_y_preparacion/historico/catalogar_bronze.py', 'datos_y_preparacion/historico/auditar_fuentes.py')],
                  'salidas': [checked(ROOT, p) for p in sorted(salida.rglob('*')) if p.is_file()],
                  'versiones': {'python': platform.python_version(), 'numpy': np.__version__,

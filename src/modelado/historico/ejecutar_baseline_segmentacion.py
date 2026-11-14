@@ -8,7 +8,7 @@ from pathlib import Path
 import duckdb
 import numpy as np
 
-from src.modelado.preparar_experimento_segmentacion import (
+from src.modelado.historico.preparar_experimento_segmentacion import (
     RAIZ, VARIABLES, Z, cargar_desarrollo, estabilidad_por_codigo,
     geometria, huella, preparar,
 )

@@ -13,8 +13,7 @@ from unittest.mock import patch
 
 import duckdb
 
-from src.datos_y_preparacion import bronze, comunes, gold
-from src.datos_y_preparacion.silver import recarga, demografia, capacidad
+from src.datos_y_preparacion.pasos import bronze, comunes, gold, recarga, demografia, capacidad
 from decimal import Decimal
 from tests.datos_y_preparacion.historico.test_recarga import export, row
 import tests.datos_y_preparacion.historico.test_gold_candidatos as candidatos
@@ -27,9 +26,10 @@ class FlujoModularTests(unittest.TestCase):
             root = Path(folder)
             codigo = {'src/__init__.py', 'src/rutas.py', 'src/preparar_dataset.py',
                       'src/datos_y_preparacion/__init__.py', 'src/datos_y_preparacion/__main__.py',
-                      'src/datos_y_preparacion/bronze.py', 'src/datos_y_preparacion/gold.py',
-                      'src/datos_y_preparacion/silver/__init__.py',
-                      'src/datos_y_preparacion/silver/territorio.py'}
+                      'src/datos_y_preparacion/pasos/01_bronze.py', 'src/datos_y_preparacion/pasos/09_gold.py',
+                      'src/datos_y_preparacion/flujo.py',
+                      'src/datos_y_preparacion/pasos/__init__.py',
+                      'src/datos_y_preparacion/pasos/02_territorio.py'}
             historico = 'src/datos_y_preparacion/historico/anterior.py'
             for ruta in codigo | {historico}:
                 path = root / ruta
@@ -47,12 +47,12 @@ class FlujoModularTests(unittest.TestCase):
             recibo = documentos['recarga.csv.adquisicion.json'] | comunes.huella(root / 'recarga.csv')
             (root / 'recarga.csv.adquisicion.json').write_text(json.dumps(recibo), encoding='utf-8')
             with patch.object(bronze, 'RAIZ', root), \
-                 patch.object(bronze, '__file__', str(root / 'src/datos_y_preparacion/bronze.py')), \
+                 patch.object(bronze, '__file__', str(root / 'src/datos_y_preparacion/pasos/01_bronze.py')), \
                  patch.object(bronze, 'ENTRADAS', entradas), \
                  patch.object(bronze, 'conectar', return_value=nullcontext()), \
                  patch.object(bronze, 'bronze_build_manifest', return_value={'archivos': []}), \
-                 patch.object(bronze, 'recarga_geo_evidence'), \
-                 patch.object(bronze, 'metadatos_ide_verify', return_value={}):
+                 patch.object(recarga, 'recarga_geo_evidence'), \
+                 patch.object(capacidad, 'metadatos_ide_verify', return_value={}):
                 _, archivos, _, _, _ = bronze.comprobar_entradas()
             registrados = {e['ruta'] for e in archivos if e['ruta'].startswith('src/')}
             self.assertEqual(registrados, codigo)

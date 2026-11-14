@@ -8,7 +8,7 @@ import csv
 import math
 import re
 
-from src.datos_y_preparacion.comunes import comprobar_clave, consultar, identificador_sql
+from src.datos_y_preparacion.pasos.comunes import comprobar_clave, consultar, identificador_sql
 
 
 DEMOGRAFIA_TXT = 'Fuentes/parque_vehiculos_202512.txt'

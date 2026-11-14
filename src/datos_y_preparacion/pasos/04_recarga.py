@@ -9,7 +9,7 @@ import json
 import re
 import unicodedata
 
-from src.datos_y_preparacion.comunes import (
+from src.datos_y_preparacion.pasos.comunes import (
     comprobar_archivo,
     comprobar_clave,
     consultar,

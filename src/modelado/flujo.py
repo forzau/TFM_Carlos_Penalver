@@ -11,25 +11,25 @@ from src.rutas import RAIZ
 
 def verificar(tipo, carpeta):
     """Detiene el flujo si el verificador independiente encuentra un problema."""
-    modulo = {'baseline': 'verificar_baseline_descriptivo',
-              'comparacion': 'verificar_comparacion_descriptiva'}[tipo]
+    modulo = {'baseline': '02_verificar_baseline',
+              'comparacion': '04_verificar_modelos'}[tipo]
     subprocess.run(
-        [sys.executable, '-m', f'src.modelado.{modulo}', str(carpeta)],
+        [sys.executable, '-m', f'src.modelado.pasos.{modulo}', str(carpeta)],
         cwd=RAIZ, check=True,
     )
 
 
 def reproducir():
     """Crea ejecuciones nuevas y compara con el baseline generado en este flujo."""
-    from src.modelado.ejecutar_baseline_descriptivo import main as baseline
-    from src.modelado.ejecutar_comparacion_descriptiva import main as comparar
-    from src.modelado.exportar_clusters_descriptivos import exportar
+    from src.modelado.pasos import baseline as _baseline
+    from src.modelado.pasos import comparar_modelos as _comparar_modelos
+    from src.modelado.pasos import exportar_imagenes as _exportar_imagenes
 
-    carpeta_baseline = baseline()
+    carpeta_baseline = _baseline.main()
     verificar('baseline', carpeta_baseline)
-    carpeta_comparacion = comparar(baseline=carpeta_baseline.relative_to(RAIZ).as_posix())
+    carpeta_comparacion = _comparar_modelos.main(baseline=carpeta_baseline.relative_to(RAIZ).as_posix())
     verificar('comparacion', carpeta_comparacion)
-    imagenes = exportar(carpeta_comparacion)
+    imagenes = _exportar_imagenes.exportar(carpeta_comparacion)
     return {nombre: ruta.relative_to(RAIZ).as_posix() for nombre, ruta in (
         ('baseline', carpeta_baseline), ('comparacion', carpeta_comparacion), ('imagenes', imagenes),
     )}

@@ -3,7 +3,7 @@
 import unittest
 from pathlib import Path
 
-from src.modelado.comprobar_utilidad_segmentacion import unir_oferta, validar_desarrollo, vecinos
+from src.modelado.historico.comprobar_utilidad_segmentacion import unir_oferta, validar_desarrollo, vecinos
 
 
 def municipio(codigo, z=0, grupo=0, puntos=0):
