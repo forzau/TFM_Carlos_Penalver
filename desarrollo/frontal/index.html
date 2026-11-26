@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Visor municipal · Recarga en la Comunitat Valenciana</title>
+  <link rel="stylesheet" href="estilos.css?v=2">
+  <script src="visor.js?v=2" defer></script>
+</head>
+<body>
+  <header class="cabecera">
+    <div class="marca">
+      <span class="marca-icono" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="m13 2-8 12h6l-1 8 9-12h-6l1-8Z"/></svg>
+      </span>
+      <strong>Recarga CV</strong>
+    </div>
+    <div class="cabecera-opciones">
+      <span class="cabecera-lugar">Comunitat Valenciana</span>
+      <button id="tema" class="tema" type="button" aria-pressed="false">
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M17 12.3A7.4 7.4 0 0 1 7.7 3 7.4 7.4 0 1 0 17 12.3Z"/></svg>
+        <span>Modo oscuro</span>
+      </button>
+    </div>
+  </header>
+  <main>
+    <section class="titulo">
+      <h1>Visor municipal</h1>
+      <p>Explora la oferta de recarga y la demanda potencial por municipio.</p>
+    </section>
+    <form id="filtros" class="filtros" aria-label="Filtros de municipios">
+      <div class="campo campo-busqueda">
+        <label for="busqueda">Municipio</label>
+        <div class="busqueda">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="5.5"/><path d="m15 15 4 4"/></svg>
+          <input id="busqueda" type="text" role="combobox" aria-autocomplete="list"
+                 aria-expanded="false" aria-controls="lista" placeholder="Busca por nombre"
+                 autocomplete="off" spellcheck="false" disabled>
+          <div id="sugerencias" class="sugerencias" hidden>
+            <ul id="lista" class="lista" role="listbox" aria-label="Municipios"></ul>
+            <p id="sugerencias-vacias" class="lista-vacia" hidden>Sin municipios que coincidan.</p>
+          </div>
+        </div>
+      </div>
+      <label class="campo">Provincia
+        <select id="provincia" disabled><option value="">Todas las provincias</option></select>
+      </label>
+      <label class="campo">Perfil
+        <select id="perfil" disabled><option value="">Todos los perfiles</option></select>
+      </label>
+      <button id="restablecer" type="reset" class="boton secundario" disabled>Restablecer</button>
+    </form>
+
+    <div class="espacio">
+      <section class="mapa" aria-labelledby="titulo-mapa">
+        <svg id="mapa" aria-label="Mapa municipal por perfil de recarga" role="img">
+          <text id="mar" class="mar" aria-hidden="true">MAR MEDITERRÁNEO</text>
+          <g id="municipios" fill-rule="evenodd"></g>
+        </svg>
+        <div class="mapa-encabezado">
+          <h2 id="titulo-mapa">Perfiles municipales</h2>
+          <p id="recuento" role="status">Cargando municipios…</p>
+        </div>
+        <div class="mapa-controles" aria-label="Controles del mapa">
+          <button type="button" id="acercar" aria-label="Acercar mapa" title="Acercar mapa" disabled>+</button>
+          <button type="button" id="alejar" aria-label="Alejar mapa" title="Alejar mapa" disabled>−</button>
+          <button type="button" id="centrar" aria-label="Volver a la vista regional" title="Volver a la vista regional" disabled>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="4.5"/><path d="M10 1v4.5m0 9V19M1 10h4.5m9 0H19"/></svg>
+          </button>
+        </div>
+        <details class="leyenda" open>
+          <summary>Leyenda de perfiles</summary>
+          <ul id="leyenda"></ul>
+        </details>
+        <p class="mapa-indicacion">Arrastra para mover el mapa</p>
+        <div class="mapa-mensaje" id="mapa-mensaje" hidden></div>
+        <div class="tooltip" id="tooltip" aria-hidden="true" hidden>
+          <strong id="tooltip-nombre"></strong>
+          <span id="tooltip-perfil"></span>
+        </div>
+      </section>
+
+      <aside class="lateral" aria-label="Consulta de municipios">
+        <section class="tarjeta" aria-labelledby="ficha-titulo">
+          <header class="tarjeta-cabecera"><h2 id="ficha-titulo" tabindex="-1">Ficha municipal</h2></header>
+          <div id="ficha-inicio" class="ficha-inicio">Usa el mapa o el buscador para consultar un municipio.</div>
+          <div id="ficha" class="ficha" hidden>
+            <button type="button" id="cerrar-ficha" class="cerrar-ficha" aria-label="Cerrar ficha" title="Cerrar ficha">×</button>
+            <p id="ficha-provincia" class="ficha-provincia"></p>
+            <h3 id="ficha-nombre"></h3>
+            <p id="ficha-perfil" class="perfil-etiqueta"><span class="punto" aria-hidden="true"></span><span></span></p>
+            <dl class="metricas">
+              <div><dt>Vehículos con Distintivo 0</dt><dd id="ficha-vehiculos"></dd></div>
+              <div><dt>Puntos de recarga con municipio validado</dt><dd id="ficha-puntos"></dd></div>
+              <div><dt>Población (2025)</dt><dd id="ficha-poblacion"></dd></div>
+            </dl>
+            <p id="ficha-aviso" class="aviso" hidden></p>
+            <button type="button" id="filtrar-perfil" class="boton principal">Ver municipios de este perfil <span aria-hidden="true">→</span></button>
+          </div>
+          <p id="anuncio-ficha" class="solo-lectura" role="status"></p>
+        </section>
+      </aside>
+    </div>
+    <footer class="pie">
+      <span>Fuentes · DGT, MITECO e INE · Obra derivada de BDLJE CC-BY 4.0 ign.es</span>
+      <span>Parque y población 2025 · Recarga registrada en octubre de 2026</span>
+    </footer>
+  </main>
+</body>
+</html>
